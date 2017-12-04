@@ -1,0 +1,488 @@
+    
+**简要描述：** 
+
+- 分页查询商家用户列表，主要是根据app_id
+
+**请求URL：** 
+- http://test.zhichiwangluo.com/index.php?r=api/User/List
+  
+**请求方式：**
+- POST 
+
+**参数：** 
+
+|参数名|必选|类型|说明|
+|:----    |:---|:----- |-----   |
+|app_id |是  |string |商家appid  |
+|page |否  |int |页码  |
+|page_size |否  |int |每页显示条数  |
+
+ **返回示例**
+
+``` 
+ {
+    "status": 0,
+    "data": [
+        {
+            "nickname": "61892221",
+            "phone": "13713709996",
+            "country": "",
+            "province": "",
+            "city": "",
+            "id": "67",
+            "user_token": "91ce422d86e121ef8b0889aa7ef7ab03"
+        },
+        {
+            "nickname": "24313002",
+            "phone": "18627116519",
+            "country": "",
+            "province": "",
+            "city": "",
+            "id": "66",
+            "user_token": "2dc5adc75ce6e662884ba9fd31a93826"
+        },
+        {
+            "nickname": "80437556",
+            "phone": "18617116519",
+            "country": "",
+            "province": "",
+            "city": "",
+            "id": "64",
+            "user_token": "866a883f4f3f1e2bf320042539bfa391"
+        },
+        {
+            "nickname": "刘亚珂测试",
+            "phone": "13651443160",
+            "country": "中国",
+            "province": "上海",
+            "city": "浦东新区",
+            "id": "5",
+            "user_token": "6d63aae4c52638fe2ef84da0747b1eff"
+        }
+    ],
+    "is_more": 0,
+    "current_page": 1,
+    "count": "4",
+    "total_page": 1
+}
+```
+
+ **返回参数说明** 
+
+|参数名|类型|说明|
+|:-----  |:-----|-----                           |
+|status |int   |0：查询成功；1：查询失败  |
+|nickname |string  |用户昵称  |
+|phone |string  |联系方式  |
+|country、province、city |string  |用户地址  |
+|nickname |string  |用户唯一标识符  |
+
+
+ **备注** 
+
+- 更多返回错误代码请看首页的错误代码描述
+
+
+
+=========================================================
+
+
+    
+**简要描述：** 
+
+- 查询商家信息，主要是根据app_id
+
+**请求URL：** 
+- http://test.zhichiwangluo.com/index.php?r=api/User/List
+  
+**请求方式：**
+- POST 
+
+**参数：** 
+
+|参数名|必选|类型|说明|
+|:----    |:---|:----- |-----   |
+|app_id |是  |string |商家appid  |
+
+
+ **返回示例**
+
+``` 
+ {
+    "status": 0,
+    "data": {
+        "name": "96集团",
+        "phone": "13713709996",
+        "region": "广东省 深圳市 福田区",
+        "address": "测试地址"
+    }
+}
+```
+
+ **返回参数说明** 
+
+|参数名|类型|说明|
+|:-----  |:-----|-----                           |
+|status |int   |0：查询成功；1：查询失败  |
+|name |string  |商家昵称  |
+|phone |string  |联系方式  |
+|region |string  |商家地址  |
+|address |string  |商家详细地址  |
+
+
+ **备注** 
+
+- 更多返回错误代码请看首页的错误代码描述
+
+
+
+=========================================================
+    
+**简要描述：** 
+
+- 分页查询商品列表API，主要是根据app_id
+
+**请求URL：** 
+-  http://test.zhichiwangluo.com/index.php?r=api/Goods/List
+  
+**请求方式：**
+- POST 
+
+**参数：** 
+
+|参数名|必选|类型|说明|
+|:----    |:---|:----- |-----   |
+|app_id |是  |string |商家appid  |
+|page |否  |int |页码  |
+|page_size |否  |int |每页显示条数  | 
+|form |否  |string |商品类型 'goods':电商, 'appointment'：预约, 'takeout'：外卖, 'tostore' ：到店 |
+ **返回示例**
+
+``` 
+{
+    "status": 0,
+    "data": [
+        {
+            "description": "测试007",
+            "img_urls": [
+                "http://img.zhichiwangluo.com/zcimgdir/album/file_54b608aac867d.jpg",
+                "http://img.zhichiwangluo.com/zcimgdir/album/file_54b608abaa3e2.jpg"
+            ],
+            "type": "0",
+            "delivery_id": "80",
+            "region_id": "",
+            "id": "4749",
+            "app_id": "3vq318qKlL",
+            "title": "测试007",
+            "cover": "http://img.weiye.me/zcimgdir/thumb/t_15101933195a03b8a76a337.jpg",
+            "price": "1.00",
+            "sale_price": "0.00",
+            "category": "",
+            "sales": "0",
+            "is_recommend": "0",
+            "stock": "100",
+            "weight": "0",
+            "goods_type": "0",
+            "volume": "10.000",
+            "express_rule_id": "0",
+            "seckill_status": "2",
+            "virtual_price": "1.00",
+            "status": "0",
+            "category_id": null,
+            "server_time": 1512371826,
+            "is_group_buy": 0,
+            "delivery_data": {
+                "delivery_name": "测试",
+                "delivery_info": [
+                    {
+                        "name": "给卖家留言",
+                        "type": "text",
+                        "is_hidden": "0"
+                    },
+                    {
+                        "name": "啥事",
+                        "type": "mul-text",
+                        "is_hidden": "1"
+                    }
+                ]
+            }
+        },
+        {
+            "description": "测试007",
+            "img_urls": [
+                "http://img.zhichiwangluo.com/zcimgdir/album/file_54b608aac867d.jpg",
+                "http://img.zhichiwangluo.com/zcimgdir/album/file_54b608abaa3e2.jpg"
+            ],
+            "type": "0",
+            "delivery_id": "80",
+            "region_id": "",
+            "id": "4748",
+            "app_id": "3vq318qKlL",
+            "title": "测试007",
+            "cover": "http://img.weiye.me/zcimgdir/thumb/t_15101933195a03b8a76a337.jpg",
+            "price": "1.00",
+            "sale_price": "0.00",
+            "category": "",
+            "sales": "0",
+            "is_recommend": "0",
+            "stock": "100",
+            "weight": "0",
+            "goods_type": "0",
+            "volume": "10.000",
+            "express_rule_id": "0",
+            "seckill_status": "2",
+            "virtual_price": "1.00",
+            "status": "0",
+            "category_id": null,
+            "server_time": 1512371826,
+            "is_group_buy": 0,
+            "delivery_data": {
+                "delivery_name": "测试",
+                "delivery_info": [
+                    {
+                        "name": "给卖家留言",
+                        "type": "text",
+                        "is_hidden": "0"
+                    },
+                    {
+                        "name": "啥事",
+                        "type": "mul-text",
+                        "is_hidden": "1"
+                    }
+                ]
+            }
+        },
+        {
+            "description": "测试007",
+            "img_urls": [
+                "http://img.zhichiwangluo.com/zcimgdir/album/file_54b608aac867d.jpg",
+                "http://img.zhichiwangluo.com/zcimgdir/album/file_54b608abaa3e2.jpg"
+            ],
+            "type": "0",
+            "delivery_id": "80",
+            "region_id": "",
+            "id": "4746",
+            "app_id": "3vq318qKlL",
+            "title": "测试007",
+            "cover": "http://img.weiye.me/zcimgdir/thumb/t_15101933195a03b8a76a337.jpg",
+            "price": "1.00",
+            "sale_price": "0.00",
+            "category": "",
+            "sales": "0",
+            "is_recommend": "0",
+            "stock": "100",
+            "weight": "0",
+            "goods_type": "0",
+            "volume": "10.000",
+            "express_rule_id": "0",
+            "seckill_status": "2",
+            "virtual_price": "1.00",
+            "status": "0",
+            "category_id": null,
+            "server_time": 1512371826,
+            "is_group_buy": 0,
+            "delivery_data": {
+                "delivery_name": "测试",
+                "delivery_info": [
+                    {
+                        "name": "给卖家留言",
+                        "type": "text",
+                        "is_hidden": "0"
+                    },
+                    {
+                        "name": "啥事",
+                        "type": "mul-text",
+                        "is_hidden": "1"
+                    }
+                ]
+            }
+        },
+        {
+            "description": "逆天小飞侠菜",
+            "type": "0",
+            "delivery_id": "79",
+            "region_id": "",
+            "id": "4421",
+            "app_id": "3vq318qKlL",
+            "title": "逆天小飞侠菜",
+            "cover": "http://img.zhichiwangluo.com/zcimgdir/album/file_54b608afc1d00.jpg",
+            "price": "20.00",
+            "sale_price": "0.00",
+            "category": "",
+            "sales": "1",
+            "is_recommend": "0",
+            "stock": "200",
+            "weight": "0",
+            "goods_type": "0",
+            "volume": "0.000",
+            "express_rule_id": "0",
+            "seckill_status": "2",
+            "virtual_price": "0.00",
+            "status": "0",
+            "category_id": null,
+            "server_time": 1512371826,
+            "is_group_buy": 0,
+            "delivery_data": {
+                "delivery_name": "阿萨",
+                "delivery_info": [
+                    {
+                        "name": "给卖家留言",
+                        "type": "text",
+                        "is_hidden": "1"
+                    },
+                    {
+                        "name": "阿萨",
+                        "type": "mul-text",
+                        "is_hidden": "1"
+                    }
+                ]
+            }
+        },
+        {
+            "description": "总店商品",
+            "type": "0",
+            "delivery_id": "0",
+            "region_id": "",
+            "id": "2697",
+            "app_id": "3vq318qKlL",
+            "title": "总店商品",
+            "cover": "http://img.zhichiwangluo.com/zcimgdir/album/file_54b608b1af7ae.jpg",
+            "price": "0.01",
+            "sale_price": "0.00",
+            "category": "",
+            "sales": "1",
+            "is_recommend": "0",
+            "stock": "252",
+            "weight": "0",
+            "goods_type": "0",
+            "volume": "12.000",
+            "express_rule_id": "0",
+            "seckill_status": "2",
+            "virtual_price": "0.00",
+            "status": "0",
+            "category_id": null,
+            "server_time": 1512371826,
+            "is_group_buy": 0
+        }
+    ],
+    "is_more": 0,
+    "current_page": 1,
+    "count": "5",
+    "total_page": 1
+}
+```
+
+ **返回参数说明** 
+
+|参数名|类型|说明|
+|:-----  |:-----|-----                           |
+|status |int   |0：查询成功；1：查询失败  |
+|title |string  |商品名 |
+|cover |string  |商品图片  |
+|goods_type|int  |商品类型 0：电商 1：预约 2：外卖 3：到店 |
+|sale_price |double |销售价格 |
+|is_recommend |int |是否推荐 |
+|sale_price |double |销售价格 |
+|virtual_price |double |商品虚拟价格 |
+|express_fee |string |配送方式 |
+|stock |int |商品库存 |
+|volume |string |商品体积 |
+|weight |int |商品重量 |
+|delivery_data |int |商品补充信息 |
+|img_urls |int |商品轮播图 |
+|description |string |商品描述|
+
+
+ **备注** 
+
+- 更多返回错误代码请看首页的错误代码描述
+
+
+
+=========================================================
+    
+**简要描述：** 
+
+- 获取商品详情信息，主要是根据商家app_id，商品data_id
+
+**请求URL：** 
+-  http://test.zhichiwangluo.com/index.php?r=api/Goods/Info
+  
+**请求方式：**
+- POST 
+
+**参数：** 
+
+|参数名|必选|类型|说明|
+|:----    |:---|:----- |-----   |
+|app_id |是  |string |商家appid  |
+|data_id |是  |int |商品 data_id |
+
+ **返回示例**
+
+``` 
+ {
+    "status": 0,
+    "data": [
+        {
+            "title": "测试007",
+            "cover": "http://img.weiye.me/zcimgdir/thumb/t_15101933195a03b8a76a337.jpg",
+            "price": "1.00",
+            "goods_type": "0",
+            "sale_price": "0.00",
+            "stock": "100",
+            "is_recommend": "0",
+            "weight": "0",
+            "virtual_price": "1.00",
+            "model_items": [],
+            "app_name": "96的应用1",
+            "express_fee": "包邮",
+            "server_time": 1512370015
+        }
+    ]
+}
+```
+
+ **返回参数说明** 
+
+|参数名|类型|说明|
+|:-----  |:-----|-----                           |
+|status |int   |0：查询成功；1：查询失败  |
+|title |string  |商品名 |
+|cover |string  |商品图片  |
+|goods_type|int  |商品类型 0：电商 1：预约 2：外卖 3：到店 |
+|sale_price |double |销售价格 |
+|is_recommend |int |是否推荐 |
+|sale_price |double |销售价格 |
+|virtual_price |double |商品虚拟价格 |
+|express_fee |string |配送方式 |
+|stock |int |商品库存 |
+
+
+ **备注** 
+
+- 更多返回错误代码请看首页的错误代码描述
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
