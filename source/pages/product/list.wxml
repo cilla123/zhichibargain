@@ -1,0 +1,3 @@
+<!--pages/product/list.wxml-->
+<text>{{ls}}</text>
+<button bindtap='setLs'>设置</button>
