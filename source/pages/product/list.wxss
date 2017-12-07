@@ -1,1 +1,6 @@
 /* pages/product/list.wxss */
+.active{
+  color: #FF7100;
+  padding-bottom:1.3vh;
+  border-bottom: 3px solid #FF7100;
+}

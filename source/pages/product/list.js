@@ -1,11 +1,14 @@
 // pages/product/list.js
-
+var MemberMgr=require("../../classes/MemberMgr.js");
 Page({
   /**
    * 页面的初始数据
    */
   data: {
+    "type":"all",
+    member:{},
     displaytype:"LIST",
+    items:[]
   },
   setLs(){
     wx.setStorage({
@@ -13,11 +16,40 @@ Page({
       data: 'hellop',
     });
   },
+  changeType(e){
+    var t=e.currentTarget.id;
+    this.setData({"type":t});
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    var that=this;
+    var member=MemberMgr.getMember(1);
+
+    var items=[];
+    items.push({
+      img:"../../images/product.png",
+      title:"爱国者超薄便携通用乌龙奶盖茶",
+      price: 9999.00,
+      oriprice:14100,
+      "type":"going",
+      reminder: 20,
+      starttime: "2017-12-10",
+      endtime:"2017-12-31"
+    });
+    items.push({
+      img: "../../images/product.png",
+      title: "爱国者超薄便携通用乌龙奶盖茶",
+      price: 9999.00,
+      oriprice: 14100,
+      "type": "coming",
+      reminder: 20,
+      starttime: "2017-12-10",
+      endtime: "2017-12-31"
+    });
+
+    that.setData({ member: member,items:items });
   },
 
   /**
