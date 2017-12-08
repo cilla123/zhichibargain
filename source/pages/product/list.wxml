@@ -1,23 +1,23 @@
 <!--pages/product/list.wxml-->
 <view class='flex-row padding-2 white' style='margin-bottom:2px;'>
-  <view  class='flex-9 font-65 flex-row'>
+  <view class='flex-9 font-65 flex-row'>
     <view style='margin-right:1vh;'>
-      <image class='img-2' src="../../images/icons/horn.png" ></image>
+      <image class='img-2' src="../../images/icons/horn.png"></image>
     </view>
     <view>
       <text>恭喜{{member.name}}砍价成功，共砍掉￥99</text>
     </view>
   </view>
-  <view  class='flex-4 font-65 primary text-right'>
-     <text>查看我的砍价</text>
-     <i class="fa fa-chevron-right"></i>
+  <view class='flex-4 font-65 primary text-right'>
+    <text>查看我的砍价</text>
+    <i class="fa fa-chevron-right"></i>
   </view>
 </view>
-<view class='white padding-2' style='padding-bottom:0px;'>
-  <view class='flex-row border-bottom ' >
-    <view class='flex-row flex-7 font-75  ' style='padding-left:3vh;'>
+<view class='white '>
+  <view class='flex-row border-bottom padding-2 no-margin' style='padding-bottom:0px;margin-top:1px;'>
+    <view class='flex-row flex-7 font-80  ' style='padding-left:3vh;'>
       <view class='flex-1' bindtap='changeType' id="all">
-        <text class='{{type=="all"?"active":""}}'>全部</text>
+        <text class='{{type=="all"?"active":""}}'>全部{{activeitem}}</text>
       </view>
       <view class='flex-1' bindtap='changeType' id="going">
         <text class='{{type=="going"?"active":""}}'>砍价中</text>
@@ -26,13 +26,13 @@
         <text class='{{type=="coming"?"active":""}}'>即将开始</text>
       </view>
     </view>
-    <view class='flex-1 text-right'>
-      <image class='img-3' src="../../images/icons/list.png" ></image>
+    <view class='flex-1 text-right' bindtap='changeDisplayType'>
+      <image class='img-3' src="../../images/icons/list.png"></image>
     </view>
   </view>
-  <view class='item-list'>
+  <view class='item-list padding-2' wx:if="{{displaytype=='list'}}" style='padding-bottom:0px;'>
     <block wx:for="{{items}}" wx:key="key">
-      <view  class='flex-row border-bottom item' style='margin-top:1.5vh;' wx:if="{{type=='all'||type==item.type}}">
+      <view class='flex-row border-bottom item' style='margin-top:1.5vh;' wx:if="{{(item.endtime_s.reminder>0)&&(type=='all'||(type=='going'&&item.starttime_s.reminder<0)||(type=='coming'&&item.starttime_s.reminder>0))}}"  bindtap='gotoDetail' id="{{item.id}}">
         <view class='flex-1'>
           <image style='width:28vw;height:28vw;' src="{{item.img}}"></image>
         </view>
@@ -40,25 +40,25 @@
           <view style='min-height:8vh;'>
             <text class='font-80'>{{item.title}}</text>
           </view>
-          <view class='flex-row '   >
+          <view class='flex-row '>
             <view class='flex-1 primary'>
-              <text class='font-60'>￥</text><text>{{item.price}}</text>
+              <text class='font-60'>￥</text>
+              <text>{{item.price}}</text>
             </view>
-            <view class='flex-2 text-right' >
-              <text wx:if="{{item.type=='going'}}" class='font-white going-bg font-60 ' style='border-radius:3px;padding:0.5vh;'><text style='margin-right:1vh;'>距结束</text><text class='bg_no' wx:for="{{item.endtime_s.hour}}" wx:key="key">{{item}}</text>:<text class='bg_no' wx:for="{{item.endtime_s.minute}}" wx:key="key">{{item}}</text>:<text class='bg_no' wx:for="{{item.endtime_s.second}}" wx:key="key">{{item}}</text></text>
-              <text wx:if="{{item.type=='coming'}}" class='font-white coming-bg font-60 ' style='border-radius:3px;padding:0.5vh;'><text style='margin-right:1vh;'>距开始</text><text class='bg_no' wx:for="{{item.starttime_s.hour}}" wx:key="key">{{item}}</text>:<text class='bg_no' wx:for="{{item.starttime_s.minute}}" wx:key="key">{{item}}</text>:<text class='bg_no' wx:for="{{item.starttime_s.second}}" wx:key="key">{{item}}</text></text>
+            <view class='flex-2 text-right'>
+              <text wx:if="{{item.starttime_s.reminder<0}}" class='font-white going-bg font-60 ' style='border-radius:3px;padding:0.5vh;'><text style='margin-right:1vh;'>距结束</text><text class='bg_no' wx:for="{{item.endtime_s.hour}}" wx:key="key">{{item}}</text>:<text class='bg_no' wx:for="{{item.endtime_s.minute}}" wx:key="key">{{item}}</text>:<text class='bg_no' wx:for="{{item.endtime_s.second}}" wx:key="key">{{item}}</text></text><text wx:if="{{item.starttime_s.reminder>0}}" class='font-white coming-bg font-60 ' style='border-radius:3px;padding:0.5vh;'><text style='margin-right:1vh;'>距开始</text><text class='bg_no' wx:for="{{item.starttime_s.hour}}" wx:key="key">{{item}}</text>:<text class='bg_no' wx:for="{{item.starttime_s.minute}}" wx:key="key">{{item}}</text>:<text class='bg_no' wx:for="{{item.starttime_s.second}}" wx:key="key">{{item}}</text></text>
             </view>
           </view>
           <view class='flex-row no-margin' style='margin-top:-1vh;'>
             <view class='flex-1'>
               <text class='light font-60' style='text-decoration:line-through'>￥{{item.oriprice}}</text>
             </view>
-            <view class='flex-2 flex-row' style='padding-left:2vh;padding-right:1vh;' >
+            <view class='flex-2 flex-row' style='padding-left:2vh;padding-right:1vh;'>
               <view class='flex-4'>
-              <text class='font-60 light' >仅剩{{item.reminder}}件</text>
+                <text class='font-60 light'>仅剩{{item.reminder}}件</text>
               </view>
-              <view  class='flex-5 ' style='padding-top:2.5vh;' >
-                <view class='progress {{item.type}}' style='padding-right:{{(item.allstore-item.reminder)/item.allstore*100}}%;' >
+              <view class='flex-5 ' style='padding-top:2.5vh;'>
+                <view class='progress {{item.starttime_s.reminder<0?"going":"coming"}}' style='padding-right:{{(item.allstore-item.reminder)/item.allstore*100}}%;'>
                   <view class='progress-go'></view>
                 </view>
               </view>
@@ -67,5 +67,45 @@
         </view>
       </view>
     </block>
+  </view>
+  <view class='item-grid ' wx:if="{{displaytype=='grid'}}" style='padding-bottom:0px;padding-top:2.3vh;'>
+    <view class='flex-row' style='flex-wrap:wrap'>
+      <block wx:for="{{items}}" wx:key="key" wx:if="{{(item.endtime_s.reminder>0)&&(type=='all'||(type=='going'&&item.starttime_s.reminder<0)||(type=='coming'&&item.starttime_s.reminder>0))}}">
+        <view class='flex-1 item' bindtap='gotoDetail' id="{{item.id}}">
+            <view >
+              <image src="{{item.img}}" style='width:49.5vw;height:49.5vw'></image>
+            </view>
+          <view class='no-margin font-80' style='padding-left:1vh;padding-right:1vh;margin-bottom:0px;text-align:left;padding-top:2vh;line-height:3vh;'>
+          {{item.title}}
+          </view>
+          <view class='flex-row ' style='text-align:left;padding-left:1vh;padding-right:1vh;'>
+            <view class='flex-1 primary'>
+              <text class='font-60'>￥</text>
+              <text>{{item.price}}</text>
+            </view>
+            <view class='flex-1'>
+              <text class='light font-60' style='text-decoration:line-through'>￥{{item.oriprice}}</text>
+            </view>
+          </view>
+          <view class='no-margin' style='text-align:left;padding-left:1vh;padding-right:1vh;margin-bottom:0px;margin-top:-1vh;'>
+            <text wx:if="{{item.starttime_s.reminder<0}}" class='font-white going-bg font-65 ' style='border-radius:3px;padding:0.5vh;'><text >距结束</text><text class='bg_no' wx:for="{{item.endtime_s.hour}}" wx:key="key">{{item}}</text>:<text class='bg_no' wx:for="{{item.endtime_s.minute}}" wx:key="key">{{item}}</text>:<text class='bg_no' wx:for="{{item.endtime_s.second}}" wx:key="key">{{item}}</text></text>
+            <text wx:if="{{item.starttime_s.reminder>0}}" class='font-white coming-bg font-65 ' style='border-radius:3px;padding:0.5vh;'><text>距开始</text><text class='bg_no' wx:for="{{item.starttime_s.hour}}" wx:key="key">{{item}}</text>:<text class='bg_no' wx:for="{{item.starttime_s.minute}}" wx:key="key">{{item}}</text>:<text class='bg_no' wx:for="{{item.starttime_s.second}}" wx:key="key">{{item}}</text></text>
+          </view>
+          <view class='flex-row no-margin' style='text-align:left;padding-left:1vh;padding-right:1vh;margin-bottom:1vh;margin-top:-1vh;margin-right:3.5vh;'>
+            <view class='flex-4'>
+                <text class='font-60 light'>仅剩{{item.reminder}}件</text>
+              </view>
+              <view class='flex-5 ' style='padding-top:2.5vh;'>
+                <view class='progress {{item.starttime_s.reminder<0?"going":"coming"}}' style='padding-right:{{(item.allstore-item.reminder)/item.allstore*100}}%;'>
+                  <view class='progress-go'></view>
+                </view>
+              </view>
+          </view>
+        </view>
+      </block>
+      <!--有用的，别删除了-->
+      <view class='flex-1 item' wx:if="{{activeitem%2==1}}">
+      </view>
+    </view>
   </view>
 </view>

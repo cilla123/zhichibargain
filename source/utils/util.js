@@ -17,6 +17,7 @@ const timecutting=n=>{
   //console.log(n);
   var date=new Date(n);
   var second = (date.getTime() - (new Date()).getTime())/1000;
+  var reminder=second;
   var hour=parseInt( second/3600);
   second=second-3600*hour;
   var minute = parseInt(second/60);
@@ -30,7 +31,7 @@ const timecutting=n=>{
   second = second > 9 ? second.toString() : "0" + second.toString();
 
   //console.log(hour.toString() + "-"+minute.toString() + "-"+second.toString() );
-  return {hour:hour,minute:minute,second:second};
+  return {hour:hour,minute:minute,second:second,reminder:reminder};
 }
 
 module.exports = {
