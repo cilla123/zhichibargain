@@ -124,6 +124,9 @@ background-color:#F2F2F2;
   margin-top:-13px;
   margin-bottom:-13px;
 }
+.font-white{
+  color:white;
+}
 .primary{
   color:#FF7100;
 }
