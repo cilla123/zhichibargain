@@ -1,5 +1,6 @@
 // pages/product/list.js
 var MemberMgr = require("../../classes/MemberMgr.js");
+var ProductMgr = require("../../classes/ProductMgr.js");
 var StorageMgr = require("../../classes/StorageMgr.js");
 var Util = require("../../utils/util.js");
 Page({
@@ -11,7 +12,8 @@ Page({
     member:{},
     displaytype:"",
     items:[],
-    activeitem:0
+    activeitem:0,
+    bordercase:{},
   },
   setLs(){
     wx.setStorage({
@@ -50,49 +52,10 @@ Page({
       displaytype="list";
     }
 
-    var items=[];
-    var nowtime=new Date().getTime();
-    items.push({
-      id:1,
-      img:"../../images/product.png",
-      title:"爱国者超薄便携通用乌龙奶盖茶",
-      price: 9999.00,
-      oriprice:14100,
-      allstore: 20,
-      reminder: 7,
-      starttime: "2017-12-9",
-      endtime: "2017-12-31",
-      starttime_s: Util.timecutting("2017-12-9"),
-      endtime_s: Util.timecutting("2017-12-31")
-    });
-    items.push({
-      id: 2,
-      img: "../../images/product.png",
-      title: "爱国者超薄便携通用乌龙奶盖茶",
-      price: 9999.00,
-      oriprice: 14100,
-      allstore: 20,
-      reminder: 20,
-      starttime: "2017-12-10",
-      endtime: "2017-12-31",
-      starttime_s: Util.timecutting("2017-12-10"),
-      endtime_s: Util.timecutting("2017-12-31")
-    });
-    items.push({
-      id: 3,
-      img: "../../images/product.png",
-      title: "爱国者超薄便携通用乌龙奶盖茶",
-      price: 9999.00,
-      oriprice: 14100,
-      allstore: 20,
-      reminder: 20,
-      starttime: "2017-12-10",
-      endtime: "2017-12-31",
-      starttime_s: Util.timecutting("2017-12-10"),
-      endtime_s: Util.timecutting("2017-12-31")
-    });
+    var items = ProductMgr.getProductList();
+    var broadcase = ProductMgr.getProductKanjiaBroadcase();
 
-    that.setData({ member: member, items: items, displaytype: displaytype });
+    that.setData({ member: member, items: items, displaytype: displaytype, broadcase: broadcase});
     this.count();
     this.goroundtimer=setInterval(function(){
       that.count();
