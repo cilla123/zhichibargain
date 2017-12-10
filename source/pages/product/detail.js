@@ -15,8 +15,60 @@ Page({
     status: "N",
     product: {},
     broadcase:{},
+    addtocart: true,
+    count:1,
+    selectedoptionstr:""
   },
+  countminus(){
+    var count=this.data.count;
+    count--;
+    if(count<1){
+      count=1;
+    }
+    this.setData({count:count});
+  },
+  countplus() {
+    var count = this.data.count;
+    count++;
+    if (count >this.data.product.reminder) {
+      count = this.data.product.reminder;
+    }
+    this.setData({ count: count });
+  },
+  optionSelect(e){
+    var product=this.data.product;
+    var id=e.currentTarget.id.split("_");
+    var optionid = id[0];
+    var optionvalue = id[1];
 
+    for(var i=0;i<product.specs.length;i++){
+      if (product.specs[i].id==optionid){
+        product.specs[i].value = optionvalue;
+      }
+    }
+    this.setData({ product: product });
+    this.updateselectedoptionstr();
+  },
+  updateselectedoptionstr(){
+    var selectedoptionstr="";
+    var product = this.data.product;
+    for (var i = 0; i < product.specs.length; i++) {
+      if (product.specs[i].value!="") {
+        for (var j = 0; j < product.specs[i].options.length;j++){
+          if (product.specs[i].value == product.specs[i].options[j].value){
+            selectedoptionstr += '"' + product.specs[i].options[j].display+'"';
+          }
+        }
+      }
+    }
+    this.setData({ selectedoptionstr: selectedoptionstr });
+  },
+  tryAddToCart(){
+    this.setData({addtocart:true});
+  },
+  closeAddToCart() {
+    this.setData({ addtocart: false });
+  },
   /**
    * 生命周期函数--监听页面加载
    */

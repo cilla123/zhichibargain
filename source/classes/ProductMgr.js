@@ -51,8 +51,13 @@ class ProductMgr {
       allstore: 20,
       reminder: 20,
       starttime: "2017-12-10 0:00:0",
-      endtime: "2017-12-1 23:59:59",
-      deliveryamount:0
+      endtime: "2017-12-31 23:59:59",
+      deliveryamount:0,
+      specs:[
+        { id: 1, name: "尺码", options: [{ display: "大", value: "L" }, { display: "中", value: "M" }, { display: "小", value: "S" }], value: "" },
+        { id: 2, name: "颜色", options: [{ display: "纯金", value: "T" }, { display: "铂金", value: "PT" }, { display: "白银", value: "S" }], value: "" },
+        { id: 3, name: "款式", options: [{ display: "淑女", value: "L" }, { display: "小清新", value: "M" }, { display: "妖艳贱货", value: "S" }],value:"" }
+      ]
     };
     return item;
   }

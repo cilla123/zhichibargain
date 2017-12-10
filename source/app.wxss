@@ -149,12 +149,23 @@ background-color:#F2F2F2;
 .light{
   color:#aaa;
 }
+.bold{
+  font-weight: bold;
+}
 .no-margin{
   margin-top:-8px;
   margin-bottom:-8px;
 }
 .font-white{
   color:white;
+}
+.back-primary{
+  background:#FF7100;
+  color:white;
+}
+.back-light{
+  background:#F5F5F5;
+  color:#595959;
 }
 .primary{
   color:#FF7100;
