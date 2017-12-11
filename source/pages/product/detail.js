@@ -18,7 +18,9 @@ Page({
     addtocart: false,
     count:1,
     selectedoptionstr:"",
-    kanprice:0
+    kanprice:0,
+    bangtype:"rank",
+    rankkanfriends:[]
   },
   tryKanjia(){
     this.setData({ status: "P", addtocart: false});
@@ -93,7 +95,7 @@ Page({
     this.getKanPrice();
     this.gokanpricetimer = setInterval(function () {
       that.getKanPrice();
-    }, 1000);
+    }, 10000);
   },
   goroundtimer:null,
   count() {
@@ -115,16 +117,30 @@ Page({
   onReady: function () {
 
   },
-  ccc:0,
   gokanpricetimer: null,
   getKanPrice(){
     this.ccc++;
-    var kanprice = ProductMgr.getProductKanjiaPrice(this.data.member.id, this.data.product.id);
-    kanprice = kanprice + 1000 * this.ccc;
+    var kanfriends = ProductMgr.getProductKanjiaFriends(this.data.member.id, this.data.product.id);
+    var kanprice = 0;
+
+    for(var i=0;i<kanfriends.length;i++){
+      kanprice += kanfriends[i].kanprice;
+    }
+
     if (kanprice > (this.data.product.oriprice - this.data.product.lowprice)){
       kanprice=(this.data.product.oriprice-this.data.product.lowprice);
     }
-    this.setData({kanprice:kanprice});
+
+
+    var rankkanfriends=kanfriends.sort(function(a,b){
+      return a.kanprice<b.kanprice;
+    });
+
+    for (var i = 0; i < rankkanfriends.length; i++) {
+      rankkanfriends[i].seq = i + 1;
+    }
+
+    this.setData({ kanprice: kanprice, kanfriends: kanfriends, rankkanfriends: rankkanfriends});
   },
   /**
    * 生命周期函数--监听页面显示

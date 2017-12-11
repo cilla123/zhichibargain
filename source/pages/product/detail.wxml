@@ -254,10 +254,60 @@
         <text class='font-80 bold' style='background:url(../../images/bg_gold.png);color:#CD5602;background-size:100% 100%;border-radius:4vh;padding:2vh;padding-left:4vh;padding-right:4vh;' >找人帮砍</text>
     </view>
     <view  class=' text-center' style='margin-top:2vh;'>
-      <text class='font-60'>新用户可看下更多金额哦</text>
+      <text class='font-65'>新用户可看下更多金额哦</text>
     </view>
-    <view  class='' style='margin-top:2vh;'>
-    
+    <view  class='flex-row ' style='padding-left:5vh;padding-right:5vh;margin-top:5vh;' >
+      <view class='flex-3 '  style="margin-right:2vh;">
+        <view style='height:1px;width:100%;background:white;margin-top:2vh;'>
+        </view>
+      </view>
+      <view class='flex-3 text-center' >
+        <image src="../../images/kanjiabang.png" style='width:20.1vw;height:8.7vw;'></image>
+      </view>
+      <view class='flex-3 ' style="margin-left:2vh;">
+        <view style='height:1px;width:100%;background:white;margin-top:2vh;'>
+        </view></view>
+    </view>
+
+
+    <view  class='flex-row ' style='margin-top:2vh;' >
+      <view class='flex-4 font-80 bold text-right'  style="color:#FDEF90">给力好友</view>
+      <view class='flex-3 text-center' ></view>
+      <view class='flex-4  font-80 bold'  style="color:#FDEF90" >砍价记录</view>
+    </view>
+    <view style='background:url(../../images/bg-left.png);background-size:cover;margin-left:2vh;margin-right:2vh;'>
+      <view class='flex-row padding-2 margin-2 border-bottom font-70 ' style='padding-top:4vh;'>
+        已有{{kanfriends.length}}为好朋友帮你砍价
+      </view>
+      <view wx:if="{{bangtype=='rank'}}" class='padding-2'>
+        <block wx:for="{{rankkanfriends}}" wx:key="i">
+        <view wx:if="{{item.seq<=5||showmorerankfriends==true}}" class="flex-row" style="margin-bottom:2vh;">
+          <view class='flex-1 text-center' style='width:3vh;' >
+            <text class="font-80" wx:if="{{item.seq>3}}" >{{item.seq}}</text>
+            <image  wx:if="{{item.seq==1}}" style='margin-top:1.5vh;'src='../../images/icons/jin.png' class='img-3'></image>
+            <image  wx:if="{{item.seq==2}}" src='../../images/icons/yin.png' class='img-3'style='margin-top:1.5vh;'></image>
+            <image  wx:if="{{item.seq==3}}" src='../../images/icons/tong.png' class='img-3'style='margin-top:1.5vh;'></image>
+          </view>
+          <view style='flex-2 margin-left:3vh;'>
+            <image  src='{{item.memberphoto}}' class='img-7' style='border-radius:3.5vh;' ></image>
+          </view>
+          <view class='flex-4 flex-row' style='margin-left:2vh;' >
+            <view class='flex-5'>
+            <text class='font-70'>{{item.membername}}</text>
+            </view>
+            <view class='flex-5 text-right'>
+            <text class='font-80' style="color:#FDEF90">-￥{{item.kanprice}}</text>
+            </view>
+          </view>
+        </view>
+        </block>
+        <view class='border-bottom'>
+        
+        </view>
+      </view>
+      <view wx:else>
+
+      </view>
     </view>
   </view>
 

@@ -204,6 +204,10 @@ background-color:#F2F2F2;
   width: 6vh;
   height: 6vh;
 }
+.img-7{
+  width: 7vh;
+  height: 7vh;
+}
 
 .padding-1{
   padding:1vh;
