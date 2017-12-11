@@ -1,5 +1,5 @@
 <!--pages/product/detail.wxml-->
-<view style='position:absolute;left:0;top:0;'>
+<view style='position:absolute;left:0;top:0;' wx:if="{{status=='N'}}">
 <scroll-view scroll-y style="height: 91.5vh;" >
 
 <view class='broadcast font-65 flex-row padding-2' wx:if="{{broadcase.money>0}}">
@@ -19,7 +19,7 @@
   <view class='flex-5 flex-row' style='padding-left:1vh;'>
     <view class='flex-2'>
       <text class='font-75'>￥</text>
-      <text class='font-200'>{{product.price}}</text>
+      <text class='font-200'>{{product.lowprice}}</text>
     </view>
     <view class='flex-1'>
       <view class=''>
@@ -149,7 +149,7 @@
       <view class='padding-2 no-margin flex-12'  style='margin-top:-2vh;'>
         <view class='no-margin font-80'>{{product.title}}</view>
         <view class='primary'>
-          <text class='font-60'>￥</text><text class='font-80'>{{product.price}}</text>
+          <text class='font-60'>￥</text><text class='font-80'>{{product.lowprice}}</text>
         </view>
         <view class='font-70' wx:if="{{selectedoptionstr!=''}}">
           已选：{{selectedoptionstr}}
@@ -176,8 +176,89 @@
       <view class='font-80 flex-2 text-right'><text>库存 {{product.reminder}} </text><i class="fa fa-minus back-light padding-1" bindtap="countminus"></i><text class='back-light ' style='padding-left:2vh;padding-right:2vh;padding-top:0.5vh;padding-bottom:0.7vh;margin-left:1px;margin-right:1px;'>{{count}}</text><i class="fa fa-plus back-light  padding-1"  bindtap="countplus"></i> </view>
     </view>
 
-    <view class='back-primary padding-2 text-center'>
+    <view class='back-primary padding-2 text-center' bindtap='tryKanjia'>
       <text class='font-80'>加入购物车</text>
     </view>
   </view>
+</view>
+
+
+
+
+
+<view wx:if="{{status=='P'}}" class='font-white' style='background:#FA8B44;' >
+  <view>
+    <image src="../../images/banner.png" style='width:100vw;height:54.6vw;'></image>
+  </view>
+  <view style='background-image:url("../../images/focus.png");margin-left:6vh;margin-right:6vh;border-top-left-radius:1vh;border-top-right-radius:1vh;background-size:100% 100%;height:8vh;padding-left:10vh;padding-right:10vh;' class="text-center" >
+    <view class='flex-row' style='padding-top:2vh;'>
+      <view >
+        <image src='{{member.photo}}' class='img-5' style='border-radius:5vh;'></image>
+      </view>
+      <view class='font-70' style='margin-top:0.5vh;margin-left:1vh;'>
+        <text style='color:#FDEC8E;text-overflow:ellipsis;'>{{member.name}}</text><text>正在砍价</text>
+      </view>
+    </view>
+  </view>
+  <view class='white block block-radius' style='margin-top:0px;color:black'>
+    <view class='flex-row border-bottom' >
+      <view>
+        <image src='{{product.img}}' style='width:20vw;height:20vw;border-radius:1vh;'></image>
+      </view>
+      <view style='margin-left:2vh;width:100%;'>
+        <view class='font-80'>{{product.title}}</view>
+        <view class='block-radius flex-row  padding-1' style='background-image:url(../../images/bg_button.png);margin-top:1vh;background-size:100% 100%;color:#FDEC8E;'>
+          <text class='font-65' style='line-height:2.2vh;'>最低\n砍至</text>
+          <text class='font-75' style='margin-left:1vh;margin-top:1vh;'>￥</text>
+          <text>{{product.lowprice}}</text>
+          <text   class='font-65 no-margin' style='margin-left:3vh;color:white;padding-top:1vh;'>
+            <text  class='no-margin'  style='text-decoration:line-through;'>￥{{product.oriprice}}\n</text>仅剩{{product.reminder}}件
+          </text>
+        </view>
+      </view>
+    </view>
+    <view class='flex-row'>
+      <view>
+        <image src="../../images/icons/bolt.png" class='img-2'></image>
+      </view>
+      <view class='font-75' style='margin-top:1vh;margin-left:1.5vh;'>活动时间仅剩：</view>
+      <view style='color:black'>
+      <text wx:if="{{product.starttime_s.reminder<0}}" class='going-bg font-65 ' style='border-radius:3px;padding:0.5vh;'><text class='bg_p' wx:for="{{product.endtime_s.hour}}" wx:key="key" >{{item}}</text>时<text class='bg_p' wx:for="{{product.endtime_s.minute}}" wx:key="key">{{item}}</text>分<text class='bg_p' wx:for="{{product.endtime_s.second}}" wx:key="key">{{item}}</text>秒</text>
+      </view>
+    </view>
+  </view>
+
+  <view >
+    <view class="flex-row" style='margin-top:4vh;margin-bottom:0.5vh;padding-left:4vh;margin-left:{{kanprice*65.0/(product.oriprice-product.lowprice)}}vw;'>
+        <view class='flex-row primary' style='height:4vh;background-image:url(../../images/button_tran.png);background-size:100% 100%;padding:0.5vh;margin-bottom:1vh;'>
+        <view >
+          <image src='{{member.photo}}' class='img-4' style='border-radius:2vh;margin-top:-1px;margin-left:-1px;'></image>
+        </view>
+            <text class='font-60' style='margin-top:1vh;'>￥</text>
+            <text class='font-90' style='margin-top:-0.5vh;margin-right:2vh;'>{{kanprice}}</text>
+        </view>
+    </view>
+    <view  style='margin-left:10vh;margin-right:10vh;height:2.5vh;background:#FFA566;border-radius:1.25vh;'>
+      <view style='background:white;height:100%;width:{{kanprice*100.0/(product.oriprice-product.lowprice)}}%;border-top-left-radius:1.25vh;border-bottom-left-radius:1.25vh;{{kanprice*100.0/(product.oriprice-product.lowprice)>=99.5?"border-top-right-radius:1.25vh;border-bottom-right-radius:1.25vh;":""}}'>
+        <view style='position:absolute;height:4vh;width:4vh;background:white;border-radius:2vh;margin-top:-0.8vh;margin-left:10vh;left:{{kanprice*63.0/(product.oriprice-product.lowprice)}}vw'>
+          <view style='width:1vh;height:1vh;border-radius:0.5vh;background:red;margin-top:1.5vh;margin-left:1.5vh;'>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class='flex-row font-60' style='padding-left:6vh;padding-right:6vh;padding-top:1vh;'>
+        <view class='flex-1'>￥{{product.oriprice}}</view>
+        <view class='flex-1 text-right'>￥{{product.lowprice}}</view>
+    </view>
+    <view  class=' text-center' style='margin-top:3vh;'>
+        <text class='font-80 bold' style='background:url(../../images/bg_gold.png);color:#CD5602;background-size:100% 100%;border-radius:4vh;padding:2vh;padding-left:4vh;padding-right:4vh;' >找人帮砍</text>
+    </view>
+    <view  class=' text-center' style='margin-top:2vh;'>
+      <text class='font-60'>新用户可看下更多金额哦</text>
+    </view>
+    <view  class='' style='margin-top:2vh;'>
+    
+    </view>
+  </view>
+
 </view>

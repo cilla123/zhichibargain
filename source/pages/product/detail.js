@@ -15,9 +15,13 @@ Page({
     status: "N",
     product: {},
     broadcase:{},
-    addtocart: true,
+    addtocart: false,
     count:1,
-    selectedoptionstr:""
+    selectedoptionstr:"",
+    kanprice:0
+  },
+  tryKanjia(){
+    this.setData({ status: "P", addtocart: false});
   },
   countminus(){
     var count=this.data.count;
@@ -85,6 +89,11 @@ Page({
     this.goroundtimer = setInterval(function () {
       that.count();
     }, 1000);
+
+    this.getKanPrice();
+    this.gokanpricetimer = setInterval(function () {
+      that.getKanPrice();
+    }, 1000);
   },
   goroundtimer:null,
   count() {
@@ -97,6 +106,8 @@ Page({
     that.setData({ product: product
     , now: new Date().getTime()
       , s: new Date(product.starttime).getTime()});
+
+      
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -104,7 +115,17 @@ Page({
   onReady: function () {
 
   },
-
+  ccc:0,
+  gokanpricetimer: null,
+  getKanPrice(){
+    this.ccc++;
+    var kanprice = ProductMgr.getProductKanjiaPrice(this.data.member.id, this.data.product.id);
+    kanprice = kanprice + 1000 * this.ccc;
+    if (kanprice > (this.data.product.oriprice - this.data.product.lowprice)){
+      kanprice=(this.data.product.oriprice-this.data.product.lowprice);
+    }
+    this.setData({kanprice:kanprice});
+  },
   /**
    * 生命周期函数--监听页面显示
    */
@@ -124,6 +145,7 @@ Page({
    */
   onUnload: function () {
     clearInterval(this.goroundtimer);
+    clearInterval(this.gokanpricetimer);
   },
 
   /**

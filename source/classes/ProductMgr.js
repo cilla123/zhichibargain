@@ -8,7 +8,7 @@ class ProductMgr {
       id: 1,
       img: "../../images/product.png",
       title: "爱国者超薄便携通用乌龙奶盖茶",
-      price: 9999.00,
+      lowprice: 99.00,
       oriprice: 14100,
       allstore: 20,
       reminder: 7,
@@ -19,7 +19,7 @@ class ProductMgr {
       id: 2,
       img: "../../images/product.png",
       title: "爱国者超薄便携通用乌龙奶盖茶",
-      price: 9999.00,
+      lowprice: 99.00,
       oriprice: 14100,
       allstore: 20,
       reminder: 20,
@@ -30,7 +30,7 @@ class ProductMgr {
       id: 3,
       img: "../../images/product.png",
       title: "爱国者超薄便携通用乌龙奶盖茶",
-      price: 9999.00,
+      lowprice: 99.00,
       oriprice: 14100,
       allstore: 20,
       reminder: 20,
@@ -46,7 +46,7 @@ class ProductMgr {
       img: "../../images/product.png",
       cover: "../../images/product.png",
       title: "爱国者超薄便携通用乌龙奶盖茶",
-      price: 9999.00,
+      lowprice: 99.00,
       oriprice: 14100,
       allstore: 20,
       reminder: 20,
@@ -63,10 +63,14 @@ class ProductMgr {
   }
   static getProductKanjiaStatus(member_id, product_id) {
     //Todo:调用获取砍价状态
-    return "N";
+    return "P";
+  }
+  static getProductKanjiaPrice(member_id, product_id) {
+    //Todo:调用获取砍价状态
+    return 3530;
   }
   static getProductKanjiaBroadcase(){
-    return {membername:"小黑妹",money:9999.00}
+    return {membername:"小黑妹",money:99.00}
   }
 }
 

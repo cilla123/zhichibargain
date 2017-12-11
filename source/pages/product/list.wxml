@@ -43,7 +43,7 @@
           <view class='flex-row '>
             <view class='flex-1 primary'>
               <text class='font-60'>￥</text>
-              <text>{{item.price}}</text>
+              <text>{{item.lowprice}}</text>
             </view>
             <view class='flex-2 text-right'>
               <text wx:if="{{item.starttime_s.reminder<0}}" class='font-white going-bg font-60 ' style='border-radius:3px;padding:0.5vh;'><text style='margin-right:1vh;'>距结束</text><text class='bg_no' wx:for="{{item.endtime_s.hour}}" wx:key="key">{{item}}</text>:<text class='bg_no' wx:for="{{item.endtime_s.minute}}" wx:key="key">{{item}}</text>:<text class='bg_no' wx:for="{{item.endtime_s.second}}" wx:key="key">{{item}}</text></text><text wx:if="{{item.starttime_s.reminder>0}}" class='font-white coming-bg font-60 ' style='border-radius:3px;padding:0.5vh;'><text style='margin-right:1vh;'>距开始</text><text class='bg_no' wx:for="{{item.starttime_s.hour}}" wx:key="key">{{item}}</text>:<text class='bg_no' wx:for="{{item.starttime_s.minute}}" wx:key="key">{{item}}</text>:<text class='bg_no' wx:for="{{item.starttime_s.second}}" wx:key="key">{{item}}</text></text>
@@ -82,7 +82,7 @@
           <view class='flex-row ' style='text-align:left;padding-left:1vh;padding-right:1vh;'>
             <view class='flex-1 primary'>
               <text class='font-60'>￥</text>
-              <text>{{item.price}}</text>
+              <text>{{item.lowprice}}</text>
             </view>
             <view class='flex-1'>
               <text class='light font-60' style='text-decoration:line-through'>￥{{item.oriprice}}</text>
