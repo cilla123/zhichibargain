@@ -23,7 +23,16 @@ Page({
     rankkanfriends:[],
     showmorerankfriends: false,
     timekanfriends: [],
-    showmoretimefriends: false
+    showmoretimefriends: false,
+    scolltomiddle:false
+  },
+  scrollmonitor(e){
+    //console.log(e);
+    var scrolltop=e.detail.scrollTop;
+    var scolltomiddle=scrolltop>300;
+    if (this.data.scolltomiddle != scolltomiddle){
+      this.setData({ scolltomiddle: scolltomiddle});
+    }
   },
   changebangtype(e){
     var bangtype=e.currentTarget.id;

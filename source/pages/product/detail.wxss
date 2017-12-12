@@ -7,6 +7,22 @@
   border-top-right-radius: 5vh;
   border-bottom-right-radius: 5vh;
 }
+.topbroadcast{
+  position: absolute;
+  background-color: white ;
+  width:100vw;
+  top:0;
+  left:0;
+  z-index: 1;
+}
+.bottomorder{
+  position: absolute;
+  background-color: white ;
+  width:100vw;
+  bottom:0;
+  left:0;
+  z-index: 1;
+}
 .bg_no{
   background: black;
   margin-right:2px;
@@ -19,4 +35,10 @@
   margin-right:2px;
   padding:2px;
   border-radius: 2px;
+}
+.btnOrange{
+  margin-left:30vw;
+  margin-right:30vw;
+  background-size:100% 100%;
+  padding:2vh;
 }
