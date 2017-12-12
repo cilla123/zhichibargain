@@ -186,7 +186,7 @@
 
 
 
-<view wx:if="{{status=='P'}}" class='font-white' style='background:#FA8B44;' >
+<view wx:if="{{status=='P'}}" class='font-white' style='background:#fa8b44;padding-bottom:3vh;' >
   <view>
     <image src="../../images/banner.png" style='width:100vw;height:54.6vw;'></image>
   </view>
@@ -271,44 +271,90 @@
 
 
     <view  class='flex-row ' style='margin-top:2vh;' >
-      <view class='flex-4 font-80 bold text-right'  style="color:#FDEF90">给力好友</view>
+      <view class='flex-4 font-80 bold text-right'  style="color:#FDEF90" bindtap='changebangtype' id="rank">给力好友</view>
       <view class='flex-3 text-center' ></view>
-      <view class='flex-4  font-80 bold'  style="color:#FDEF90" >砍价记录</view>
+      <view class='flex-4  font-80 bold'  style="color:#FDEF90"  bindtap='changebangtype' id="time">砍价记录</view>
     </view>
-    <view style='background:url(../../images/bg-left.png);background-size:cover;margin-left:2vh;margin-right:2vh;'>
-      <view class='flex-row padding-2 margin-2 border-bottom font-70 ' style='padding-top:4vh;'>
-        已有{{kanfriends.length}}为好朋友帮你砍价
+    <view style='background:url(../../images/bg-{{bangtype=="rank"?"left":"right"}}.png) no-repeat ;background-size:93vw 100%;margin-left:2vh;margin-right:2vh;'>
+      <view class='flex-row margin-2 border-bottom font-70 no-margin' style='padding-top:4vh;padding-bottom:2vh;'>
+      <view style='margin-right:2vh;'>
+        <image src="../../images/icons/sword.png" class='img-3'></image>
       </view>
-      <view wx:if="{{bangtype=='rank'}}" class='padding-2'>
+      已有{{kanfriends.length}}位好朋友帮你砍价
+      </view>
+      <view wx:if="{{bangtype=='rank'}}" class='no-margin' style='padding-top:2vh;'>
         <block wx:for="{{rankkanfriends}}" wx:key="i">
-        <view wx:if="{{item.seq<=5||showmorerankfriends==true}}" class="flex-row" style="margin-bottom:2vh;">
-          <view class='flex-1 text-center' style='width:3vh;' >
+        <view wx:if="{{item.seq<=5||showmorerankfriends==true}}" class="flex-row" style="margin-top:2vh;">
+          <view class='flex-1 text-center' >
             <text class="font-80" wx:if="{{item.seq>3}}" >{{item.seq}}</text>
-            <image  wx:if="{{item.seq==1}}" style='margin-top:1.5vh;'src='../../images/icons/jin.png' class='img-3'></image>
-            <image  wx:if="{{item.seq==2}}" src='../../images/icons/yin.png' class='img-3'style='margin-top:1.5vh;'></image>
-            <image  wx:if="{{item.seq==3}}" src='../../images/icons/tong.png' class='img-3'style='margin-top:1.5vh;'></image>
+            <image  wx:if="{{item.seq==1}}" style='margin-top:1vh;'src='../../images/icons/jin.png' class='img-3'></image>
+            <image  wx:if="{{item.seq==2}}" src='../../images/icons/yin.png' class='img-3'style='margin-top:1vh;'></image>
+            <image  wx:if="{{item.seq==3}}" src='../../images/icons/tong.png' class='img-3'style='margin-top:1vh;'></image>
           </view>
-          <view style='flex-2 margin-left:3vh;'>
-            <image  src='{{item.memberphoto}}' class='img-7' style='border-radius:3.5vh;' ></image>
+          <view style='flex-2 '>
+            <image  src='{{item.memberphoto}}' class='img-5' style='border-radius:3.5vh;' ></image>
           </view>
           <view class='flex-4 flex-row' style='margin-left:2vh;' >
             <view class='flex-5'>
             <text class='font-70'>{{item.membername}}</text>
             </view>
-            <view class='flex-5 text-right'>
+            <view class='flex-5 text-right' style='padding-right:2vh;'>
             <text class='font-80' style="color:#FDEF90">-￥{{item.kanprice}}</text>
             </view>
           </view>
         </view>
         </block>
-        <view class='border-bottom'>
-        
+        <view class='border-bottom' wx:if="{{showmorerankfriends==false}}" style='margin-top:2vh;'>
+
+        </view>
+        <view class='padding-2'>
+          <button wx:if="{{showmorerankfriends==false}}" bindtap='rankcheckmore'>查看更多</button>
         </view>
       </view>
-      <view wx:else>
+      <view wx:else  class='no-margin' style='padding-top:2vh;'>
+<block wx:for="{{timekanfriends}}" wx:key="i">
+        <view wx:if="{{item.seq<=5||showmoretimefriends==true}}" class="flex-row" style="margin-top:2vh;">
+          
+          <view style='flex-2 ' style='padding-left:3vh;'>
+            <image  src='{{item.memberphoto}}' class='img-5' style='border-radius:3.5vh;' ></image>
+          </view>
+          <view class='flex-4 flex-row' style='margin-left:2vh;' >
+            <view class='flex-5'>
+            <text class='font-70'>{{item.membername}}</text>
+            </view>
+            <view class='flex-5 text-right' style='padding-right:2vh;'>
+            <text class='font-80' style="color:#FDEF90">-￥{{item.kanprice}}</text>
+            </view>
+          </view>
+        </view>
+        </block>
+        <view class='border-bottom' wx:if="{{showmoretimefriends==false}}" style='margin-top:2vh;'>
+
+        </view>
+        <view class='padding-2'>
+          <button wx:if="{{showmoretimefriends==false}}" bindtap='timecheckmore'>查看更多</button>
+        </view>
+
+
+
 
       </view>
     </view>
   </view>
+
+  <view class='white block block-radius font-80 flex-row' style='color:black;margin-top:4vh;padding:1vh;border-radius:1vh;padding-left:2vh;padding-right:2vh;' >
+    <view class='flex-1'>商品评价</view>
+    <view class='flex-1 text-right'>
+      <i class="fa fa-angle-down"></i>
+    </view>
+  </view>
+
+  <view class='white block block-radius font-80 flex-row' style='color:black;margin-top:1vh;padding:1vh;border-radius:1vh;padding-left:2vh;padding-right:2vh;' >
+    <view class='flex-1'>商品详情</view>
+    <view class='flex-1 text-right'>
+      <i class="fa fa-angle-down"></i>
+    </view>
+  </view>
+
 
 </view>

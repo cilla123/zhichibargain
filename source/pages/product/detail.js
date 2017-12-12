@@ -20,7 +20,20 @@ Page({
     selectedoptionstr:"",
     kanprice:0,
     bangtype:"rank",
-    rankkanfriends:[]
+    rankkanfriends:[],
+    showmorerankfriends: false,
+    timekanfriends: [],
+    showmoretimefriends: false
+  },
+  changebangtype(e){
+    var bangtype=e.currentTarget.id;
+    this.setData({ bangtype: bangtype});
+  },
+  rankcheckmore(){
+    this.setData({ showmorerankfriends:true});
+  },
+  timecheckmore() {
+    this.setData({ showmoretimefriends: true });
   },
   tryKanjia(){
     this.setData({ status: "P", addtocart: false});
@@ -135,12 +148,15 @@ Page({
     var rankkanfriends=kanfriends.sort(function(a,b){
       return a.kanprice<b.kanprice;
     });
+    var timekanfriends = kanfriends.sort(function (a, b) {
+      return a.kanprice_date < b.kanprice_date;
+    });
 
     for (var i = 0; i < rankkanfriends.length; i++) {
       rankkanfriends[i].seq = i + 1;
     }
 
-    this.setData({ kanprice: kanprice, kanfriends: kanfriends, rankkanfriends: rankkanfriends});
+    this.setData({ kanprice: kanprice, kanfriends: kanfriends, rankkanfriends: rankkanfriends, timekanfriends:timekanfriends});
   },
   /**
    * 生命周期函数--监听页面显示
