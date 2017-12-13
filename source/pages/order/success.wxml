@@ -1,0 +1,56 @@
+<!--pages/order/index.wxml-->
+<view style='background-color:rgba(0,0,0, 0.1);' class="abs">
+<image src='../../images/brilliant.png' wx:if="{{showBrilliant}}" class="abs brilliant" style='opacity: 0.85;'></image>
+<view class="abs">
+ <image src='../../images/success.png' style='width:65%; border-radius:1vh;margin-top:20%;text-align:center;'></image>
+</view>
+
+<!--gongxi-->
+<view class="abs" style="top:6.5%;height:50px;margin-left:28%;margin-right:28%;">
+   <view class="gongxi flex-row" style="width:65%;">
+    <view class="leftline">
+       
+    </view>
+    <view class="round"></view>
+    <text class="gxtext">恭喜你</text>
+    <view class="round"></view>
+    <view class="rightline">
+      
+    </view>
+   </view>
+ </view>
+
+    <!--Close-->
+      <view class='abs' style='margin:10% 15% 0 16.5%; width:68.3%; height:50px; text-align:right; '>
+      <image src='../../images/icons/close-empty.png'  class='img-3'  bindtap='close'></image>
+      </view>
+      <view class='abs' style='margin:16% 0 0 0; width:82.3%; height:19px; text-align:right;border-right:1px; border-right-color:rgba(255,255,255, 0.6); border-right-style:solid; '>
+      </view>
+
+<!--Information-->
+   <view class="abs information" style="top:41.5%;">
+    <view class="head">
+      <text>成功帮好友砍掉</text>
+    </view>
+    <view class="body">
+    <text class='font-60'>￥</text>
+      <text>0.54</text>
+    </view>
+    <view class="footer" wx:if="{{isNewUser}}">
+      <text>+</text>
+      <text class='font-60'>￥</text>
+      <text>0.03</text>
+      <text>(新用户额外砍价)</text>
+    </view>
+   </view>
+
+<!--Button-->
+  <view class="abs" style="top:62.5%;">
+  <view class="flex-row" style="margin-left:17.5%; margin-right:17.5%;">
+<button class="cstbutton" wx:if="{{!allowCutAgain}}" bindtap="close" plain="true" size="mini">我知道了</button>
+<button class="cstbutton"  wx:if="{{!allowCutAgain}}" style="background-color:rgb(243, 149, 73);" bindtap="close"  size="mini">发起我的砍价</button>
+<button class="cstbutton"  wx:if="{{allowCutAgain}}" style="background-color:rgb(243, 149, 73);" bindtap="close" size="mini">帮TA多砍</button>
+</view> 
+</view>
+
+</view>

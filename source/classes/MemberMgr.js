@@ -10,6 +10,9 @@ class MemberMgr {
     };
     return member;
   }
+  static getDefaultDeliveryAddress(id){
+    return {name:"夏黑",contact:"18888888888",address:"宁夏自治区广东人不会打字"};
+  }
 }
 
 module.exports = MemberMgr;

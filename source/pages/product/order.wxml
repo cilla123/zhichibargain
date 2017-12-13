@@ -1,0 +1,99 @@
+<!--pages/product/order.wxml-->
+<view class='flex-row padding-2 white primary' style='padding-top:1.5vh;padding-bottom:1.5vh;'>
+  <view style='margin-right:1vh;margin-top:-0.3vh' class='font-75'>
+    <text class=' fa fa-exclamation-circle ' style=''></text>
+  </view>
+  <text class=' font-65'>提交订单后，砍价商品价格确定，不可继续砍价。</text>
+</view>
+
+<view class='flex-row padding-4 white' style='margin-top:2px'>
+  <view class='flex-1'>
+    <image src='{{product.img}}' style='width:13vw;height:13vw;border-radius:1vh;'></image>
+  </view>
+  <view class='flex-8' style='padding-left:2vh;padding-right:2vh;'>
+    <view class='no-margin'>
+      <text class='font-80'>{{product.title}}</text>
+    </view>
+    <view style='margin-top:1vh;'>
+      <text class='primary font-90'>￥{{product.oriprice-kanprice}}</text><text class="font-60 through-line light" style='margin-left:2vh;'>￥{{product.oriprice}}</text>
+    </view>
+  </view>
+  <view class='flex-1 font-70 text-right no-margin' style='margin-top:5vh;'>
+    <text>x 1</text>
+  </view>
+</view>
+
+<view class='flex-row white' style='margin-top:2px'>
+  <view  class='block block-radius font-70'  style='background:#E9E7E8;width:100%'>
+  <textarea style='height:12vh;'
+  value="{{comment}}" placeholder='买家留言' maxlength="30" bindinput='commentChange' ></textarea>
+  <view class='text-right no-margin light'>
+    <text>{{comment.length}}/30</text>
+  </view>
+  </view>
+</view>
+
+<view class='flex-row padding-2 white' style='margin-top:2px;padding-top:1vh;padding-bottom:1vh;' >
+  <view bindtap='changeDeliveryType' id="express">
+    <text class='fa fa-check-circle font-90 {{deliverytype!="express"?"whitelight":""}}' ></text>
+    <text class='font-85' style='margin-left:1vh;'>快递</text>
+  </view>
+  <view style='margin-left:6vh;' bindtap='changeDeliveryType' id="self" wx:if="{{selfdeliveryposition.address!=undefined}}">
+    <text class='fa fa-check-circle font-90 {{deliverytype!="self"?"whitelight":""}}' ></text>
+    <text class='font-85' style='margin-left:1vh;'>上门自提</text>
+  </view>
+  
+</view>
+<view class=' padding-2 white font-85' style='margin-top:2px' wx:if='{{deliverytype=="express"}}'>
+    <view class='flex-row'>
+      <view>{{delivery.name}}</view>
+      <view style='margin-left:2vh;'>{{delivery.contact}}</view>
+    </view>
+    <view class='flex-row'>
+      <view class='flex-12'>{{delivery.address}}</view>
+      <view class='flex-1 text-right font-120'><text class='fa fa-angle-right'></text></view>
+    </view>
+</view>
+<view class=' padding-2 white font-85' style='margin-top:2px' wx:if='{{deliverytype=="self"}}'>
+    <view class='flex-row' style='margin-top:1vh'>
+      <view ><text class="fa fa-map-marker"></text></view>
+      <view style='margin-left:1vh;'>{{selfdeliveryposition.address}}</view>
+    </view>
+    <view class='flex-row' style='margin-top:2vh'>
+      <view><text class="fa fa-phone"></text></view>
+      <view style='margin-left:1vh;'>{{selfdeliveryposition.contact}}</view>
+    </view>
+    <view  style='margin-top:2vh'>
+      <text class='light font-80'>亲，勾选上门店自提，需要自己去门店取货哦！</text>
+    </view>
+</view>
+<view class='flex-row padding-2 white font-85' style='margin-top:2px' >
+  <view class='flex-1'>商品金额</view>
+  <view class='flex-1 primary text-right'>￥{{product.oriprice-kanprice}}</view>
+</view>
+<view class='flex-row padding-2 white font-85' style='margin-top:2px' >
+  <view class='flex-1'>活动优惠：砍价</view>
+  <view class='flex-1 text-right'>-￥{{kanprice}}</view>
+</view>
+<view class='flex-row padding-2 white font-85' style='margin-top:2px' >
+  <view class='flex-1'>运费</view>
+  <view class='flex-1 text-right'>￥{{deliverytype=="express"||product.deliveryamount>0?product.deliveryamount:"0"}}</view>
+</view>
+<view class='flex-row padding-2 white font-85' style='margin-top:2px' >
+  <view class='flex-1'>补充信息</view>
+  <view class='flex-1 text-right'>
+    <text class='fa fa-angle-right font-120'></text>
+  </view>
+</view>
+
+<view style='height:15vh;'></view>
+
+<view class='weui-footer_fixed-bottom flex-row font-80' style='bottom:0'>
+    <view class='flex-7  padding-2 ' style='background:white' >
+      <text>立即下单</text>
+      <text class='primary'>￥{{product.oriprice-kanprice}}</text>
+    </view>
+    <view class='flex-3 text-center padding-2 font-white' style='background:#FF6633'>
+      <text>立即下单</text>
+    </view>
+</view>

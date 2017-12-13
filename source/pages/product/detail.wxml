@@ -173,7 +173,7 @@
 
     <view class='padding-2 border-bottom flex-row' style='padding-top:4vh;padding-bottom:4vh;'>
       <view class='font-80 bold flex-1'>数量</view>
-      <view class='font-80 flex-2 text-right'><text>库存 {{product.reminder}} </text><i class="fa fa-minus back-light padding-1" bindtap="countminus"></i><text class='back-light ' style='padding-left:2vh;padding-right:2vh;padding-top:0.5vh;padding-bottom:0.7vh;margin-left:1px;margin-right:1px;'>{{count}}</text><i class="fa fa-plus back-light  padding-1"  bindtap="countplus"></i> </view>
+      <view class='font-80 flex-2 text-right'><text>库存 {{product.reminder}} </text><i class="fa fa-minus back-light padding-1" ></i><text class='back-light ' style='padding-left:2vh;padding-right:2vh;padding-top:0.5vh;padding-bottom:0.7vh;margin-left:1px;margin-right:1px;'>{{count}}</text><i class="fa fa-plus back-light  padding-1"  ></i> </view>
     </view>
 
     <view class='back-primary padding-2 text-center' bindtap='tryKanjia'>
@@ -198,8 +198,8 @@
       <text>恭喜{{broadcase.membername}}砍价成功，共砍掉<text class='primary'>{{broadcase.money}}</text>元</text>
     </view>
     <view class='flex-row ' style='width:20vw'>
-      <view style='' class='img-5 text-center' >
-        <image src='../../images/icons/contact.png' class='img-3'></image>
+      <view  class='img-5 text-center' >
+        <image src='../../images/icons/contact.png' class='img-3' ></image>
       </view>
       <view style='margin-left:2vh;' class='img-5 text-center' >
         <image src='../../images/icons/shop.png' class='img-3'></image>
@@ -336,7 +336,8 @@
       <view style='margin-right:2vh;'>
         <image src="../../images/icons/sword.png" class='img-3'></image>
       </view>
-      已有{{kanfriends.length}}位好朋友帮你砍价
+      <block wx:if="{{kanfriends.length>0}}">已有{{kanfriends.length}}位好朋友帮你砍价</block>
+      <block wx:else>暂无砍价记录</block>
       </view>
       <view wx:if="{{bangtype=='rank'}}" class='no-margin' style='padding-top:2vh;'>
         <block wx:for="{{rankkanfriends}}" wx:key="i">

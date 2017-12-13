@@ -149,6 +149,9 @@ background-color:#F2F2F2;
 .light{
   color:#aaa;
 }
+.whitelight{
+  color:#E9E7E8;
+}
 .bold{
   font-weight: bold;
 }
@@ -215,6 +218,9 @@ background-color:#F2F2F2;
 .padding-2{
   padding:2vh;
 }
+.padding-4{
+  padding:4vh;
+}
 
 .margin-2{
   margin:2vh;
@@ -222,4 +228,7 @@ background-color:#F2F2F2;
 
 .border-bottom{
   border-bottom: 1px solid #F2F2F2;
+}
+.through-line{
+  text-decoration: line-through;
 }

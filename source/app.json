@@ -1,8 +1,11 @@
 {
   "pages": [
+    "pages/product/order",
     "pages/product/detail",
     "pages/product/list",
     "pages/index/index",
+    "pages/order/index",
+    "pages/order/success",
     "pages/logs/logs"
   ],
   "window": {
