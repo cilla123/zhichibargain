@@ -33,8 +33,14 @@ const timecutting=n=>{
   //console.log(hour.toString() + "-"+minute.toString() + "-"+second.toString() );
   return {hour:hour,minute:minute,second:second,reminder:reminder};
 }
+const amountcutting=n=>{
+  var b=Number(n).toFixed(0);
+  var s ="."+ Number(n).toFixed(2).split(".")[1].substring(0,2);
+  return {b:b,s:s}
+}
 
 module.exports = {
   formatTime: formatTime,
-  timecutting: timecutting
+  timecutting: timecutting,
+  amountcutting: amountcutting
 }

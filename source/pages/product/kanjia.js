@@ -18,11 +18,41 @@ Page({
    */
   data: {
     member: {},
-    product: {id:0},
+    status: "N",
+    product: {},
+    kanfriends: [],
+    kanprice: 0,
     broadcase:{},
     addtocart: false,
     count:1,
-    selectedoptionstr:""
+    selectedoptionstr:"",
+    bangtype:"rank",
+    rankkanfriends:[],
+    showmorerankfriends: false,
+    timekanfriends: [],
+    showmoretimefriends: false,
+    scolltomiddle:false
+  },
+  scrollmonitor(e){
+    //console.log(e);
+    var scrolltop=e.detail.scrollTop;
+    var scolltomiddle=scrolltop>20;
+    if (this.data.scolltomiddle != scolltomiddle){
+      this.setData({ scolltomiddle: scolltomiddle});
+    }
+  },
+  changebangtype(e){
+    var bangtype=e.currentTarget.id;
+    this.setData({ bangtype: bangtype});
+  },
+  rankcheckmore(){
+    this.setData({ showmorerankfriends:true});
+  },
+  timecheckmore() {
+    this.setData({ showmoretimefriends: true });
+  },
+  tryKanjia(){
+    this.setData({ status: "P", addtocart: false});
   },
   countminus(){
     var count=this.data.count;
@@ -80,26 +110,22 @@ Page({
   onLoad: function (options) {
     var that=this;
     var id = options.id;
-    id=92;
     var member = MemberMgr.getMember();
     var app_id = MerchantMgr.getAppId();
 
 
     kanproductApi.detail({zhichiapp_id:app_id,member_id:member.id,id:id},function(data){
       var product = data;
-      
-      if(product.id==undefined){
-        wx.redirectTo({
-          url: 'list'
-        });
-        return;
-      }
-      console.log(data.detail.model);
+      var status = data.order_status;
       that.setData({ product: product, status: status });
       that.count(true);
       that.goroundtimer = setInterval(function () {
         that.count();
       }, 1000);
+      that.getKanPrice();
+      that.gokanpricetimer = setInterval(function () {
+        that.getKanPrice();
+      }, 10000);
     });
 
 
@@ -130,6 +156,34 @@ Page({
    */
   onReady: function () {
 
+  },
+  gokanpricetimer: null,
+  getKanPrice(){
+    this.ccc++;
+    var kanfriends = ProductMgr.getProductKanjiaFriends(this.data.member.id, this.data.product.id);
+    var kanprice = 0;
+
+    for(var i=0;i<kanfriends.length;i++){
+      kanprice += kanfriends[i].kanprice;
+    }
+
+    if (kanprice > (this.data.product.oriprice - this.data.product.lowprice)){
+      kanprice=(this.data.product.oriprice-this.data.product.lowprice);
+    }
+
+
+    var rankkanfriends=kanfriends.sort(function(a,b){
+      return a.kanprice<b.kanprice;
+    });
+    var timekanfriends = kanfriends.sort(function (a, b) {
+      return a.kanprice_date < b.kanprice_date;
+    });
+
+    for (var i = 0; i < rankkanfriends.length; i++) {
+      rankkanfriends[i].seq = i + 1;
+    }
+
+    this.setData({ kanprice: kanprice, kanfriends: kanfriends, rankkanfriends: rankkanfriends, timekanfriends:timekanfriends});
   },
   /**
    * 生命周期函数--监听页面显示

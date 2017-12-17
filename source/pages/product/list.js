@@ -2,7 +2,14 @@
 var MemberMgr = require("../../classes/MemberMgr.js");
 var ProductMgr = require("../../classes/ProductMgr.js");
 var StorageMgr = require("../../classes/StorageMgr.js");
+var MerchantMgr = require("../../classes/MerchantMgr.js");
 var Util = require("../../utils/util.js");
+
+
+var KanproductApi=require('../../apis/kanproduct.js');
+var kanproductApi=new KanproductApi();
+
+
 Page({
   /**
    * 页面的初始数据
@@ -38,6 +45,11 @@ Page({
       url: 'detail?id='+id,
     })
   },
+  gotoMyOrder(){
+    wx.navigateTo({
+      url: '../order/index',
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -51,28 +63,37 @@ Page({
     if(displaytype==""){
       displaytype="list";
     }
-
-    var items = ProductMgr.getProductList();
+    var app_id = MerchantMgr.getAppId();
+    kanproductApi.list({ zhichiapp_id: app_id,orderby:"seq desc,starttime"},function(data){
+      var items = data;
+      console.log(items);
+      that.setData({ items: items});
+      that.count(true);
+      that.goroundtimer = setInterval(function () {
+        that.count();
+      }, 1000);
+    });
+    
     var broadcase = ProductMgr.getProductKanjiaBroadcase();
 
-    that.setData({ member: member, items: items, displaytype: displaytype, broadcase: broadcase});
-    this.count();
-    this.goroundtimer=setInterval(function(){
-      that.count();
-    },1000);
+    that.setData({ member: member, displaytype: displaytype, broadcase: broadcase});
   },
-  count(){
+  count(amountcut=false){
     var that=this;
     var items = that.data.items;
     var ty = that.data.type;
     var activeitem = 0;
     for (var i = 0; i < items.length; i++) {
+      if (amountcut){
+        items[i].lowprice_str = Util.amountcutting(items[i].lowprice);
+      }
       items[i].starttime_s = Util.timecutting(items[i].starttime);
       items[i].endtime_s = Util.timecutting(items[i].endtime);
       if ((items[i].endtime_s.reminder > 0) && (ty == 'all' || (ty == 'going' && items[i].starttime_s.reminder < 0) || (ty == 'coming' && items[i].starttime_s.reminder > 0))) {
         activeitem++;
       }
     }
+    //console.log(items);
     that.setData({ items: items, activeitem: activeitem });
   },
   goroundtimer:null,
