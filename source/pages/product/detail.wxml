@@ -37,13 +37,18 @@
         
         <view class='no-margin text-right ' style='padding-left:1vh;padding-right:1vh;margin-top:-1vh;'>
             <text wx:if="{{product.starttime_s.reminder<0}}" class='font-white going-bg font-65 ' style='border-radius:3px;padding:0.5vh;'><text class='bg_no' wx:for="{{product.endtime_s.hour}}" wx:key="key" >{{item}}</text>时<text class='bg_no' wx:for="{{product.endtime_s.minute}}" wx:key="key">{{item}}</text>分<text class='bg_no' wx:for="{{product.endtime_s.second}}" wx:key="key">{{item}}</text>秒</text>
-            <text wx:if="{{product.starttime_s.reminder>0}}" class='font-white coming-bg font-65 ' style='border-radius:3px;padding:0.5vh;'><text class='bg_no' wx:for="{{product.starttime_s.hour}}" wx:key="key" wx:if="{{item!='0'}}">{{item}}</text>时<text class='bg_no' wx:for="{{product.starttime_s.minute}}" wx:key="key">{{item}}</text>分<text class='bg_no' wx:for="{{product.starttime_s.second}}" wx:key="key">{{item}}</text>秒</text>
+            <text wx:if="{{product.starttime_s.reminder>0}}" class='font-white coming-bg font-65 ' style='border-radius:3px;padding:0.5vh;'><text class='bg_no' wx:for="{{product.starttime_s.hour}}" wx:key="key" >{{item}}</text>时<text class='bg_no' wx:for="{{product.starttime_s.minute}}" wx:key="key">{{item}}</text>分<text class='bg_no' wx:for="{{product.starttime_s.second}}" wx:key="key">{{item}}</text>秒</text>
           </view>
       </view>
   </view>
 
-  <view class='flex-3 reminder text-center' style='background:url(../../images/bg2.png);background-size:100% 100%;margin-top:-1vh;padding-top:3vh;' wx:else>
-      <text class='light'>已结束</text>
+  <view class='flex-3 reminder text-center' style='background:url(../../images/bg3.png);background-size:100% 100%;margin-top:-1vh;' wx:else>
+  <view class='no-margin font-white' style='padding-left:5vh;'>
+      <text class='font-60' >活动剩余时间</text>
+      <view class='no-margin text-right ' style='padding-left:1vh;padding-right:1vh;margin-top:-1vh;'>
+            <text  class='font-white coming-bg font-65 ' style='border-radius:3px;padding:0.5vh;'><text class='bg_g' wx:for="{{'0000'}}" wx:key="key" >{{item}}</text>时<text class='bg_g' wx:for="{{'00'}}" wx:key="key">{{item}}</text>分<text class='bg_g' wx:for="{{'00'}}" wx:key="key">{{item}}</text>秒</text>
+          </view>
+      </view>
   </view>
 
 
@@ -71,19 +76,15 @@
   运费：{{product.expressset=="FREE"?"包邮":product.detail.express_fee}}
 </view>
 </view>
-<view class='white padding-2 border-bottom'>
+<view class='white padding-2 border-bottom' wx:if="{{product.endtime_s.reminder>0&&product.status=='A'}}">
   <view wx:if="{{product.starttime_s.reminder<0}}">
-      <view wx:if="{{kanjialist.length>0}}">
-        
-      </view>
-      <view class='text-center' wx:else>
+      <view class='text-center' >
           <view   >
             <text class='font-65 light '>暂无进行中的砍价</text>
           </view>
           <view style='margin-top:2vh'>
             <text bindtap='tryAddToCart' class='font-80' style='background:url(../../images/btn_red.png);background-size: 100% 100%;font-weight:bold;color:white;margin-top:2vh;padding-top:1.8vh;padding-bottom:3vh;padding-left:15vw;padding-right:15vw;border:0'>发起砍价</text>
           </view>
-          <button  size="mini"  ></button>
       </view>
   </view>
   <view wx:if="{{product.starttime_s.reminder>0}}">
@@ -94,6 +95,17 @@
     </view>
   </view>
 </view>
+<view class='white padding-2 border-bottom' wx:else>
+  <view >
+    <view class='text-center' >
+          <view style='margin-top:2vh'>
+            <text bindtap='tryAddToCart' class='font-80' style='background:#999999;background-size: 100% 100%;font-weight:bold;color:white;margin-top:2vh;padding-top:1.8vh;padding-bottom:2vh;padding-left:15vw;padding-right:15vw;border-radius:5vh;'>砍价活动已结束</text>
+          </view>
+      </view>
+  </view>
+</view>
+
+
 <view class='white padding-2 ' style='padding-top:1.5vh;padding-bottom:1.5vh;margin-top:1vh;'>
   <view class=' flex-row '>
     <view class='flex-1 font-85'>评价</view>
@@ -127,8 +139,8 @@
           <text class='font-60 light'>店铺</text>
         </view>
       </view>
-      <view class='flex-4 light' style='background:#f2f2f2;padding-top:1.5vh;'  wx:if="{{product.status!='A'}}">
-        <text class='font-80'>已结束</text>
+      <view class='flex-4 light font-white' style='background:#999999;padding-top:1.5vh;'  wx:if="{{product.status!='A'}}">
+        <text class='font-80'>砍价活动已结束</text>
       </view>
       <view class='flex-4 light' style='background:#f2f2f2;padding-top:1.5vh;'  wx:elif="{{product.starttime_s.reminder>0}}">
         <text class='font-80'>尚未开始</text>

@@ -50,3 +50,23 @@
   background-size:100% 100%;
   padding:2vh;
 }
+.avt .bar{
+  background: white;
+}
+.avt .ball{
+  background: white;
+}
+.avt .point{
+  background: red;
+}
+
+
+.dis .bar{
+  background: #999999;
+}
+.dis .ball{
+  background: #999999;
+}
+.dis .point{
+  background: white;
+}

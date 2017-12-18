@@ -32,7 +32,8 @@ Page({
     timekanfriends: [],
     showmoretimefriends: 0,
     scolltomiddle:false,
-    progressfix:70.0
+    progressfix:70.0,
+    inshare:true
   },
   scrollmonitor(e){
     //console.log(e);
@@ -53,6 +54,12 @@ Page({
   },
   timecheckmore() {
     this.setData({ showmoretimefriends: ++this.data.showmoretimefriends });
+  },
+  goInshare() {
+    this.setData({ inshare: true });
+  },
+  closeShare(){
+    this.setData({inshare:false});
   },
   /**
    * 生命周期函数--监听页面加载

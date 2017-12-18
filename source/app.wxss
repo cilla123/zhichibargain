@@ -146,6 +146,9 @@ background-color:#F2F2F2;
 .font-50{
   font-size: 50%;
 }
+.blacklight{
+  color:#999999;
+}
 .light{
   color:#aaa;
 }

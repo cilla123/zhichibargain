@@ -27,14 +27,16 @@
 </view>
 
 <view class='bottomorder flex-row font-75' wx:if="{{scolltomiddle==true}}">
-    <view class='flex-6 text-center padding-2 ' style='background:#FDA14C' wx:if="{{member.id==order.member.id}}">
+    <view class='flex-6 text-center padding-2 ' style='background:#FDA14C'  bindtap='gotoTryPay'  wx:if="{{product.starttime_s.reminder<0&&product.endtime_s.reminder>0&&product.status=='A'}}">
       <text>现价￥{{product.oriprice-kanprice}}立即下单</text>
     </view>
-    <view class='flex-4 text-center padding-2' style='background:#FF6633'>
+    <view class='flex-4 text-center padding-2' style='background:#FF6633' bindtap='goInshare' wx:if="{{product.starttime_s.reminder<0&&product.endtime_s.reminder>0&&product.status=='A'}}">
       <text>找人帮砍</text>
     </view>
+    <view class='flex-4 text-center padding-2 font-white' style='background:#999999'  wx:if="{{(product.starttime_s.reminder<0&&product.endtime_s.reminder>0&&product.status=='A')==false}}">
+      <text>砍价活动已结束</text>
+    </view>
 </view>
-
 
 <scroll-view scroll-y style="height: {{scolltomiddle?'93':'100'}}vh;" bindscroll="scrollmonitor">
   <view class='broadcast font-65 flex-row padding-2' wx:if="{{broadcase.money>0}}" style="color:black" >
@@ -65,7 +67,7 @@
         <image src='{{order.member.photo}}' class='img-5' style='border-radius:5vh;'></image>
       </view>
       <view class='font-70' style='margin-top:0.5vh;margin-left:1vh;'>
-        <text style='color:#FDEC8E;text-overflow:ellipsis;'>{{order.member.name}}</text><text>正在砍价</text>
+        <text style='color:#FDEC8E;text-overflow:ellipsis;'>{{order.member.shortname}}</text><text>正在砍价</text>
       </view>
     </view>
   </view>
@@ -91,7 +93,7 @@
         <image src="../../images/icons/bolt.png" class='img-2'></image>
       </view>
       <view class='font-75' style='margin-top:1vh;margin-left:1.5vh;'>活动时间仅剩：</view>
-      <view style='color:black' wx:if="{{product.starttime_s.reminder<0&&product.endtime_s.reminder>0&&status=='P'}}">
+      <view style='color:black' wx:if="{{product.starttime_s.reminder<0&&product.endtime_s.reminder>0&&product.status=='A'&&status=='P'}}">
       <text wx:if="{{product.starttime_s.reminder<0}}" class='going-bg font-65 ' style='border-radius:3px;padding:0.5vh;'><text class='bg_p' wx:for="{{product.endtime_s.hour}}" wx:key="key" >{{item}}</text>时<text class='bg_p' wx:for="{{product.endtime_s.minute}}" wx:key="key">{{item}}</text>分<text class='bg_p' wx:for="{{product.endtime_s.second}}" wx:key="key">{{item}}</text>秒</text>
       </view>
       <view style='color:black' wx:else>
@@ -101,8 +103,8 @@
   </view>
 
   <view >
-    <view class="flex-row" style='margin-top:4vh;margin-bottom:0.5vh;padding-left:4vh;margin-left:{{kanprice*progressfix/(product.oriprice-product.lowprice)+2}}vw;'>
-        <view class='flex-row primary' style='height:4vh;background-image:url(../../images/button_tran.png);background-size:100% 100%;padding:0.5vh;margin-bottom:1vh;'>
+    <view class="flex-row {{product.starttime_s.reminder<0&&product.endtime_s.reminder>0&&product.status=='A'&&status=='P'?'primary':'blacklight'}}" style='margin-top:4vh;margin-bottom:0.5vh;padding-left:4vh;margin-left:{{kanprice*progressfix/(product.oriprice-product.lowprice)+2}}vw;'>
+        <view class="flex-row  " style='height:4vh;background-image:url(../../images/button_tran.png);background-size:100% 100%;padding:0.5vh;margin-bottom:1vh;'>
         <view >
           <image src='{{order.member.photo}}' class='img-4' style='border-radius:2vh;margin-top:-1px;margin-left:-1px;'></image>
         </view>
@@ -110,10 +112,10 @@
             <text class='font-90' style='margin-top:-0.5vh;margin-right:2vh;'>{{kanprice_str.b}}<text class='font-70'>{{kanprice_str.s}}</text></text>
         </view>
     </view>
-    <view  style='margin-left:10vh;margin-right:10vh;height:2.5vh;background:#FFA566;border-radius:1.25vh;'>
-      <view style='background:white;height:100%;width:{{kanprice*100.0/(product.oriprice-product.lowprice)}}%;border-top-left-radius:1.25vh;border-bottom-left-radius:1.25vh;{{kanprice*100.0/(product.oriprice-product.lowprice)>=99.5?"border-top-right-radius:1.25vh;border-bottom-right-radius:1.25vh;":""}}'>
-        <view style='position:absolute;height:4vh;width:4vh;background:white;border-radius:2vh;margin-top:-0.8vh;margin-left:10vh;left:{{kanprice*63.0/(product.oriprice-product.lowprice)}}vw'>
-          <view style='width:1vh;height:1vh;border-radius:0.5vh;background:red;margin-top:1.5vh;margin-left:1.5vh;'>
+    <view class="{{product.starttime_s.reminder<0&&product.endtime_s.reminder>0&&product.status=='A'&&status=='P'?'avt':'dis'}}" style='margin-left:10vh;margin-right:10vh;height:2.5vh;background:#FFA566;border-radius:1.25vh;'>
+      <view class='bar' style='height:100%;width:{{kanprice*100.0/(product.oriprice-product.lowprice)}}%;border-top-left-radius:1.25vh;border-bottom-left-radius:1.25vh;{{kanprice*100.0/(product.oriprice-product.lowprice)>=99.5?"border-top-right-radius:1.25vh;border-bottom-right-radius:1.25vh;":""}}'>
+        <view class='ball' style='position:absolute;height:4vh;width:4vh;border-radius:2vh;margin-top:-0.8vh;margin-left:10vh;left:{{kanprice*63.0/(product.oriprice-product.lowprice)}}vw'>
+          <view class='point' style='width:1vh;height:1vh;border-radius:0.5vh;margin-top:1.5vh;margin-left:1.5vh;'>
           </view>
         </view>
       </view>
@@ -122,20 +124,21 @@
         <view class='flex-1'>￥{{product.oriprice}}</view>
         <view class='flex-1 text-right'>￥<text>{{product.lowprice}}</text></view>
     </view>
-    <view  class='flex-row ' style='margin-top:3vh;' wx:if="{{member.id==order.member.id}}">
+    <view  class='flex-row ' style='margin-top:3vh;' wx:if="{{product.starttime_s.reminder<0&&product.endtime_s.reminder>0&&product.status=='A'}}">
       <view class="flex-1 text-right">
         <text class='font-80 bold' style='color:white;border:1px solid white;border-radius:4vh;padding:2vh;padding-left:4vh;padding-right:4vh;margin-right:1vh;' bindtap='gotoTryPay' >立即下单</text>
       </view>
       <view class="flex-1">
-        <text class='font-80 bold' style='background:url(../../images/bg_gold.png);color:#CD5602;background-size:100% 100%;border-radius:4vh;padding:2vh;padding-left:4vh;padding-right:4vh;margin-left:1vh;' >找人帮砍</text>
+        <text class='font-80 bold' style='background:url(../../images/bg_gold.png);color:#CD5602;background-size:100% 100%;border-radius:4vh;padding:2vh;padding-left:4vh;padding-right:4vh;margin-left:1vh;' bindtap='goInshare'>找人帮砍</text>
       </view>
     </view>
     <view  class='text-center ' style='margin-top:3vh;' wx:else   >
-      <text class='font-80 bold' style='background:url(../../images/bg_gold.png);color:#CD5602;background-size:100% 100%;border-radius:4vh;padding:2vh;padding-left:4vh;padding-right:4vh;margin-left:1vh;' >找人帮砍</text>
+        <text class='font-80 bold' style='background:#999999;color:white;border-radius:4vh;padding:2vh;padding-left:4vh;padding-right:4vh;margin-right:1vh;' >砍价活动已结束</text>
     </view>
 
-    <view  class=' text-center' style='margin-top:2vh;'>
-      <text class='font-65'>新用户可看下更多金额哦</text>
+    <view  class=' text-center' style='margin-top:2vh;' wx:if="{{product.extrakan!='N'}}">
+      <text class='font-65' wx:if="{{product.extrakan=='C'}}">新用户可看下更多金额哦</text>
+      <text class='font-65' wx:if="{{product.extrakan=='N'}}">好友绑定手机，砍价金额可能翻倍哦</text>
     </view>
     <view  class='flex-row ' style='padding-left:5vh;padding-right:5vh;margin-top:5vh;' >
       <view class='flex-3 '  style="margin-right:2vh;">
@@ -239,4 +242,43 @@
   </view>
 
 </scroll-view>
+</view>
+
+
+
+
+
+
+
+<view style='position:absolute;left:0;top:0;height:100vh;width:100vw;' wx:if="{{inshare==true}}">
+  <view style='height:100vh;width:100vw;background:black;opacity: 0.7;' bindtap='closeShare'>
+  </view>
+  <view style='position:absolute;left:0;top:0;width:100vw;' >
+    <image style='width:74vw;height:120vw;margin-left:13vw;margin-top:5vh;' src="../../images/1.png"></image>
+  </view>
+  <view style='position:absolute;left:30vw;top:30vh;width:100vw;' >
+    <view class='flex-row font-white' style='padding-top:2vh;'>
+      <view >
+        <image src='{{order.member.photo}}' class='img-3' style='border-radius:5vh;'></image>
+      </view>
+      <view class='font-60' style='margin-top:0.8vh;margin-left:1vh;'>
+        <text style='color:#FDEC8E;text-overflow:ellipsis;'>{{order.member.shortname}}</text><text>正在砍价</text>
+      </view>
+    </view>
+  </view>
+  <view style='position:absolute;left:18vw;top:36.5vh;width:100vw;' >
+    <view class='flex-row ' style='padding-top:2vh;'>
+      <view>
+        <image src="{{product.cover}}"  style='width:18vw;height:18vw;border-radius:1vh;'></image>
+      </view>
+      <view style='margin-left:2vh'>
+        <view class='font-70'>{{product.title}}</view>
+        <view  style='margin-left:4vh;color:#FDEC8E;margin-top:3vh'>
+          <text class='font-60' >￥</text>
+          <text  >{{product.lowprice_str.b}}<text class='font-80'>{{product.lowprice_str.s}}</text></text>
+          <text class='font-white font-60' style='right:3vh;'>{{product.oriprice}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
 </view>

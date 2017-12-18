@@ -29,6 +29,12 @@
   padding:2px;
   border-radius: 2px;
 }
+.bg_g{
+  background: #939393;
+  margin-right:2px;
+  padding:2px;
+  border-radius: 2px;
+}
 .bg_p{
   background: #FE594A;
   color:white;

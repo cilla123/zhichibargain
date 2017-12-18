@@ -91,12 +91,12 @@ Page({
     kanorderApi.order(json, function (data) {
       if (data.code != "0") {
         wx.showModal({
-          title: '提示',
+          title: '发起砍价失败',
           content: data.result,
           showCancel: false
         });
       } else {
-        wx.redirectTo({
+        wx.navigateTo({
           url: 'kanjia?id=' + data.return,
         })
       }
@@ -111,7 +111,7 @@ Page({
   onLoad: function (options) {
     var that=this;
     var id = options.id;
-    //id=13;
+    //id=8;
     var member = MemberMgr.getMember();
     var app_id = MerchantMgr.getAppId();
 
