@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/product/kanjia",
     "pages/product/detail",
     "pages/product/list",
     "pages/index/index",

@@ -6,6 +6,7 @@ class MemberMgr {
     var member={
       id:1,
       name: "小黑妹",
+      mobile: "13751082562",
       photo: "../../images/product.png"
     };
     return member;

@@ -6,7 +6,10 @@ var MerchantMgr = require("../../classes/MerchantMgr.js");
 
 
 var KanproductApi = require('../../apis/kanproduct.js');
-var kanproductApi = new KanproductApi();
+var kanproductApi = new KanproductApi();        
+
+var KanorderApi = require('../../apis/kanorder.js');
+var kanorderApi=new KanorderApi();
 
 var Util = require("../../utils/util.js");
 
@@ -23,6 +26,9 @@ Page({
     addtocart: false,
     count:1,
     selectedoptionstr:""
+  },
+  tryKanjia(){
+    
   },
   countminus(){
     var count=this.data.count;
@@ -46,30 +52,55 @@ Page({
     var optionid = id[0];
     var optionvalue = id[1];
 
-    for(var i=0;i<product.specs.length;i++){
-      if (product.specs[i].id==optionid){
-        product.specs[i].value = optionvalue;
+    for (var i in product.detail.model) {
+      
+      var options = [];
+      if (product.detail.model[i].id == optionid){
+        product.detail.model[i].value = optionvalue;
       }
+    
     }
+
     this.setData({ product: product });
     this.updateselectedoptionstr();
   },
   updateselectedoptionstr(){
     var selectedoptionstr="";
     var product = this.data.product;
-    for (var i = 0; i < product.specs.length; i++) {
-      if (product.specs[i].value!="") {
-        for (var j = 0; j < product.specs[i].options.length;j++){
-          if (product.specs[i].value == product.specs[i].options[j].value){
-            selectedoptionstr += '"' + product.specs[i].options[j].display+'"';
+    for (var i in product.detail.model) {
+      if (product.detail.model[i].value != "") {
+        for (var j = 0; j < product.detail.model[i].subModelId.length; j++) {
+          if (product.detail.model[i].value == product.detail.model[i].options[j].value) {
+            selectedoptionstr += '"' + product.detail.model[i].options[j].display + '"';
           }
         }
       }
     }
+    
     this.setData({ selectedoptionstr: selectedoptionstr });
   },
   tryAddToCart(){
-    this.setData({addtocart:true});
+
+    var json = {
+      member_id: this.data.member.id,
+      membername: this.data.member.name,
+      membermobile: this.data.member.mobile,
+      zhichiapp_id: MerchantMgr.getAppId(),
+      product_id: this.data.product.id
+    };
+    kanorderApi.order(json, function (data) {
+      if (data.code != "0") {
+        wx.showModal({
+          title: '提示',
+          content: data.result,
+          showCancel: false
+        });
+      } else {
+        wx.redirectTo({
+          url: 'kanjia?id=' + data.return,
+        })
+      }
+    });
   },
   closeAddToCart() {
     this.setData({ addtocart: false });
@@ -80,7 +111,7 @@ Page({
   onLoad: function (options) {
     var that=this;
     var id = options.id;
-    id=92;
+    //id=13;
     var member = MemberMgr.getMember();
     var app_id = MerchantMgr.getAppId();
 
@@ -93,10 +124,21 @@ Page({
           url: 'list'
         });
         return;
+      } 
+      product.lowprice_str = Util.amountcutting(product.lowprice);
+      for (var i in product.detail.model) {
+        console.log(product.detail.model[i].subModelId);
+        var options = [];
+        for (var j = 0; j < product.detail.model[i].subModelId.length; j++) {
+          options.push({ display: product.detail.model[i].subModelName[j], value: product.detail.model[i].subModelId[j] });
+        }
+        product.detail.model[i].options = options;
+        product.detail.model[i].value = "";
       }
-      console.log(data.detail.model);
+      
+      console.log(product.detail.model);
       that.setData({ product: product, status: status });
-      that.count(true);
+      that.count();
       that.goroundtimer = setInterval(function () {
         that.count();
       }, 1000);
@@ -109,12 +151,10 @@ Page({
 
   },
   goroundtimer:null,
-  count(amountcut=false) {
+  count() {
     var that = this;
     var product = that.data.product;
-    if(amountcut){
-      product.lowprice_str = Util.amountcutting(product.lowprice);
-    }
+    
     var activeitem = 0;
     product.starttime_s = Util.timecutting(product.starttime);
     product.endtime_s = Util.timecutting(product.endtime);

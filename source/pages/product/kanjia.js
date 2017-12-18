@@ -17,21 +17,22 @@ Page({
    * status: N:未发起砍价
    */
   data: {
+    id:0,
     member: {},
-    status: "N",
+    order:{},
+    status: "E",
     product: {},
     kanfriends: [],
     kanprice: 0,
+    kanprice_str: {b:"0","s":".00"},
     broadcase:{},
-    addtocart: false,
-    count:1,
-    selectedoptionstr:"",
     bangtype:"rank",
     rankkanfriends:[],
-    showmorerankfriends: false,
+    showmorerankfriends: 0,
     timekanfriends: [],
-    showmoretimefriends: false,
-    scolltomiddle:false
+    showmoretimefriends: 0,
+    scolltomiddle:false,
+    progressfix:70.0
   },
   scrollmonitor(e){
     //console.log(e);
@@ -46,63 +47,12 @@ Page({
     this.setData({ bangtype: bangtype});
   },
   rankcheckmore(){
-    this.setData({ showmorerankfriends:true});
+    console.log(this.data.showmorerankfriends);
+    this.setData({ showmorerankfriends: ++this.data.showmorerankfriends });
+    console.log(this.data.showmorerankfriends);
   },
   timecheckmore() {
-    this.setData({ showmoretimefriends: true });
-  },
-  tryKanjia(){
-    this.setData({ status: "P", addtocart: false});
-  },
-  countminus(){
-    var count=this.data.count;
-    count--;
-    if(count<1){
-      count=1;
-    }
-    this.setData({count:count});
-  },
-  countplus() {
-    var count = this.data.count;
-    count++;
-    if (count >this.data.product.reminder) {
-      count = this.data.product.reminder;
-    }
-    this.setData({ count: count });
-  },
-  optionSelect(e){
-    var product=this.data.product;
-    var id=e.currentTarget.id.split("_");
-    var optionid = id[0];
-    var optionvalue = id[1];
-
-    for(var i=0;i<product.specs.length;i++){
-      if (product.specs[i].id==optionid){
-        product.specs[i].value = optionvalue;
-      }
-    }
-    this.setData({ product: product });
-    this.updateselectedoptionstr();
-  },
-  updateselectedoptionstr(){
-    var selectedoptionstr="";
-    var product = this.data.product;
-    for (var i = 0; i < product.specs.length; i++) {
-      if (product.specs[i].value!="") {
-        for (var j = 0; j < product.specs[i].options.length;j++){
-          if (product.specs[i].value == product.specs[i].options[j].value){
-            selectedoptionstr += '"' + product.specs[i].options[j].display+'"';
-          }
-        }
-      }
-    }
-    this.setData({ selectedoptionstr: selectedoptionstr });
-  },
-  tryAddToCart(){
-    this.setData({addtocart:true});
-  },
-  closeAddToCart() {
-    this.setData({ addtocart: false });
+    this.setData({ showmoretimefriends: ++this.data.showmoretimefriends });
   },
   /**
    * 生命周期函数--监听页面加载
@@ -110,24 +60,42 @@ Page({
   onLoad: function (options) {
     var that=this;
     var id = options.id;
+    id=18;
     var member = MemberMgr.getMember();
     var app_id = MerchantMgr.getAppId();
 
+    var KanorderApi = require('../../apis/kanorder.js');
+    var kanorderApi = new KanorderApi();
 
-    kanproductApi.detail({zhichiapp_id:app_id,member_id:member.id,id:id},function(data){
-      var product = data;
-      var status = data.order_status;
-      that.setData({ product: product, status: status });
-      that.count(true);
+    kanorderApi.detail({id:id,zhichiapp_id:app_id},function(data){
+      if (data.id == undefined) {
+        wx.redirectTo({
+          url: 'list'
+        });
+        return;
+      }
+      var order=data;
+      var id=data.id;
+      console.log(id);
+      var status=data.status;
+
+      var product=data.product;
+      //product.oriprice = 1000;
+      //product.lowprice = 990;
+      product.lowprice_str = Util.amountcutting(product.lowprice);
+
+      order.member=member;
+
+      that.setData({ product: product, status: status, id: id, order:order });
+
+
+      that.count();
       that.goroundtimer = setInterval(function () {
         that.count();
       }, 1000);
-      that.getKanPrice();
-      that.gokanpricetimer = setInterval(function () {
-        that.getKanPrice();
-      }, 10000);
-    });
 
+      that.getKanPrice();
+    });
 
     var broadcase = ProductMgr.getProductKanjiaBroadcase();
 
@@ -135,12 +103,9 @@ Page({
 
   },
   goroundtimer:null,
-  count(amountcut=false) {
+  count() {
     var that = this;
     var product = that.data.product;
-    if(amountcut){
-      product.lowprice_str = Util.amountcutting(product.lowprice);
-    }
     var activeitem = 0;
     product.starttime_s = Util.timecutting(product.starttime);
     product.endtime_s = Util.timecutting(product.endtime);
@@ -150,6 +115,11 @@ Page({
       , s: new Date(product.starttime).getTime()});
 
       
+  },
+  gotoTryPay(){
+      wx.navigateTo({
+        url: 'order?id='+this.data.id,
+      })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -183,7 +153,7 @@ Page({
       rankkanfriends[i].seq = i + 1;
     }
 
-    this.setData({ kanprice: kanprice, kanfriends: kanfriends, rankkanfriends: rankkanfriends, timekanfriends:timekanfriends});
+    this.setData({ kanprice: kanprice, kanprice_str: Util.amountcutting(kanprice), kanfriends: kanfriends, rankkanfriends: rankkanfriends, timekanfriends:timekanfriends});
   },
   /**
    * 生命周期函数--监听页面显示

@@ -36,6 +36,14 @@
   padding:2px;
   border-radius: 2px;
 }
+.bg_g{
+  
+  background: #919191;
+  color:white;
+  margin-right:2px;
+  padding:2px;
+  border-radius: 2px;
+}
 .btnOrange{
   margin-left:30vw;
   margin-right:30vw;

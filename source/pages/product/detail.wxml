@@ -56,7 +56,7 @@
 <view class='white padding-2 border-bottom'>
 <view class=' flex-row '>
   <view class='flex-8 font-85'>
-    <text>{{product.title}}</text>
+    <text>{{product.detail.title}}</text>
   </view>
   <view class='flex-1 text-right no-margin'>
     <view>
@@ -100,7 +100,7 @@
     <view class='flex-1 text-right light font-70'><i class="fa fa-chevron-right"></i></view>
   </view>
 </view>
-<view class='white border-bottom' style='padding-top:1.5vh;padding-bottom:1.5vh;margin-top:1vh;'>
+<view class='white  padding-2 border-bottom' style='padding-top:1.5vh;padding-bottom:1.5vh;margin-top:1vh;'>
   <view class=' flex-row '>
     <view class='flex-1 font-85'>商品详情</view>
     <view class='flex-1 text-right light font-70'><i class="fa fa-chevron-right"></i></view>
@@ -109,7 +109,7 @@
 
 </scroll-view>
 
-<view class="weui-footer_fixed-bottom white no-margin text-center" >
+<view class="weui-footer_fixed-bottom white no-margin text-center" style='bottom:0.45em' >
      <view class='flex-row'>
       <view class='flex-1 padding-1' style='border-right:1px solid #f2f2f2;'>
         <view style='margin-bottom:-15px;'>
@@ -144,16 +144,20 @@
 
 </view>
 
+
+
+
+
 <view style='position:absolute;left:0;top:0;height:100vh;width:100vw;' wx:if="{{addtocart==true}}">
   <view style='height:100vh;width:100vw;background:black;opacity: 0.7;' bindtap='closeAddToCart'>
   </view>
   <view class='weui-footer_fixed-bottom white no-margin ' style='margin-bottom:-1.6vh;' >
     <view class='flex-row  padding-2 border-bottom'>
       <view class='flex-2'>
-      <image src='{{product.img}}' style='width:18vh;height:18vh;border-radius:1vh;margin-top:-8vh;'></image>
+      <image src='{{product.detail.cover}}' style='width:18vh;height:18vh;border-radius:1vh;margin-top:-8vh;'></image>
       </view>
       <view class='padding-2 no-margin flex-12'  style='margin-top:-2vh;'>
-        <view class='no-margin font-80'>{{product.title}}</view>
+        <view class='no-margin font-80'>{{product.detail.title}}</view>
         <view class='primary'>
           <text class='font-60'>￥</text><text class='font-80'>{{product.lowprice_str.b}}<text class='font-70'>{{product.lowprice_str.s}}</text></text>
         </view>
@@ -164,11 +168,11 @@
       <view class='text-right flex-1' style='margin-top:-1vh;'  bindtap='closeAddToCart'><image src='../../images/icons/close-empty.png'  class='img-3'></image>
       </view>
     </view>
-    <block wx:for="{{product.specs}}" wx:key="index">
+    <block wx:for="{{product.detail.model}}" wx:key="index">
     <view class='padding-2 border-bottom'>
       <view class='font-80 bold'>{{item.name}}</view>
       <view class='flex-row' style='margin-top:1vh;'>
-        <block  wx:for="{{item.options}}" wx:for-item="option" wx:for-index="opt">
+        <block  wx:for="{{item.options}}" wx:for-item="option" wx:for-index="opt" wx:key="indexopt">
           <view class='{{item.value==option.value?"back-primary":"back-light"}} padding-2' style='margin-right:2vh;padding-top:0.5vh;padding-bottom:0.5vh;border-radius:1vh;' bindtap='optionSelect' id="{{item.id}}_{{option.value}}" >
             <text class='font-75' >{{option.display}}</text>
           </view>

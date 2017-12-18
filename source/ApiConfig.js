@@ -3,6 +3,7 @@ class APIConfig{
   UploadFolderUrl = "https://cmsdev.app-link.org/alucard263096/zhichibargain/upload";//上传文件的存储路径
   FileUploadUrl ="https://cmsdev.app-link.org/alucard263096/zhichibargain/fileupload";//文件上传接口
   //显示loading相关的代码
+  showLoadingCounter=0;
   ShowLoading=function(){
     if (this.showLoadingCounter==0){
       wx.showLoading({
