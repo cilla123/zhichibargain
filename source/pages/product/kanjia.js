@@ -8,6 +8,9 @@ var MerchantMgr = require("../../classes/MerchantMgr.js");
 var KanproductApi = require('../../apis/kanproduct.js');
 var kanproductApi = new KanproductApi();
 
+var KanorderApi = require('../../apis/kanorder.js');
+var kanorderApi = new KanorderApi();
+
 var Util = require("../../utils/util.js");
 
 Page({
@@ -33,7 +36,10 @@ Page({
     showmoretimefriends: 0,
     scolltomiddle:false,
     progressfix:70.0,
-    inshare:true
+    inshare:false,
+    member_kanprice:"",
+    inkaning: false,
+    inkan: false
   },
   scrollmonitor(e){
     //console.log(e);
@@ -61,6 +67,27 @@ Page({
   closeShare(){
     this.setData({inshare:false});
   },
+  gokan(){
+    var that=this;
+    var member=this.data.member;
+    kanorderApi.kan({ order_id:this.data.id,member_id:member.id,
+    membername:member.name,memberphoto:member.photo,membermobile:member.mobile }, function (data) {
+      var inkaning=true;
+      var member_kanprice =data.kanprice;
+      var member_extraprice =data.extraprice;
+
+      that.setData({ inkaning: inkaning, member_kanprice: member_kanprice, member_extraprice: member_extraprice});
+      that.getKanPrice();
+      setTimeout(function(){
+        var inkaning = false;
+        var inkan = true;
+        that.setData({ inkaning: inkaning, inkan: inkan });
+      },3000);
+    });
+  },
+  close(){
+    this.setData({inkan:false});
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -74,6 +101,11 @@ Page({
     var KanorderApi = require('../../apis/kanorder.js');
     var kanorderApi = new KanorderApi();
 
+    kanorderApi.getmykanprice({member_id:member.id,order_id:id},function(data){
+      var member_kanprice=data.kanprice;
+      that.setData({ member_kanprice: member_kanprice});
+    });
+
     kanorderApi.detail({id:id,zhichiapp_id:app_id},function(data){
       if (data.id == undefined) {
         wx.redirectTo({
@@ -82,6 +114,7 @@ Page({
         return;
       }
       var order=data;
+      //order.status="S";
       var id=data.id;
       console.log(id);
       var status=data.status;
@@ -90,7 +123,8 @@ Page({
       //product.oriprice = 1000;
       //product.lowprice = 990;
       product.lowprice_str = Util.amountcutting(product.lowprice);
-
+      //product.extrakan="C";
+      //product.status='D';
       order.member=member;
 
       that.setData({ product: product, status: status, id: id, order:order });
@@ -123,6 +157,11 @@ Page({
 
       
   },
+  gotoMyKan(){
+      wx.navigateTo({
+        url: 'detail?id='+this.data.product.id,
+      })
+  },
   gotoTryPay(){
       wx.navigateTo({
         url: 'order?id='+this.data.id,
@@ -136,31 +175,35 @@ Page({
   },
   gokanpricetimer: null,
   getKanPrice(){
-    this.ccc++;
-    var kanfriends = ProductMgr.getProductKanjiaFriends(this.data.member.id, this.data.product.id);
-    var kanprice = 0;
+    var that=this;
+    kanorderApi.friends({order_id:this.data.id},function(data){
+      var kanfriends = data;
+      var kanprice = 0.00;
 
-    for(var i=0;i<kanfriends.length;i++){
-      kanprice += kanfriends[i].kanprice;
-    }
+      for (var i = 0; i < kanfriends.length; i++) {
+        kanprice +=Number( kanfriends[i].kanprice);
+      }
 
-    if (kanprice > (this.data.product.oriprice - this.data.product.lowprice)){
-      kanprice=(this.data.product.oriprice-this.data.product.lowprice);
-    }
+      if (kanprice > (that.data.product.oriprice - that.data.product.lowprice)) {
+        kanprice = (that.data.product.oriprice - that.data.product.lowprice);
+      }
 
 
-    var rankkanfriends=kanfriends.sort(function(a,b){
-      return a.kanprice<b.kanprice;
-    });
-    var timekanfriends = kanfriends.sort(function (a, b) {
-      return a.kanprice_date < b.kanprice_date;
-    });
+      var rankkanfriends = kanfriends.sort(function (a, b) {
+        return a.kanprice < b.kanprice;
+      });
+      var timekanfriends = kanfriends.sort(function (a, b) {
+        return a.kanprice_date < b.kanprice_date;
+      });
 
-    for (var i = 0; i < rankkanfriends.length; i++) {
-      rankkanfriends[i].seq = i + 1;
-    }
+      for (var i = 0; i < rankkanfriends.length; i++) {
+        rankkanfriends[i].seq = i + 1;
+      }
+      console.log(kanprice);
+      that.setData({ kanprice: kanprice, kanprice_str: Util.amountcutting(kanprice), kanfriends: kanfriends, rankkanfriends: rankkanfriends, timekanfriends: timekanfriends });
+    },false);
 
-    this.setData({ kanprice: kanprice, kanprice_str: Util.amountcutting(kanprice), kanfriends: kanfriends, rankkanfriends: rankkanfriends, timekanfriends:timekanfriends});
+    
   },
   /**
    * 生命周期函数--监听页面显示
@@ -202,6 +245,26 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: '帮我来砍价',
+      path: '/pages/product/kanjia?id='+this.data.id,
+      imageUrl: "http://cmsdev.app-link.org/alucard263096/zhichibargain/api/kanorder/photo?order_id="+this.data.id,
+      success: function (res) {
+        // 转发成功
+      },
+      fail: function (res) {
+        // 转发失败
+      }
+    }
+  },
+  sharetomemory:function(){
+    wx.saveImageToPhotosAlbum({
+      filePath: "http://cmsdev.app-link.org/alucard263096/zhichibargain/api/kanorder/photo?order_id=" + this.data.id,
+      success(res) {
+        wx.showToast({
+          title: '图片已保存，可分享到朋友圈',
+        })
+      }
+    })
   }
 })

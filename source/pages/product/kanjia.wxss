@@ -70,3 +70,72 @@
 .dis .point{
   background: white;
 }
+
+
+
+
+
+.abs{
+  position:absolute;
+  
+  left:0; 
+  top:0;
+  text-align:center;
+  height:100%;
+  width:100%;
+}
+.brilliant{
+
+}
+.gongxi{
+  color:white;
+  font-size: 13px;
+}
+.leftline{
+ width:15%;
+ height:1px;
+ margin-top:10px;
+ background: -webkit-gradient(linear, 0 0, right 0, from(rgba(0, 0, 0, 0.2)), to(#ffffff));
+ background: gradient(linear, 0 0, right 0, from(rgba(0, 0, 0, 0.2)), to(#ffffff));
+ text-align:right;
+}
+.round{
+ border-radius: 50%;
+ border-color:white;
+ margin-top:8px;
+ background-color:white;
+ height:4px;
+ width:4px;
+}
+.gxtext{
+  padding-left:10px;
+  padding-right:10px;
+  width:30%;
+}
+.rightline{
+  width:15%;
+  margin-top:10px;
+ height:1px;
+ background: -webkit-gradient(linear, 0 0, right 0, from(#ffffff), to(rgba(0, 0, 0, 0.2)));
+ background: gradient(linear, 0 0, right 0, from(#ffffff), to(rgba(0, 0, 0, 0.2)));
+}
+.information{
+  color:white;
+}
+.information .head{
+}
+.information .body{
+  font-weight:bold;
+}
+.information .footer{
+  padding-top:10px;
+  font-size:12px;
+}
+.cstbutton{
+  font-size:12px !important;
+  padding:0 1em !important;
+  width:48%;
+  border-color:#fff !important;
+  border-radius:50px;
+  color:white !important;
+}
