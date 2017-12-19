@@ -266,19 +266,56 @@
       </view>
     </view>
   </view>
-  <view style='position:absolute;left:18vw;top:36.5vh;width:100vw;' >
+  <view style='position:absolute;left:18vw;top:36.5vh;width:64vw;' >
     <view class='flex-row ' style='padding-top:2vh;'>
       <view>
         <image src="{{product.cover}}"  style='width:18vw;height:18vw;border-radius:1vh;'></image>
       </view>
-      <view style='margin-left:2vh'>
+      <view style='margin-left:2vh;width:100%'>
         <view class='font-70'>{{product.title}}</view>
         <view  style='margin-left:4vh;color:#FDEC8E;margin-top:3vh'>
           <text class='font-60' >￥</text>
           <text  >{{product.lowprice_str.b}}<text class='font-80'>{{product.lowprice_str.s}}</text></text>
-          <text class='font-white font-60' style='right:3vh;'>{{product.oriprice}}</text>
+          <text class='font-white font-60 through-line' style='margin-top:1.5vh;position:absolute;right:1vw' >{{product.oriprice}}</text>
         </view>
       </view>
     </view>
   </view>
+
+
+  <view style='position:absolute;left:0vw;top:56vh;width:100vw;' >
+    <view class='text-center font-white font-65'>
+      <text>{{product.endtime}}</text>
+    </view>
+  </view>
+
+<view style='position:absolute;left:0.2vw;top:61vh;width:100vw;' >
+      <view class='text-center'>
+          <image  style='width:18vw;height:18vw;background-image:url(http://cmsdev.app-link.org/alucard263096/zhichibargain/api/kanorder/qrcode?order_id={{id}});background-size:18vw 20.7vw;'></image>
+      </view>
+</view>
+
+<view class='flex-row' style='position:absolute;left:0vw;top:83vh;width:100vw;' >
+    <view class='flex-1 text-right flex-row '>
+        <view  class='btn-outline font-white  font-70 flex-row' bindtap='sharetomemory'style='padding-left:4vw;padding-right:4vw;padding-top:0.5vh;margin-left:15vw;'>
+          <view>
+          <image src="../../images/icons/memory.png" style='width:5vw;height:5vw;margin-top:0.5vh;'></image>
+          </view>
+          <view>
+          <text style='margin-left:1vh;'>分享朋友圈</text> 
+          </view>
+        </view>
+    </view>
+    <view class='flex-1 text-right flex-row '>
+        <view  class='btn-outline font-white  font-70 flex-row' bindtap='sharetofriend' style='padding-left:4vw;padding-right:4vw;padding-top:0.5vh;margin-left:2vw;'>
+          <view>
+          <image src="../../images/icons/friends.png" style='width:5vw;height:5vw;margin-top:0.5vh;'></image>
+          </view>
+          <view>
+          <text style='margin-left:1vh;'>分享给好友</text> 
+          </view>
+        </view>
+    </view>
+</view>
+
 </view>

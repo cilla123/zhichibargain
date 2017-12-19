@@ -43,6 +43,10 @@ background-color:#CCCCCC;
 color:#FFFFFF;
 background-color:#F2F2F2;
 }
+.btn-outline{
+  border:1px solid white;
+  border-radius: 4vh;
+}
 .debug{
   background: blue;
 }
