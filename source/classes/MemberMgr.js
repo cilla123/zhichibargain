@@ -4,7 +4,7 @@ class MemberMgr {
   static getMember(id){
     //console.log(this.name);
     var member={
-      id:2,
+      id:1,
       name: "小黑妹",
       shortname: "小黑妹".substr(0,8),
       mobile: "13751082562",

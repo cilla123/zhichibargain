@@ -20,40 +20,45 @@ Page({
    * status: N:未发起砍价
    */
   data: {
-    id:0,
+    id: 0,
     member: {},
-    order:{},
+    order: {},
     status: "E",
     product: {},
     kanfriends: [],
     kanprice: 0,
-    kanprice_str: {b:"0","s":".00"},
-    broadcase:{},
-    bangtype:"rank",
-    rankkanfriends:[],
+    kanprice_str: { b: "0", "s": ".00" },
+    broadcase: {},
+    bangtype: "rank",
+    rankkanfriends: [],
     showmorerankfriends: 0,
     timekanfriends: [],
     showmoretimefriends: 0,
-    scolltomiddle:false,
-    progressfix:70.0,
-    inshare:false,
-    member_kanprice:"",
+    scolltomiddle: false,
+    progressfix: 70.0,
+    inshare: false,
+    member_kanprice: "",
     inkaning: false,
-    inkan: false
+    inkan: false,
+    addtocart: false,
+    count: 1,
+    selectedoptionstr: "",
+    stock:0,
+    selectmodel:[]
   },
-  scrollmonitor(e){
+  scrollmonitor(e) {
     //console.log(e);
-    var scrolltop=e.detail.scrollTop;
-    var scolltomiddle=scrolltop>20;
-    if (this.data.scolltomiddle != scolltomiddle){
-      this.setData({ scolltomiddle: scolltomiddle});
+    var scrolltop = e.detail.scrollTop;
+    var scolltomiddle = scrolltop > 20;
+    if (this.data.scolltomiddle != scolltomiddle) {
+      this.setData({ scolltomiddle: scolltomiddle });
     }
   },
-  changebangtype(e){
-    var bangtype=e.currentTarget.id;
-    this.setData({ bangtype: bangtype});
+  changebangtype(e) {
+    var bangtype = e.currentTarget.id;
+    this.setData({ bangtype: bangtype });
   },
-  rankcheckmore(){
+  rankcheckmore() {
     console.log(this.data.showmorerankfriends);
     this.setData({ showmorerankfriends: ++this.data.showmorerankfriends });
     console.log(this.data.showmorerankfriends);
@@ -64,70 +69,177 @@ Page({
   goInshare() {
     this.setData({ inshare: true });
   },
-  closeShare(){
-    this.setData({inshare:false});
+  closeShare() {
+    this.setData({ inshare: false });
   },
-  gokan(){
-    var that=this;
-    var member=this.data.member;
-    kanorderApi.kan({ order_id:this.data.id,member_id:member.id,
-    membername:member.name,memberphoto:member.photo,membermobile:member.mobile }, function (data) {
-      var inkaning=true;
-      var member_kanprice =data.kanprice;
-      var member_extraprice =data.extraprice;
+  gokan() {
+    var that = this;
+    var member = this.data.member;
+    kanorderApi.kan({
+      order_id: this.data.id, member_id: member.id,
+      membername: member.name, memberphoto: member.photo, membermobile: member.mobile
+    }, function (data) {
+      var inkaning = true;
+      var member_kanprice = data.kanprice;
+      var member_extraprice = data.extraprice;
 
-      that.setData({ inkaning: inkaning, member_kanprice: member_kanprice, member_extraprice: member_extraprice});
+      that.setData({ inkaning: inkaning, member_kanprice: member_kanprice, member_extraprice: member_extraprice });
       that.getKanPrice();
-      setTimeout(function(){
+      setTimeout(function () {
         var inkaning = false;
         var inkan = true;
         that.setData({ inkaning: inkaning, inkan: inkan });
-      },3000);
+      }, 3000);
     });
   },
-  close(){
-    this.setData({inkan:false});
+  close() {
+    this.setData({ inkan: false });
+  },
+
+
+  countminus() {
+    var count = this.data.count;
+    count--;
+    if (count < 1) {
+      count = 1;
+    }
+    this.setData({ count: count });
+  },
+  countplus() {
+    var count = this.data.count;
+    count++;
+    if (count > this.data.product.reminder) {
+      count = this.data.product.reminder;
+    }
+    this.setData({ count: count });
+  },
+  optionSelect(e) {
+    var product = this.data.product;
+    var id = e.currentTarget.id.split("_");
+    var optionid = id[0];
+    var optionvalue = id[1];
+
+    for (var i in product.detail.model) {
+
+      var options = [];
+      if (product.detail.model[i].id == optionid) {
+        product.detail.model[i].value = optionvalue;
+      }
+
+    }
+
+    this.setData({ product: product });
+    this.updateselectedoptionstr();
+  },
+  updateselectedoptionstr() {
+    var selectedoptionstr = "";
+    var selectmodel=[];
+    var product = this.data.product;
+    for (var i in product.detail.model) {
+      if (product.detail.model[i].value != "") {
+        for (var j = 0; j < product.detail.model[i].subModelId.length; j++) {
+          if (product.detail.model[i].value == product.detail.model[i].options[j].value) {
+            selectedoptionstr += '"' + product.detail.model[i].options[j].display + '"';
+            selectmodel.push(product.detail.model[i].options[j].value);
+          }
+        }
+      }
+    }
+    console.log(product.detail.model_items);
+    selectmodel.sort(function(a,b){return a>b;});
+    var modelstock=null;
+    for (var i = 0; i < product.detail.model_items.length;i++){
+      var model = product.detail.model_items[i].model.split(",");
+      model.sort(function (a, b) { return a > b; });
+      if (selectmodel.join(",") == model.join(",")){
+        modelstock = product.detail.model_items[i].stock;
+        break;
+      }
+    }
+    var stock = modelstock == null ? this.data.product.detail.stock : modelstock
+    this.setData({ selectedoptionstr: selectedoptionstr, stock: stock, selectmodel: selectmodel });
+  },
+  tryKanjia() {
+    var modelcount=0;
+    for (var i in this.data.product.detail.model){
+      modelcount++;
+    }
+    console.log(this.data.product.detail.model.length);
+    if (this.data.selectmodel.length < modelcount){
+        wx.showModal({
+          title: '提示',
+          content: '请选择商品规格',
+          showCancel:false
+        })
+    }else{
+      if(this.data.stock<=0){
+        wx.showModal({
+          title: '提示',
+          content: '您选择的商品规格库存不足，请重新选择',
+          showCancel: false
+        })
+      }else{
+        wx.navigateTo({
+          url: 'order?id=' + this.data.id + "&" + this.data.selectmodel.join(","),
+        })
+      }
+    }
+    
+  },
+  closeAddToCart() {
+    this.setData({ addtocart: false });
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that=this;
+    var that = this;
     var id = options.id;
-    id=18;
+    id=21;
     var member = MemberMgr.getMember();
     var app_id = MerchantMgr.getAppId();
 
     var KanorderApi = require('../../apis/kanorder.js');
     var kanorderApi = new KanorderApi();
 
-    kanorderApi.getmykanprice({member_id:member.id,order_id:id},function(data){
-      var member_kanprice=data.kanprice;
-      that.setData({ member_kanprice: member_kanprice});
+    kanorderApi.getmykanprice({ member_id: member.id, order_id: id }, function (data) {
+      var member_kanprice = data.kanprice;
+      that.setData({ member_kanprice: member_kanprice });
     });
 
-    kanorderApi.detail({id:id,zhichiapp_id:app_id},function(data){
+    kanorderApi.detail({ id: id, zhichiapp_id: app_id }, function (data) {
       if (data.id == undefined) {
         wx.redirectTo({
           url: 'list'
         });
         return;
       }
-      var order=data;
+      var order = data;
       //order.status="S";
-      var id=data.id;
+      var id = data.id;
       console.log(id);
-      var status=data.status;
+      var status = data.status;
 
-      var product=data.product;
+      var product = data.product;
       //product.oriprice = 1000;
       //product.lowprice = 990;
       product.lowprice_str = Util.amountcutting(product.lowprice);
       //product.extrakan="C";
       //product.status='D';
-      order.member=member;
+      order.member = member;
 
-      that.setData({ product: product, status: status, id: id, order:order });
+      for (var i in product.detail.model) {
+        console.log(product.detail.model[i].subModelId);
+        var options = [];
+        for (var j = 0; j < product.detail.model[i].subModelId.length; j++) {
+          options.push({ display: product.detail.model[i].subModelName[j], value: product.detail.model[i].subModelId[j] });
+        }
+        product.detail.model[i].options = options;
+        product.detail.model[i].value = "";
+      }
+
+
+      that.setData({ product: product, status: status, id: id, order: order,stock:product.detail.stock });
 
 
       that.count();
@@ -140,10 +252,10 @@ Page({
 
     var broadcase = ProductMgr.getProductKanjiaBroadcase();
 
-    this.setData({ member: member,broadcase: broadcase });
+    this.setData({ member: member, broadcase: broadcase });
 
   },
-  goroundtimer:null,
+  goroundtimer: null,
   count() {
     var that = this;
     var product = that.data.product;
@@ -151,21 +263,30 @@ Page({
     product.starttime_s = Util.timecutting(product.starttime);
     product.endtime_s = Util.timecutting(product.endtime);
 
-    that.setData({ product: product
-    , now: new Date().getTime()
-      , s: new Date(product.starttime).getTime()});
+    that.setData({
+      product: product
+      , now: new Date().getTime()
+      , s: new Date(product.starttime).getTime()
+    });
 
-      
+
   },
-  gotoMyKan(){
-      wx.navigateTo({
-        url: 'detail?id='+this.data.product.id,
-      })
+  gotoMyKan() {
+    wx.navigateTo({
+      url: 'detail?id=' + this.data.product.id,
+    })
   },
-  gotoTryPay(){
+  gotoTryPay() {
+    //wx.navigateTo({
+    //  url: 'order?id=' + this.data.id,
+    //})
+    if(this.data.product.detail.model_items.length==0){
       wx.navigateTo({
-        url: 'order?id='+this.data.id,
+        url: 'order?id=' + this.data.id+"&"+this.data.selectmodel.join(","),
       })
+    }else{
+      this.setData({ addtocart: true });
+    }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -174,14 +295,14 @@ Page({
 
   },
   gokanpricetimer: null,
-  getKanPrice(){
-    var that=this;
-    kanorderApi.friends({order_id:this.data.id},function(data){
+  getKanPrice() {
+    var that = this;
+    kanorderApi.friends({ order_id: this.data.id }, function (data) {
       var kanfriends = data;
       var kanprice = 0.00;
 
       for (var i = 0; i < kanfriends.length; i++) {
-        kanprice +=Number( kanfriends[i].kanprice);
+        kanprice += Number(kanfriends[i].kanprice);
       }
 
       if (kanprice > (that.data.product.oriprice - that.data.product.lowprice)) {
@@ -201,9 +322,9 @@ Page({
       }
       console.log(kanprice);
       that.setData({ kanprice: kanprice, kanprice_str: Util.amountcutting(kanprice), kanfriends: kanfriends, rankkanfriends: rankkanfriends, timekanfriends: timekanfriends });
-    },false);
+    }, false);
 
-    
+
   },
   /**
    * 生命周期函数--监听页面显示
@@ -247,8 +368,8 @@ Page({
   onShareAppMessage: function () {
     return {
       title: '帮我来砍价',
-      path: '/pages/product/kanjia?id='+this.data.id,
-      imageUrl: "http://cmsdev.app-link.org/alucard263096/zhichibargain/api/kanorder/photo?order_id="+this.data.id,
+      path: '/pages/product/kanjia?id=' + this.data.id,
+      imageUrl: "http://cmsdev.app-link.org/alucard263096/zhichibargain/api/kanorder/photo?order_id=" + this.data.id,
       success: function (res) {
         // 转发成功
       },
@@ -257,14 +378,25 @@ Page({
       }
     }
   },
-  sharetomemory:function(){
-    wx.saveImageToPhotosAlbum({
-      filePath: "http://cmsdev.app-link.org/alucard263096/zhichibargain/api/kanorder/photo?order_id=" + this.data.id,
-      success(res) {
-        wx.showToast({
-          title: '图片已保存，可分享到朋友圈',
-        })
+  sharetomemory: function () {
+    wx.downloadFile({
+      url: "https://cmsdev.app-link.org/alucard263096/zhichibargain/api/kanorder/photo?order_id=" + this.data.id, //仅为示例，并非真实的资源
+      success: function (res) {
+        // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
+        if (res.statusCode === 200) {
+          console.log(res.tempFilePath);
+          wx.saveImageToPhotosAlbum({
+            filePath: res.tempFilePath,
+            success(res) {
+              wx.showToast({
+                title: '图片已保存，可分享到朋友圈',
+              })
+            }
+          });
+        }
       }
     })
+
+    
   }
 })

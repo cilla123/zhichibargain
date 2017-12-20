@@ -1,5 +1,7 @@
 <!--pages/product/order.wxml-->
-<view class='flex-row padding-2 white primary' style='padding-top:1.5vh;padding-bottom:1.5vh;'>
+<view wx:if="{{id>0}}">
+
+<view class='flex-row padding-2 white primary' style='padding-top:1.5vh;padding-bottom:1.5vh;' >
   <view style='margin-right:1vh;margin-top:-0.3vh' class='font-75'>
     <text class=' fa fa-exclamation-circle ' style=''></text>
   </view>
@@ -8,11 +10,11 @@
 
 <view class='flex-row padding-4 white' style='margin-top:2px'>
   <view class='flex-1'>
-    <image src='{{product.img}}' style='width:13vw;height:13vw;border-radius:1vh;'></image>
+    <image src='{{product.detail.cover}}' style='width:13vw;height:13vw;border-radius:1vh;'></image>
   </view>
   <view class='flex-8' style='padding-left:2vh;padding-right:2vh;'>
     <view class='no-margin'>
-      <text class='font-80'>{{product.title}}</text>
+      <text class='font-80'>{{product.detail.title}}</text>
     </view>
     <view style='margin-top:1vh;'>
       <text class='primary font-90'>￥{{product.oriprice-kanprice}}</text><text class="font-60 through-line light" style='margin-left:2vh;'>￥{{product.oriprice}}</text>
@@ -77,7 +79,7 @@
 </view>
 <view class='flex-row padding-2 white font-85' style='margin-top:2px' >
   <view class='flex-1'>运费</view>
-  <view class='flex-1 text-right'>￥{{deliverytype=="express"||product.deliveryamount>0?product.deliveryamount:"0"}}</view>
+  <view class='flex-1 text-right'>{{product.expressset=="FREE"?"包邮":product.detail.express_fee}}</view>
 </view>
 <view class='flex-row padding-2 white font-85' style='margin-top:2px' >
   <view class='flex-1'>补充信息</view>
@@ -93,7 +95,10 @@
       <text>立即下单</text>
       <text class='primary'>￥{{product.oriprice-kanprice}}</text>
     </view>
-    <view class='flex-3 text-center padding-2 font-white' style='background:#FF6633'>
+    <view bindtap='goSubmit' class='flex-3 text-center padding-2 font-white' style='background:#FF6633'>
       <text>立即下单</text>
     </view>
+</view>
+
+
 </view>

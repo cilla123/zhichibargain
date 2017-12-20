@@ -22,64 +22,13 @@ Page({
   data: {
     member: {},
     product: {id:0},
-    broadcase:{},
-    addtocart: false,
-    count:1,
-    selectedoptionstr:""
+    broadcase:{}
   },
   tryKanjia(){
     
   },
-  countminus(){
-    var count=this.data.count;
-    count--;
-    if(count<1){
-      count=1;
-    }
-    this.setData({count:count});
-  },
-  countplus() {
-    var count = this.data.count;
-    count++;
-    if (count >this.data.product.reminder) {
-      count = this.data.product.reminder;
-    }
-    this.setData({ count: count });
-  },
-  optionSelect(e){
-    var product=this.data.product;
-    var id=e.currentTarget.id.split("_");
-    var optionid = id[0];
-    var optionvalue = id[1];
 
-    for (var i in product.detail.model) {
-      
-      var options = [];
-      if (product.detail.model[i].id == optionid){
-        product.detail.model[i].value = optionvalue;
-      }
-    
-    }
-
-    this.setData({ product: product });
-    this.updateselectedoptionstr();
-  },
-  updateselectedoptionstr(){
-    var selectedoptionstr="";
-    var product = this.data.product;
-    for (var i in product.detail.model) {
-      if (product.detail.model[i].value != "") {
-        for (var j = 0; j < product.detail.model[i].subModelId.length; j++) {
-          if (product.detail.model[i].value == product.detail.model[i].options[j].value) {
-            selectedoptionstr += '"' + product.detail.model[i].options[j].display + '"';
-          }
-        }
-      }
-    }
-    
-    this.setData({ selectedoptionstr: selectedoptionstr });
-  },
-  tryAddToCart(){
+  tryAddToCart() {
 
     var json = {
       member_id: this.data.member.id,
@@ -102,9 +51,6 @@ Page({
       }
     });
   },
-  closeAddToCart() {
-    this.setData({ addtocart: false });
-  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -126,15 +72,7 @@ Page({
         return;
       } 
       product.lowprice_str = Util.amountcutting(product.lowprice);
-      for (var i in product.detail.model) {
-        console.log(product.detail.model[i].subModelId);
-        var options = [];
-        for (var j = 0; j < product.detail.model[i].subModelId.length; j++) {
-          options.push({ display: product.detail.model[i].subModelName[j], value: product.detail.model[i].subModelId[j] });
-        }
-        product.detail.model[i].options = options;
-        product.detail.model[i].value = "";
-      }
+      
       
       console.log(product.detail.model);
       that.setData({ product: product, status: status });

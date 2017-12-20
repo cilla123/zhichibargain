@@ -1,8 +1,17 @@
 // pages/product/list.js
 var MemberMgr = require("../../classes/MemberMgr.js");
 var ProductMgr = require("../../classes/ProductMgr.js");
-var StorageMgr = require("../../classes/StorageMgr.js");
+var MerchantMgr = require("../../classes/MerchantMgr.js");
 var Util = require("../../utils/util.js");
+
+
+
+var KanproductApi = require('../../apis/kanproduct.js');
+var kanproductApi = new KanproductApi();
+
+var KanorderApi = require('../../apis/kanorder.js');
+var kanorderApi = new KanorderApi();
+
 Page({
   /**
    * 页面的初始数据
@@ -16,6 +25,10 @@ Page({
     items: [],
     activeitem: 0,
     bordercase: {},
+    items_p: [],
+    items_finish: [],
+    items_myhelp: [],
+    items_all: []
   },
   setLs() {
     wx.setStorage({
@@ -30,6 +43,11 @@ Page({
 
     // To Do:
      
+  },
+  goKanjia(e){
+    wx.navigateTo({
+      url: '../product/kanjia?id='+e.currentTarget.id,
+    })
   },
   changeCutType(e){
     var t = e.currentTarget.id;
@@ -54,23 +72,24 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    var member = MemberMgr.getMember(1);
+    var member = MemberMgr.getMember();
+    var app_id = MerchantMgr.getAppId();
 
-    var storageMgr = new StorageMgr();
-    var displaytype = storageMgr.getValue("list_displaytype");
-    console.log(displaytype);
-    if (displaytype == "") {
-      displaytype = "list";
-    }
+    kanorderApi.progress({member_id:member.id,zhichiapp_id:app_id},function(data){
+      that.setData({items_p:data});
+    });
+    kanorderApi.finish({ member_id: member.id, zhichiapp_id: app_id }, function (data) {
+      that.setData({ items_finish:data });
+    });
+    kanorderApi.myhelp({ member_id: member.id, zhichiapp_id: app_id }, function (data) {
+      that.setData({ items_myhelp: data });
+    });
+    kanorderApi.myhelp({ member_id: member.id, zhichiapp_id: app_id }, function (data)    {
+      that.setData({ items_all: data });
+    });
 
-    var items = ProductMgr.getProductList();
-    var broadcase = ProductMgr.getProductKanjiaBroadcase();
 
-    that.setData({ member: member, items: items, displaytype: displaytype, broadcase: broadcase });
-    this.count();
-    this.goroundtimer = setInterval(function () {
-      that.count();
-    }, 1000);
+    that.setData({ member: member });
   },
   count() {
     var that = this;

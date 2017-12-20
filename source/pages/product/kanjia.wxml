@@ -438,3 +438,51 @@
 </view>
 
 </view>
+
+
+
+
+
+<view style='position:absolute;left:0;top:0;height:100vh;width:100vw;' wx:if="{{addtocart==true}}">
+  <view style='height:100vh;width:100vw;background:black;opacity: 0.7;' bindtap='closeAddToCart'>
+  </view>
+  <view class='weui-footer_fixed-bottom white no-margin ' style='margin-bottom:-1.6vh;' >
+    <view class='flex-row  padding-2 border-bottom'>
+      <view class='flex-2'>
+      <image src='{{product.detail.cover}}' style='width:18vh;height:18vh;border-radius:1vh;margin-top:-8vh;'></image>
+      </view>
+      <view class='padding-2 no-margin flex-12'  style='margin-top:-2vh;'>
+        <view class='no-margin font-80'>{{product.detail.title}}</view>
+        <view class='primary'>
+          <text class='font-60'>￥</text><text class='font-80'>{{product.lowprice_str.b}}<text class='font-70'>{{product.lowprice_str.s}}</text></text>
+        </view>
+        <view class='font-70' wx:if="{{selectedoptionstr!=''}}">
+          已选：{{selectedoptionstr}}
+        </view>
+      </view>
+      <view class='text-right flex-1' style='margin-top:-1vh;'  bindtap='closeAddToCart'><image src='../../images/icons/close-empty.png'  class='img-3'></image>
+      </view>
+    </view>
+    <block wx:for="{{product.detail.model}}" wx:key="index">
+    <view class='padding-2 border-bottom'>
+      <view class='font-80 bold'>{{item.name}}</view>
+      <view class='flex-row' style='margin-top:1vh;'>
+        <block  wx:for="{{item.options}}" wx:for-item="option" wx:for-index="opt" wx:key="indexopt">
+          <view class='{{item.value==option.value?"back-primary":"back-light"}} padding-2' style='margin-right:2vh;padding-top:0.5vh;padding-bottom:0.5vh;border-radius:1vh;' bindtap='optionSelect' id="{{item.id}}_{{option.value}}" >
+            <text class='font-75' >{{option.display}}</text>
+          </view>
+        </block>
+      </view>
+    </view>
+    </block>
+
+    <view class='padding-2 border-bottom flex-row' style='padding-top:4vh;padding-bottom:4vh;'>
+      <view class='font-80 bold flex-1'>数量</view>
+      <view class='font-80 flex-2 text-right'><text>库存 {{stock}} </text><i class="fa fa-minus back-light padding-1" ></i><text class='back-light ' style='padding-left:2vh;padding-right:2vh;padding-top:0.5vh;padding-bottom:0.7vh;margin-left:1px;margin-right:1px;'>{{count}}</text><i class="fa fa-plus back-light  padding-1"  ></i> </view>
+    </view>
+
+    <view class='back-primary padding-2 text-center' bindtap='tryKanjia'>
+      <text class='font-80'>加入购物车</text>
+    </view>
+  </view>
+</view>

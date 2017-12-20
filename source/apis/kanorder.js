@@ -157,5 +157,157 @@ class KanorderApi
       }
     })
   };
+  submit(json, callback, showLoading = true) {
+    if (showLoading) {
+      apiconfig.ShowLoading();
+    }
+    wx.request({
+      url: apiconfig.ServerUrl + '/kanorder/submit',
+      data: json,
+      method: 'POST',
+      dataType: 'json',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        if (callback != null) {
+          callback(res.data);
+        }
+      },
+      fail: function (res) {
+        console.log(res);
+        callback(false);
+      },
+      complete: function (res) {
+        console.log(res);
+
+        if (showLoading) {
+          apiconfig.CloseLoading();
+        }
+      }
+    })
+  };
+
+
+  progress(json, callback, showLoading = true) {
+    if (showLoading) {
+      apiconfig.ShowLoading();
+    }
+    wx.request({
+      url: apiconfig.ServerUrl + '/kanorder/progress',
+      data: json,
+      method: 'POST',
+      dataType: 'json',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        if (callback != null) {
+          callback(res.data);
+        }
+      },
+      fail: function (res) {
+        console.log(res);
+        callback(false);
+      },
+      complete: function (res) {
+        console.log(res);
+
+        if (showLoading) {
+          apiconfig.CloseLoading();
+        }
+      }
+    })
+  };
+  finish(json, callback, showLoading = true) {
+    if (showLoading) {
+      apiconfig.ShowLoading();
+    }
+    wx.request({
+      url: apiconfig.ServerUrl + '/kanorder/finish',
+      data: json,
+      method: 'POST',
+      dataType: 'json',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        if (callback != null) {
+          callback(res.data);
+        }
+      },
+      fail: function (res) {
+        console.log(res);
+        callback(false);
+      },
+      complete: function (res) {
+        console.log(res);
+
+        if (showLoading) {
+          apiconfig.CloseLoading();
+        }
+      }
+    })
+  };
+  myhelp(json, callback, showLoading = true) {
+    if (showLoading) {
+      apiconfig.ShowLoading();
+    }
+    wx.request({
+      url: apiconfig.ServerUrl + '/kanorder/myhelp',
+      data: json,
+      method: 'POST',
+      dataType: 'json',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        if (callback != null) {
+          callback(res.data);
+        }
+      },
+      fail: function (res) {
+        console.log(res);
+        callback(false);
+      },
+      complete: function (res) {
+        console.log(res);
+
+        if (showLoading) {
+          apiconfig.CloseLoading();
+        }
+      }
+    })
+  };
+  all(json, callback, showLoading = true) {
+    if (showLoading) {
+      apiconfig.ShowLoading();
+    }
+    wx.request({
+      url: apiconfig.ServerUrl + '/kanorder/all',
+      data: json,
+      method: 'POST',
+      dataType: 'json',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        if (callback != null) {
+          callback(res.data);
+        }
+      },
+      fail: function (res) {
+        console.log(res);
+        callback(false);
+      },
+      complete: function (res) {
+        console.log(res);
+
+        if (showLoading) {
+          apiconfig.CloseLoading();
+        }
+      }
+    })
+  };
 }
 module.exports = KanorderApi;

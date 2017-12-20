@@ -1,11 +1,11 @@
 {
   "pages": [
     "pages/product/kanjia",
-    "pages/product/detail",
     "pages/product/list",
-    "pages/index/index",
-    "pages/product/order",
     "pages/order/index",
+    "pages/product/order",
+    "pages/product/detail",
+    "pages/index/index",
     "pages/order/success",
     "pages/logs/logs"
   ],
