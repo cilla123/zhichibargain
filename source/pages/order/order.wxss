@@ -49,3 +49,12 @@
 .item-grid .item:nth-child(even){
   text-align: right;
 }
+
+.doingbtn{
+  background-color:rgb(243, 149, 73);
+  display:inline;
+  padding-top:10px;
+  padding-bottom:10px;
+   margin-left:5px;
+   color:#fff;
+}

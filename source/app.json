@@ -1,13 +1,10 @@
 {
   "pages": [
-    "pages/product/kanjia",
-    "pages/product/list",
-    "pages/order/index",
-    "pages/product/order",
-    "pages/product/detail",
     "pages/index/index",
-    "pages/order/success",
-    "pages/logs/logs"
+    "pages/productdetail/productdetail",
+    "pages/productkanjia/productkanjia",
+    "pages/productorder/productorder",
+    "pages/order/order"
   ],
   "window": {
     "backgroundTextStyle": "light",

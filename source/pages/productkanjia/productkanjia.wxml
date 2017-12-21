@@ -1,0 +1,488 @@
+<!--pages/product/detail.wxml-->
+
+
+
+
+
+
+<view wx:if="{{id>0}}" class='font-white' style='background:#fa8b44;'>
+
+  <view class='topbroadcast' wx:if="{{scolltomiddle==true&&member.id==order.member_id}}">
+    <view class=' font-65 flex-row padding-2' wx:if="{{broadcase.money>0}}" style="color:black;padding-bottom:0px;">
+      <view style='margin-right:1vh;'>
+        <image class='img-2' src="../utils/images/icons/horn.png"></image>
+      </view>
+      <view style='padding-right:2vh;width:90vw'>
+        <text>恭喜{{broadcase.membername}}砍价成功，共砍掉<text class='primary'>{{broadcase.money}}</text>元</text>
+      </view>
+      <view class='flex-row ' style='width:20vw'>
+        <view class='img-5 text-center'>
+          <image src='../utils/images/icons/contact.png' class='img-3'></image>
+        </view>
+        <view style='margin-left:2vh;' class='img-5 text-center'>
+          <image src='../utils/images/icons/shop.png' class='img-3'></image>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class='bottomorder flex-row font-75' wx:if="{{scolltomiddle==true&&member.id==order.member_id}}">
+    <view class='flex-6 text-center padding-2 ' style='background:#FDA14C' bindtap='gotoTryPay' wx:if="{{product.starttime_s.reminder<0&&product.endtime_s.reminder>0&&product.status=='A'&&order.status=='P'}}">
+      <text>现价￥{{product.oriprice-kanprice}}立即下单</text>
+    </view>
+    <view class='flex-4 text-center padding-2' style='background:#FF6633' bindtap='goInshare' wx:if="{{product.starttime_s.reminder<0&&product.endtime_s.reminder>0&&product.status=='A'&&order.status=='P'}}">
+      <text>找人帮砍</text>
+    </view>
+    <view class='flex-4 text-center padding-2 font-white' style='background:#999999' wx:if="{{(product.starttime_s.reminder<0&&product.endtime_s.reminder>0&&product.status=='A'&&order.status=='P')==false}}">
+      <text>砍价活动已结束</text>
+    </view>
+  </view>
+
+  <scroll-view scroll-y style="height: {{scolltomiddle&&member.id==order.member_id?'93':'100'}}vh;" bindscroll="scrollmonitor">
+    <view class='broadcast font-65 flex-row padding-2' wx:if="{{broadcase.money>0}}" style="color:black">
+      <view style='margin-right:1vh;'>
+        <image class='img-2' src="../utils/images/icons/horn.png"></image>
+      </view>
+      <view style='padding-right:2vh'>
+        <text>恭喜{{broadcase.membername}}砍价成功，共砍掉<text class='primary'>{{broadcase.money}}</text>元</text>
+      </view>
+    </view>
+    <view style='position:absolute;right:0;margin-top:2.5vh;' class='flex-row'>
+      <view style='background:black;opacity:0.3;border-radius:2.5vh;' class='img-5 text-center'>
+        <image src='../utils/images/icons/contact_w.png' class='img-3'></image>
+      </view>
+      <view style='background:black;opacity:0.3;border-radius:2.5vh;margin-left:2vh;margin-right:1vh;' class='img-5 text-center'>
+        <image src='../utils/images/icons/shop_w.png' class='img-3'></image>
+      </view>
+    </view>
+
+
+
+    <view>
+      <image class='bg_banner' style='width:100vw;height:54.6vw;'></image>
+    </view>
+    <view style='margin-left:6vh;margin-right:6vh;border-top-left-radius:1vh;border-top-right-radius:1vh;height:8vh;padding-left:10vh;padding-right:10vh;' class="text-center bg_focus">
+      <view class='flex-row' style='padding-top:2vh;'>
+        <view>
+          <image src='{{order.member.photo}}' class='img-5' style='border-radius:5vh;'></image>
+        </view>
+        <view class='font-70' style='margin-top:0.5vh;margin-left:1vh;'>
+          <text style='color:#FDEC8E;text-overflow:ellipsis;'>{{order.member.shortname}}</text>
+          <text>正在砍价</text>
+        </view>
+      </view>
+    </view>
+    <view class='white block block-radius' style='margin-top:0px;color:black'>
+      <view class='flex-row border-bottom'>
+        <view>
+          <image src='{{product.detail.cover}}' style='width:20vw;height:20vw;border-radius:1vh;'></image>
+        </view>
+        <view style='margin-left:2vh;width:100%;'>
+          <view class='font-80'>{{product.detail.title}}</view>
+          <view class='block-radius flex-row  padding-1 bg_bg_button' style='margin-top:1vh;color:#FDEC8E;'>
+            <text class='font-65' style='line-height:2.2vh;'>最低\n砍至</text>
+            <text class='font-75' style='margin-left:1vh;margin-top:1vh;'>￥</text>
+            <text>{{product.lowprice_str.b}}<text class='font-70'>{{product.lowprice_str.s}}</text></text>
+            <text class='font-65 no-margin' style='margin-left:3vh;color:white;padding-top:1vh;'>
+            <text  class='no-margin'  style='text-decoration:line-through;'>￥{{product.oriprice}}\n</text>仅剩{{product.allstore-product.sales}}件
+            </text>
+            <image wx:if="{{(product.endtime_s.reminder>0&&product.status=='A')==false}}" src="../utils/images/timeover.png" class="img-7" style="position:absolute;right:10vw;"></image>
+          </view>
+        </view>
+      </view>
+      <view class='flex-row'>
+        <view>
+          <image src="../utils/images/icons/bolt.png" class='img-2'></image>
+        </view>
+        <view class='font-75' style='margin-top:1vh;margin-left:1.5vh;'>活动时间仅剩：</view>
+        <view style='color:black' wx:if="{{product.starttime_s.reminder<0&&product.endtime_s.reminder>0&&product.status=='A'&&status=='P'}}">
+          <text wx:if="{{product.starttime_s.reminder<0}}" class='going-bg font-65 ' style='border-radius:3px;padding:0.5vh;'><text class='bg_p' wx:for="{{product.endtime_s.hour}}" wx:key="key" >{{item}}</text>时<text class='bg_p' wx:for="{{product.endtime_s.minute}}" wx:key="key">{{item}}</text>分<text class='bg_p' wx:for="{{product.endtime_s.second}}" wx:key="key">{{item}}</text>秒</text>
+        </view>
+        <view style='color:black' wx:else>
+          <text class='going-bg font-65 ' style='border-radius:3px;padding:0.5vh;'><text class='bg_g' wx:for="{{'0000'}}" wx:key="key" >{{item}}</text>时<text class='bg_g' wx:for="{{'00'}}" wx:key="key">{{item}}</text>分<text class='bg_g' wx:for="{{'00'}}" wx:key="key">{{item}}</text>秒</text>
+        </view>
+      </view>
+    </view>
+
+    <view>
+      <view class="flex-row {{product.starttime_s.reminder<0&&product.endtime_s.reminder>0&&product.status=='A'&&status=='P'?'primary':'blacklight'}}" style='margin-top:4vh;margin-bottom:0.5vh;padding-left:4vh;margin-left:{{kanprice*progressfix/(product.oriprice-product.lowprice)+2}}vw;'>
+        <view class="flex-row bg_button_tran" style='height:4vh;padding:0.5vh;margin-bottom:1vh;'>
+          <view>
+            <image src='{{order.member.photo}}' class='img-4' style='border-radius:2vh;margin-top:-1px;margin-left:-1px;'></image>
+          </view>
+          <text class='font-60' style='margin-top:1vh;'>￥</text>
+          <text class='font-90' style='margin-top:-0.5vh;margin-right:2vh;'>{{kanprice_str.b}}<text class='font-70'>{{kanprice_str.s}}</text></text>
+        </view>
+      </view>
+      <view class="{{product.starttime_s.reminder<0&&product.endtime_s.reminder>0&&product.status=='A'&&status=='P'?'avt':'dis'}}" style='margin-left:10vh;margin-right:10vh;height:2.5vh;background:#FFA566;border-radius:1.25vh;'>
+        <view class='bar' style='height:100%;width:{{kanprice*100.0/(product.oriprice-product.lowprice)}}%;border-top-left-radius:1.25vh;border-bottom-left-radius:1.25vh;{{kanprice*100.0/(product.oriprice-product.lowprice)>=99.5?"border-top-right-radius:1.25vh;border-bottom-right-radius:1.25vh;":""}}'>
+          <view class='ball' style='position:absolute;height:4vh;width:4vh;border-radius:2vh;margin-top:-0.8vh;margin-left:10vh;left:{{kanprice*63.0/(product.oriprice-product.lowprice)}}vw'>
+            <view class='point' style='width:1vh;height:1vh;border-radius:0.5vh;margin-top:1.5vh;margin-left:1.5vh;'>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class='flex-row font-60' style='padding-left:6vh;padding-right:6vh;padding-top:1vh;'>
+        <view class='flex-1'>￥{{product.oriprice}}</view>
+        <view class='flex-1 text-right'>￥
+          <text>{{product.lowprice}}</text>
+        </view>
+      </view>
+      <view wx:if="{{member.id!=order.member_id}}">
+      
+        <block wx:if="{{product.starttime_s.reminder<0&&product.endtime_s.reminder>0&&product.status=='A'&&order.status=='P'}}">
+          <block  wx:if="{{member_kanprice==0}}">
+          <view class='flex-row ' style='margin-top:3vh;'>
+            <view class="flex-1 text-center">
+              <text class='font-75 bold bg_btn_gold' style='color:#CD5602;border-radius:4vh;padding:2vh;padding-left:4vh;padding-right:4vh;margin-left:1vh;' bindtap='gokan' >帮TA砍价</text>
+            </view>
+          </view>
+          <view class=' text-center' style='margin-top:2vh;' wx:if="{{product.extrakan!='N'}}">
+            <text class='font-65' wx:if="{{product.extrakan=='C'}}">新用户可看下更多金额哦</text>
+            <text class='font-65' wx:if="{{product.extrakan=='N'}}">好友绑定手机，砍价金额可能翻倍哦</text>
+          </view>
+          </block>
+          <block wx:else>
+          <view class='flex-row ' style='margin-top:3vh;'>
+            <view class="flex-1 text-center">
+              <text class='font-75 bold bg_btn_red' style='color:#CD5602;border-radius:4vh;padding:2vh;padding-left:4vh;padding-right:4vh;margin-left:1vh;color:#FDEF90;padding-bottom:3vh;' bindtap='goInshare'>找人帮TA砍</text>
+            </view>
+          </view>
+          <view class=' text-center' style='margin-top:2vh;'>
+            <text class='font-65' >共帮好友砍掉￥{{member_kanprice}}</text>
+          </view>
+          </block>
+        </block>
+        <block  wx:else>
+        <view class='text-center ' style='margin-top:3vh;' wx:if="{{product.endtime_s.reminder>0&&product.status=='A'}}">
+          <text class='font-80 bold bg_btn_gold' style='color:#CD5602;border-radius:4vh;padding:2vh;padding-left:4vh;padding-right:4vh;margin-left:1vh;' bindtap='gotoMyKan' >发起我的砍价</text>
+        </view>
+        <view class='text-center ' style='margin-top:3vh;' wx:else>
+          <text class='font-80 bold' style='background:#999999;color:white;border-radius:4vh;padding:2vh;padding-left:4vh;padding-right:4vh;margin-right:1vh;'>砍价活动已结束</text>
+        </view>
+          <view class=' text-center' style='margin-top:2vh;'>
+            <text class='font-65' >来晚啦，活动已经结束啦</text>
+          </view>
+        </block>
+      </view>
+      <view wx:else>
+        <block wx:if="{{product.starttime_s.reminder<0&&product.endtime_s.reminder>0&&product.status=='A'&&order.status=='P'}}">
+          <view class='flex-row ' style='margin-top:3vh;' >
+            <view class="flex-1 text-right">
+              <text class='font-80 bold' style='color:white;border:1px solid white;border-radius:4vh;padding:2vh;padding-left:4vh;padding-right:4vh;margin-right:1vh;' bindtap='gotoTryPay'>立即下单</text>
+            </view>
+            <view class="flex-1">
+              <text class='font-80 bold bg_btn_gold' style='color:#CD5602;border-radius:4vh;padding:2vh;padding-left:4vh;padding-right:4vh;margin-left:1vh;' bindtap='goInshare'>找人帮砍</text>
+            </view>
+          </view>
+
+          <view class=' text-center' style='margin-top:2vh;' wx:if="{{product.extrakan!='N'}}">
+            <text class='font-65' wx:if="{{product.extrakan=='C'}}">新用户可看下更多金额哦</text>
+            <text class='font-65' wx:if="{{product.extrakan=='N'}}">好友绑定手机，砍价金额可能翻倍哦</text>
+          </view>
+        </block>
+        <block wx:else>
+          <view class='text-center ' style='margin-top:3vh;' >
+            <text class='font-80 bold' style='background:#999999;color:white;border-radius:4vh;padding:2vh;padding-left:4vh;padding-right:4vh;margin-right:1vh;'>砍价活动已结束</text>
+          </view>
+        </block>
+
+      </view>
+
+      <view class='flex-row ' style='padding-left:5vh;padding-right:5vh;margin-top:5vh;'>
+        <view class='flex-3 ' style="margin-right:2vh;">
+          <view style='height:1px;width:100%;background:white;margin-top:2vh;'>
+          </view>
+        </view>
+        <view class='flex-3 text-center'>
+          <image src="../utils/images/kanjiabang.png" style='width:20.1vw;height:8.7vw;'></image>
+        </view>
+        <view class='flex-3 ' style="margin-left:2vh;">
+          <view style='height:1px;width:100%;background:white;margin-top:2vh;'>
+          </view>
+        </view>
+      </view>
+
+
+      <view class='flex-row ' style='margin-top:2vh;'>
+        <view class='flex-4 font-80 bold text-right' style="color:#FDEF90" bindtap='changebangtype' id="rank">给力好友</view>
+        <view class='flex-3 text-center'></view>
+        <view class='flex-4  font-80 bold' style="color:#FDEF90" bindtap='changebangtype' id="time">砍价记录</view>
+      </view>
+      <view class='bg_bg-{{bangtype=="rank"?"left":"right"}} {{kanfriends.length<3?"bg_bg-shortline":""}}' style='margin-left:2vh;margin-right:2vh;'>
+        <view class='flex-row margin-2 border-bottom font-70 no-margin' style='padding-top:4vh;padding-bottom:2vh;'>
+          <view style='margin-right:2vh;'>
+            <image src="../utils/images/icons/sword.png" class='img-3'></image>
+          </view>
+          <block wx:if="{{kanfriends.length>0}}">已有{{kanfriends.length}}位好朋友帮你砍价</block>
+          <block wx:else>暂无砍价记录</block>
+        </view>
+        <view wx:if="{{bangtype=='rank'}}" class='no-margin' style='padding-top:2vh;'>
+          <block wx:for="{{rankkanfriends}}" wx:key="i">
+            <view wx:if="{{item.seq<=(5+showmorerankfriends*10)}}" class="flex-row" style="margin-top:2vh;">
+              <view class='flex-1 text-center'>
+                <text class="font-80" wx:if="{{item.seq>3}}">{{item.seq}}</text>
+                <image wx:if="{{item.seq==1}}" style='margin-top:1vh;' src='../utils/images/icons/jin.png' class='img-3'></image>
+                <image wx:if="{{item.seq==2}}" src='../utils/images/icons/yin.png' class='img-3' style='margin-top:1vh;'></image>
+                <image wx:if="{{item.seq==3}}" src='../utils/images/icons/tong.png' class='img-3' style='margin-top:1vh;'></image>
+              </view>
+              <view style='flex-2 '>
+                <image src='{{item.memberphoto}}' class='img-5' style='border-radius:3.5vh;'></image>
+              </view>
+              <view class='flex-4 flex-row' style='margin-left:2vh;'>
+                <view class='flex-5'>
+                  <text class='font-70'>{{item.membername}}</text>
+                </view>
+                <view class='flex-5 text-right' style='padding-right:2vh;'>
+                  <text class='font-80' style="color:#FDEF90">-￥{{item.kanprice}}</text>
+                </view>
+              </view>
+            </view>
+          </block>
+          <view class='border-bottom' wx:if="{{kanfriends.length>(5+showmorerankfriends*10)}}" style='margin-top:2vh;'>
+
+          </view>
+          <view class='padding-2 text-center font-75'>
+            <view wx:if="{{kanfriends.length>(5+showmorerankfriends*10)}}" bindtap='rankcheckmore' class='btnOrange bg_btn_orange' >查看更多</view>
+          </view>
+        </view>
+        <view wx:else class='no-margin' style='padding-top:2vh;'>
+          <block wx:for="{{timekanfriends}}" wx:key="i">
+            <view wx:if="{{item.seq<=(5+showmoretimefriends*10)}}" class="flex-row" style="margin-top:2vh;">
+
+              <view style='flex-2 ' style='padding-left:3vh;'>
+                <image src='{{item.memberphoto}}' class='img-5' style='border-radius:3.5vh;'></image>
+              </view>
+              <view class='flex-4 flex-row' style='margin-left:2vh;'>
+                <view class='flex-5'>
+                  <text class='font-70'>{{item.membername}}</text>
+                </view>
+                <view class='flex-5 text-right' style='padding-right:2vh;'>
+                  <text class='font-80' style="color:#FDEF90">-￥{{item.kanprice}}</text>
+                </view>
+              </view>
+            </view>
+          </block>
+          <view class='border-bottom' wx:if="{{kanfriends.length>(5+showmoretimefriends*10)}}" style='margin-top:2vh;'>
+
+          </view>
+          <view class='padding-2 text-center font-75'>
+            <view wx:if="{{kanfriends.length>(5+showmoretimefriends*10)}}" bindtap='timecheckmore' class='btnOrange bg_btn_orange' >查看更多</view>
+          </view>
+
+
+
+
+        </view>
+      </view>
+    </view>
+
+    <view class='white block block-radius font-70 flex-row' style='color:black;margin-top:4vh;padding:1vh;border-radius:1vh;padding-left:2vh;padding-right:2vh;'>
+      <view class='flex-1'>商品评价</view>
+      <view class='flex-1 text-right'>
+        <i class="fa fa-angle-down"></i>
+      </view>
+    </view>
+
+    <view class='white block block-radius font-70 flex-row' style='color:black;margin-top:1vh;padding:1vh;border-radius:1vh;padding-left:2vh;padding-right:2vh;'>
+      <view class='flex-1'>商品详情</view>
+      <view class='flex-1 text-right'>
+        <i class="fa fa-angle-down"></i>
+      </view>
+    </view>
+
+  </scroll-view>
+</view>
+
+
+
+
+
+
+
+<view style='position:absolute;left:0;top:0;height:100vh;width:100vw;' wx:if="{{inshare==true}}">
+  <view style='height:100vh;width:100vw;background:black;opacity: 0.7;' bindtap='closeShare'>
+  </view>
+  <view style='position:absolute;left:13vw;top:5vh;width:74vw;'>
+    <image style='width:74vw;height:120vw;' src="../utils/images/1.png"></image>
+  </view>
+  <view style='position:absolute;left:30vw;top:30vh;width:100vw;'>
+    <view class='flex-row font-white' style='padding-top:2vh;'>
+      <view>
+        <image src='{{order.member.photo}}' class='img-3' style='border-radius:5vh;'></image>
+      </view>
+      <view class='font-60' style='margin-top:0.8vh;margin-left:1vh;'>
+        <text style='color:#FDEC8E;text-overflow:ellipsis;'>{{order.member.shortname}}</text>
+        <text>正在砍价</text>
+      </view>
+    </view>
+  </view>
+  <view style='position:absolute;left:18vw;top:36.5vh;width:64vw;'>
+    <view class='flex-row ' style='padding-top:2vh;'>
+      <view>
+        <image src="{{product.cover}}" style='width:18vw;height:18vw;border-radius:1vh;'></image>
+      </view>
+      <view style='margin-left:2vh;width:100%'>
+        <view class='font-70'>{{product.title}}</view>
+        <view style='margin-left:4vh;color:#FDEC8E;margin-top:3vh'>
+          <text class='font-60'>￥</text>
+          <text>{{product.lowprice_str.b}}<text class='font-80'>{{product.lowprice_str.s}}</text></text>
+          <text class='font-white font-60 through-line' style='margin-top:1.5vh;position:absolute;right:1vw'>{{product.oriprice}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+
+  <view style='position:absolute;left:0vw;top:56vh;width:100vw;'>
+    <view class='text-center font-white font-65'>
+      <text>{{product.endtime}}</text>
+    </view>
+  </view>
+
+  <view style='position:absolute;left:0.2vw;top:61vh;width:100vw;'>
+    <view class='text-center'>
+      <image style='width:18vw;height:18vw;background-image:url(http://cmsdev.app-link.org/alucard263096/zhichibargain/api/kanorder/qrcode?order_id={{id}});background-size:18vw 20.9vw;'></image>
+    </view>
+  </view>
+
+  <view class='flex-row' style='position:absolute;left:0vw;top:83vh;width:100vw;'>
+    <view class='flex-1 text-right flex-row '>
+      <button class='btn-outline font-white  font-70 flex-row' bindtap='sharetomemory' style='padding-left:4vw;padding-right:4vw;padding-top:0.5vh;margin-left:15vw;background:transparent'>
+        <view>
+          <image src="../utils/images/icons/memory.png" style='width:5vw;height:5vw;margin-top:0.5vh;'></image>
+        </view>
+        <view>
+          <text style='margin-left:1vh;'>分享朋友圈</text>
+        </view>
+      </button>
+    </view>
+    <view class='flex-1 text-right flex-row '>
+      <button open-type="share" class='btn-outline font-white  font-70 flex-row' style='padding-left:4vw;padding-right:4vw;padding-top:0.5vh;margin-left:2vw;background:transparent'>
+        <view>
+          <image src="../utils/images/icons/friends.png" style='width:5vw;height:5vw;margin-top:0.5vh;'></image>
+        </view>
+        <view>
+          <text style='margin-left:1vh;'>分享给好友</text>
+        </view>
+      </button>
+    </view>
+  </view>
+
+</view>
+
+
+<view style='position:absolute;left:0;top:0;height:100vh;width:100vw;' wx:if="{{inkaning==true}}">
+  <view style='height:100vh;width:100vw;background:black;opacity: 0.7;' bindtap='closeShare'>
+  </view>
+  <view style='position:absolute;left:15vw;top:20vh;height:100vh;width:70vw;'>
+    <image src="../utils/images/kan.gif" ></image>
+  </view>
+</view>
+
+
+
+<view style='position:absolute;left:0;top:0;height:100vh;width:100vw;' wx:if="{{inkan==true}}">
+  <view style='height:100vh;width:100vw;background:black;opacity: 0.7;' bindtap='closeShare'>
+  </view>
+<image src='../utils/images/brilliant.png' wx:if="{{inkan}}" class="abs brilliant" style='opacity: 0.85;'></image>
+<view class="abs">
+ <image src='../utils/images/success.png' style='width:70vw;height:98.6vw; border-radius:1vh;margin-top:20%;text-align:center;'></image>
+</view>
+
+<!--gongxi-->
+<view class="abs" style="top:6.5%;height:50px;margin-left:28%;margin-right:28%;">
+   <view class="gongxi flex-row" style="width:65%;">
+    <view class="leftline">
+       
+    </view>
+    <view class="round"></view>
+    <text class="gxtext">恭喜你</text>
+    <view class="round"></view>
+    <view class="rightline">
+      
+    </view>
+   </view>
+ </view>
+
+    <!--Close-->
+      <view class='abs' style='margin:10% 15% 0 16.5%; width:68.3%; height:50px; text-align:right; '>
+      <image src='../utils/images/icons/close-empty.png'  class='img-3'  bindtap='close'></image>
+      </view>
+      <view class='abs' style='margin:16% 0 0 0; width:82.3%; height:19px; text-align:right;border-right:1px; border-right-color:rgba(255,255,255, 0.6); border-right-style:solid; '>
+      </view>
+
+<!--Information-->
+   <view class="abs information" style="top:50.5%;">
+    <view class="head">
+      <text  class='font-80'>成功帮好友砍掉</text>
+    </view>
+    <view class="body">
+    <text class='font-80'>￥</text>
+      <text class='font-80'>{{member_kanprice}}</text>
+    </view>
+    <view class="footer" wx:if="{{product.extrakan!='N'&&member_extraprice>0}}">
+      <text>+</text>
+      <text class='font-60'>￥</text>
+      <text>{{member_extraprice}}</text>
+      <text>({{product.extrakan=='C'?"新用户额外砍价":"授权手机额外砍价"}})</text>
+    </view>
+   </view>
+
+<!--Button-->
+  <view class="abs" style="top:78%;">
+  <view class="flex-row" style="margin-left:17.5%; margin-right:17.5%;">
+<button class="cstbutton"  bindtap="close" plain="true" size="mini">我知道了</button>
+<button class="cstbutton"  style="background-color:rgb(243, 149, 73);" bindtap="gotoMyKan"  size="mini">发起我的砍价</button>
+</view> 
+</view>
+
+</view>
+
+
+
+
+
+<view style='position:absolute;left:0;top:0;height:100vh;width:100vw;' wx:if="{{addtocart==true}}">
+  <view style='height:100vh;width:100vw;background:black;opacity: 0.7;' bindtap='closeAddToCart'>
+  </view>
+  <view class='weui-footer_fixed-bottom white no-margin ' style='margin-bottom:-1.6vh;' >
+    <view class='flex-row  padding-2 border-bottom'>
+      <view class='flex-2'>
+      <image src='{{product.detail.cover}}' style='width:18vh;height:18vh;border-radius:1vh;margin-top:-8vh;'></image>
+      </view>
+      <view class='padding-2 no-margin flex-12'  style='margin-top:-2vh;'>
+        <view class='no-margin font-80'>{{product.detail.title}}</view>
+        <view class='primary'>
+          <text class='font-60'>￥</text><text class='font-80'>{{product.lowprice_str.b}}<text class='font-70'>{{product.lowprice_str.s}}</text></text>
+        </view>
+        <view class='font-70' wx:if="{{selectedoptionstr!=''}}">
+          已选：{{selectedoptionstr}}
+        </view>
+      </view>
+      <view class='text-right flex-1' style='margin-top:-1vh;'  bindtap='closeAddToCart'><image src='../utils/images/icons/close-empty.png'  class='img-3'></image>
+      </view>
+    </view>
+    <block wx:for="{{product.detail.model}}" wx:key="index">
+    <view class='padding-2 border-bottom'>
+      <view class='font-80 bold'>{{item.name}}</view>
+      <view class='flex-row' style='margin-top:1vh;'>
+        <block  wx:for="{{item.options}}" wx:for-item="option" wx:for-index="opt" wx:key="indexopt">
+          <view class='{{item.value==option.value?"back-primary":"back-light"}} padding-2' style='margin-right:2vh;padding-top:0.5vh;padding-bottom:0.5vh;border-radius:1vh;' bindtap='optionSelect' id="{{item.id}}_{{option.value}}" >
+            <text class='font-75' >{{option.display}}</text>
+          </view>
+        </block>
+      </view>
+    </view>
+    </block>
+
+    <view class='padding-2 border-bottom flex-row' style='padding-top:4vh;padding-bottom:4vh;'>
+      <view class='font-80 bold flex-1'>数量</view>
+      <view class='font-80 flex-2 text-right'><text>库存 {{stock}} </text><i class="fa fa-minus back-light padding-1" ></i><text class='back-light ' style='padding-left:2vh;padding-right:2vh;padding-top:0.5vh;padding-bottom:0.7vh;margin-left:1px;margin-right:1px;'>{{count}}</text><i class="fa fa-plus back-light  padding-1"  ></i> </view>
+    </view>
+
+    <view class='back-primary padding-2 text-center' bindtap='tryKanjia'>
+      <text class='font-80'>加入购物车</text>
+    </view>
+  </view>
+</view>

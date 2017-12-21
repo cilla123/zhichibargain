@@ -1,0 +1,164 @@
+<!--pages/product/detail.wxml-->
+<view style='position:absolute;left:0;top:0;' wx:if="{{product.id>0}}">
+<scroll-view scroll-y style="height: 91.5vh;" >
+
+<view class='broadcast font-65 flex-row padding-2' wx:if="{{broadcase.money>0}}">
+  <view style='margin-right:1vh;'>
+    <image class='img-2' src="../utils/images/icons/horn.png"></image>
+  </view>
+  <view style='padding-right:2vh'>
+    <text>恭喜{{broadcase.membername}}砍价成功，共砍掉<text class='primary'>{{broadcase.money}}</text>元</text>
+  </view>
+</view>
+
+<view>
+  <image src="{{product.detail.cover}}" style='height:53vh;width:100vw;'></image>
+</view>
+
+<view class='flex-row font-white no-margin' style='background:#FDA14C;margin-bottom:0vh;'>
+  <view class='flex-5 flex-row' style='padding-left:1vh;'>
+    <view class='flex-1'>
+      <text class='font-75'>￥</text>
+      <text class='font-150'>{{product.lowprice_str.b}}<text class='font-70'>{{product.lowprice_str.s}}</text></text>
+    </view>
+    <view class='flex-1'>
+      <view class='no-margin'>
+        <text class='font-50' style='text-decoration:line-through'>￥{{product.oriprice}}</text>
+      </view>
+      <view  class='no-margin' >
+        <text class='font-55' style='background:#FD9332;padding:0px;padding-left:4px;padding-right:4px;'>仅剩{{product.allstore-product.sales}}件</text>
+      </view>
+    </view>
+  </view>
+  <view class='flex-3 reminder text-center bg_bg' style='margin-top:-1vh;' wx:if="{{product.endtime_s.reminder>0&&product.status=='A'}}">
+      <view class='no-margin' style='padding-left:5vh;'>
+        <text class='font-60' wx:if="{{product.starttime_s.reminder<0}}">活动剩余时间</text>
+        <text class='font-60 light' wx:if="{{product.starttime_s.reminder>0}}">活动开始时间</text>
+        
+        <view class='no-margin text-right ' style='padding-left:1vh;padding-right:1vh;margin-top:-1vh;'>
+            <text wx:if="{{product.starttime_s.reminder<0}}" class='font-white going-bg font-65 ' style='border-radius:3px;padding:0.5vh;'><text class='bg_no' wx:for="{{product.endtime_s.hour}}" wx:key="key" >{{item}}</text>时<text class='bg_no' wx:for="{{product.endtime_s.minute}}" wx:key="key">{{item}}</text>分<text class='bg_no' wx:for="{{product.endtime_s.second}}" wx:key="key">{{item}}</text>秒</text>
+            <text wx:if="{{product.starttime_s.reminder>0}}" class='font-white coming-bg font-65 ' style='border-radius:3px;padding:0.5vh;'><text class='bg_no' wx:for="{{product.starttime_s.hour}}" wx:key="key" >{{item}}</text>时<text class='bg_no' wx:for="{{product.starttime_s.minute}}" wx:key="key">{{item}}</text>分<text class='bg_no' wx:for="{{product.starttime_s.second}}" wx:key="key">{{item}}</text>秒</text>
+          </view>
+      </view>
+  </view>
+
+  <view class='flex-3 reminder text-center bg_bg3' style='margin-top:-1vh;' wx:else>
+  <view class='no-margin font-white' style='padding-left:5vh;'>
+      <text class='font-60' >活动剩余时间</text>
+      <view class='no-margin text-right ' style='padding-left:1vh;padding-right:1vh;margin-top:-1vh;'>
+            <text  class='font-white coming-bg font-65 ' style='border-radius:3px;padding:0.5vh;'><text class='bg_g' wx:for="{{'0000'}}" wx:key="key" >{{item}}</text>时<text class='bg_g' wx:for="{{'00'}}" wx:key="key">{{item}}</text>分<text class='bg_g' wx:for="{{'00'}}" wx:key="key">{{item}}</text>秒</text>
+          </view>
+      </view>
+  </view>
+
+
+
+</view>
+
+
+
+
+<view class='white padding-2 border-bottom'>
+<view class=' flex-row '>
+  <view class='flex-8 font-85'>
+    <text>{{product.detail.title}}</text>
+  </view>
+  <view class='flex-1 text-right no-margin'>
+    <view>
+      <image class='img-3' src='../utils/images/icons/share.png'></image>
+    </view>
+    <view class='font-60 no-margin light'>
+      <text>分享</text>
+    </view>
+  </view>
+</view>
+<view class='font-60 light' style='margin-top:1vh;'>
+  运费：{{product.expressset=="FREE"?"包邮":product.detail.express_fee}}
+</view>
+</view>
+<view class='white padding-2 border-bottom' wx:if="{{product.endtime_s.reminder>0&&product.status=='A'}}">
+  <view wx:if="{{product.starttime_s.reminder<0}}">
+      <view class='text-center' >
+          <view   >
+            <text class='font-65 light '>暂无进行中的砍价</text>
+          </view>
+          <view style='margin-top:2vh'>
+            <text bindtap='tryAddToCart bg_btn_red' class='font-80' style='font-weight:bold;color:white;margin-top:2vh;padding-top:1.8vh;padding-bottom:3vh;padding-left:15vw;padding-right:15vw;border:0'>发起砍价</text>
+          </view>
+      </view>
+  </view>
+  <view wx:if="{{product.starttime_s.reminder>0}}">
+    <view class='text-center' >
+          <view class=''>
+            <text class='font-65 light'>活动尚未开始</text>
+          </view>
+    </view>
+  </view>
+</view>
+<view class='white padding-2 border-bottom' wx:else>
+  <view >
+    <view class='text-center' >
+          <view style='margin-top:2vh'>
+            <text bindtap='tryAddToCart' class='font-80' style='background:#999999;background-size: 100% 100%;font-weight:bold;color:white;margin-top:2vh;padding-top:1.8vh;padding-bottom:2vh;padding-left:15vw;padding-right:15vw;border-radius:5vh;'>砍价活动已结束</text>
+          </view>
+      </view>
+  </view>
+</view>
+
+
+<view class='white padding-2 ' style='padding-top:1.5vh;padding-bottom:1.5vh;margin-top:1vh;'>
+  <view class=' flex-row '>
+    <view class='flex-1 font-85'>评价</view>
+    <view class='flex-1 text-right light font-70'><i class="fa fa-chevron-right"></i></view>
+  </view>
+</view>
+<view class='white  padding-2 border-bottom' style='padding-top:1.5vh;padding-bottom:1.5vh;margin-top:1vh;'>
+  <view class=' flex-row '>
+    <view class='flex-1 font-85'>商品详情</view>
+    <view class='flex-1 text-right light font-70'><i class="fa fa-chevron-right"></i></view>
+  </view>
+</view>
+
+</scroll-view>
+
+<view class="weui-footer_fixed-bottom white no-margin text-center" style='bottom:0.45em' >
+     <view class='flex-row'>
+      <view class='flex-1 padding-1' style='border-right:1px solid #f2f2f2;'>
+        <view style='margin-bottom:-15px;'>
+          <image src='../utils/images/icons/contact.png' class='img-3'></image>
+        </view>
+        <view  class='no-margin' style=''>
+          <text class='font-60 light'>客服</text>
+        </view>
+      </view>
+      <view class='flex-1 padding-1' style='border-right:1px solid #f2f2f2;'>
+        <view style='margin-bottom:-15px;'>
+          <image src='../utils/images/icons/shop.png' class='img-3'></image>
+        </view>
+        <view  class='no-margin' style=''>
+          <text class='font-60 light'>店铺</text>
+        </view>
+      </view>
+      <view class='flex-4 light font-white' style='background:#999999;padding-top:1.5vh;'  wx:if="{{product.status!='A'}}">
+        <text class='font-80'>砍价活动已结束</text>
+      </view>
+      <view class='flex-4 light' style='background:#f2f2f2;padding-top:1.5vh;'  wx:elif="{{product.starttime_s.reminder>0}}">
+        <text class='font-80'>尚未开始</text>
+      </view>
+      <view class='flex-4 light' style='background:#f2f2f2;padding-top:1.5vh;'  wx:elif="{{product.endtime_s.reminder<0}}">
+        <text class='font-80'>已结束</text>
+      </view>
+      <view class='flex-4 font-white' style='background:#FF761C;padding-top:1.5vh;'  wx:elif="{{product.starttime_s.reminder<0}}" bindtap="tryAddToCart">
+        <text class='font-80'>发起砍价</text>
+      </view>
+     </view>
+</view>
+
+</view>
+
+
+
+
+
+
+

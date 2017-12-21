@@ -1,0 +1,2 @@
+/* pages/product/order.wxss */
+@import "../utils/common.wxss";

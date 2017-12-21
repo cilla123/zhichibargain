@@ -1,0 +1,51 @@
+/* pages/product/detail.wxss */
+@import "../utils/common.wxss";
+.broadcast{
+  position: absolute;
+  background-color: white ;
+  margin-top:1.5vh;
+  opacity: 0.7;
+  border-top-right-radius: 5vh;
+  border-bottom-right-radius: 5vh;
+}
+.topbroadcast{
+  position: absolute;
+  background-color: white ;
+  width:100vw;
+  top:0;
+  left:0;
+  z-index: 1;
+}
+.bottomorder{
+  position: absolute;
+  background-color: white ;
+  width:100vw;
+  bottom:0;
+  left:0;
+  z-index: 1;
+}
+.bg_no{
+  background: black;
+  margin-right:2px;
+  padding:2px;
+  border-radius: 2px;
+}
+.bg_g{
+  background: #939393;
+  margin-right:2px;
+  padding:2px;
+  border-radius: 2px;
+}
+.bg_p{
+  background: #FE594A;
+  color:white;
+  margin-right:2px;
+  padding:2px;
+  border-radius: 2px;
+}
+.btnOrange{
+  margin-left:30vw;
+  margin-right:30vw;
+  background-size:100% 100%;
+  padding:2vh;
+}
