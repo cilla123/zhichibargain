@@ -61,7 +61,7 @@
     <view>
       <image class='bg_banner' style='width:100vw;height:54.6vw;'></image>
     </view>
-    <view style='background-image:url("../../images/focus.png");margin-left:6vh;margin-right:6vh;border-top-left-radius:1vh;border-top-right-radius:1vh;background-size:100% 100%;height:8vh;padding-left:10vh;padding-right:10vh;' class="text-center">
+    <view style='margin-left:6vh;margin-right:6vh;border-top-left-radius:1vh;border-top-right-radius:1vh;height:8vh;padding-left:10vh;padding-right:10vh;' class="text-center bg_focus">
       <view class='flex-row' style='padding-top:2vh;'>
         <view>
           <image src='{{order.member.photo}}' class='img-5' style='border-radius:5vh;'></image>
@@ -79,7 +79,7 @@
         </view>
         <view style='margin-left:2vh;width:100%;'>
           <view class='font-80'>{{product.detail.title}}</view>
-          <view class='block-radius flex-row  padding-1' style='background-image:url(../../images/bg_button.png);margin-top:1vh;background-size:100% 100%;color:#FDEC8E;'>
+          <view class='block-radius flex-row  padding-1 bg_bg_button' style='margin-top:1vh;color:#FDEC8E;'>
             <text class='font-65' style='line-height:2.2vh;'>最低\n砍至</text>
             <text class='font-75' style='margin-left:1vh;margin-top:1vh;'>￥</text>
             <text>{{product.lowprice_str.b}}<text class='font-70'>{{product.lowprice_str.s}}</text></text>
@@ -106,7 +106,7 @@
 
     <view>
       <view class="flex-row {{product.starttime_s.reminder<0&&product.endtime_s.reminder>0&&product.status=='A'&&status=='P'?'primary':'blacklight'}}" style='margin-top:4vh;margin-bottom:0.5vh;padding-left:4vh;margin-left:{{kanprice*progressfix/(product.oriprice-product.lowprice)+2}}vw;'>
-        <view class="flex-row  " style='height:4vh;background-image:url(../../images/button_tran.png);background-size:100% 100%;padding:0.5vh;margin-bottom:1vh;'>
+        <view class="flex-row bg_button_tran" style='height:4vh;padding:0.5vh;margin-bottom:1vh;'>
           <view>
             <image src='{{order.member.photo}}' class='img-4' style='border-radius:2vh;margin-top:-1px;margin-left:-1px;'></image>
           </view>
@@ -145,7 +145,7 @@
           <block wx:else>
           <view class='flex-row ' style='margin-top:3vh;'>
             <view class="flex-1 text-center">
-              <text class='font-75 bold' style='background:url(../../images/btn_red.png);color:#CD5602;background-size:100% 100%;border-radius:4vh;padding:2vh;padding-left:4vh;padding-right:4vh;margin-left:1vh;color:#FDEF90;padding-bottom:3vh;' bindtap='goInshare'>找人帮TA砍</text>
+              <text class='font-75 bold bg_btn_red' style='color:#CD5602;border-radius:4vh;padding:2vh;padding-left:4vh;padding-right:4vh;margin-left:1vh;color:#FDEF90;padding-bottom:3vh;' bindtap='goInshare'>找人帮TA砍</text>
             </view>
           </view>
           <view class=' text-center' style='margin-top:2vh;'>
@@ -155,7 +155,7 @@
         </block>
         <block  wx:else>
         <view class='text-center ' style='margin-top:3vh;' wx:if="{{product.endtime_s.reminder>0&&product.status=='A'}}">
-          <text class='font-80 bold' style='background:url(../../images/bg_gold.png);color:#CD5602;background-size:100% 100%;border-radius:4vh;padding:2vh;padding-left:4vh;padding-right:4vh;margin-left:1vh;' bindtap='gotoMyKan' >发起我的砍价</text>
+          <text class='font-80 bold bg_btn_gold' style='color:#CD5602;border-radius:4vh;padding:2vh;padding-left:4vh;padding-right:4vh;margin-left:1vh;' bindtap='gotoMyKan' >发起我的砍价</text>
         </view>
         <view class='text-center ' style='margin-top:3vh;' wx:else>
           <text class='font-80 bold' style='background:#999999;color:white;border-radius:4vh;padding:2vh;padding-left:4vh;padding-right:4vh;margin-right:1vh;'>砍价活动已结束</text>
@@ -172,7 +172,7 @@
               <text class='font-80 bold' style='color:white;border:1px solid white;border-radius:4vh;padding:2vh;padding-left:4vh;padding-right:4vh;margin-right:1vh;' bindtap='gotoTryPay'>立即下单</text>
             </view>
             <view class="flex-1">
-              <text class='font-80 bold' style='background:url(../../images/bg_gold.png);color:#CD5602;background-size:100% 100%;border-radius:4vh;padding:2vh;padding-left:4vh;padding-right:4vh;margin-left:1vh;' bindtap='goInshare'>找人帮砍</text>
+              <text class='font-80 bold bg_btn_gold' style='color:#CD5602;border-radius:4vh;padding:2vh;padding-left:4vh;padding-right:4vh;margin-left:1vh;' bindtap='goInshare'>找人帮砍</text>
             </view>
           </view>
 
@@ -209,7 +209,7 @@
         <view class='flex-3 text-center'></view>
         <view class='flex-4  font-80 bold' style="color:#FDEF90" bindtap='changebangtype' id="time">砍价记录</view>
       </view>
-      <view style='background:url(../../images/bg-{{bangtype=="rank"?"left":"right"}}.png) no-repeat ;background-size:93vw 100%;margin-left:2vh;margin-right:2vh;'>
+      <view class='bg_bg-{{bangtype=="rank"?"left":"right"}} {{kanfriends.length<3?"bg_bg-shortline":""}}' style='margin-left:2vh;margin-right:2vh;'>
         <view class='flex-row margin-2 border-bottom font-70 no-margin' style='padding-top:4vh;padding-bottom:2vh;'>
           <view style='margin-right:2vh;'>
             <image src="../../images/icons/sword.png" class='img-3'></image>
@@ -243,7 +243,7 @@
 
           </view>
           <view class='padding-2 text-center font-75'>
-            <view wx:if="{{kanfriends.length>(5+showmorerankfriends*10)}}" bindtap='rankcheckmore' class='btnOrange' style='background-image: url(../../images/btn_orange.png);'>查看更多</view>
+            <view wx:if="{{kanfriends.length>(5+showmorerankfriends*10)}}" bindtap='rankcheckmore' class='btnOrange bg_btn_orange' >查看更多</view>
           </view>
         </view>
         <view wx:else class='no-margin' style='padding-top:2vh;'>
@@ -267,7 +267,7 @@
 
           </view>
           <view class='padding-2 text-center font-75'>
-            <view wx:if="{{kanfriends.length>(5+showmoretimefriends*10)}}" bindtap='timecheckmore' class='btnOrange' style='background-image: url(../../images/btn_orange.png);'>查看更多</view>
+            <view wx:if="{{kanfriends.length>(5+showmoretimefriends*10)}}" bindtap='timecheckmore' class='btnOrange bg_btn_orange' >查看更多</view>
           </view>
 
 

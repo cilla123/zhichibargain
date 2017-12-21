@@ -30,7 +30,7 @@
       </view>
     </view>
   </view>
-  <view class='flex-3 reminder text-center' style='background:url(../../images/bg.png);background-size:100% 100%;margin-top:-1vh;' wx:if="{{product.endtime_s.reminder>0&&product.status=='A'}}">
+  <view class='flex-3 reminder text-center bg_bg' style='margin-top:-1vh;' wx:if="{{product.endtime_s.reminder>0&&product.status=='A'}}">
       <view class='no-margin' style='padding-left:5vh;'>
         <text class='font-60' wx:if="{{product.starttime_s.reminder<0}}">活动剩余时间</text>
         <text class='font-60 light' wx:if="{{product.starttime_s.reminder>0}}">活动开始时间</text>
@@ -42,7 +42,7 @@
       </view>
   </view>
 
-  <view class='flex-3 reminder text-center' style='background:url(../../images/bg3.png);background-size:100% 100%;margin-top:-1vh;' wx:else>
+  <view class='flex-3 reminder text-center bg_bg3' style='margin-top:-1vh;' wx:else>
   <view class='no-margin font-white' style='padding-left:5vh;'>
       <text class='font-60' >活动剩余时间</text>
       <view class='no-margin text-right ' style='padding-left:1vh;padding-right:1vh;margin-top:-1vh;'>
