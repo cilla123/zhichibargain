@@ -1,46 +1,74 @@
-const formatTime = date => {
-  const year = date.getFullYear()
-  const month = date.getMonth() + 1
-  const day = date.getDate()
-  const hour = date.getHours()
-  const minute = date.getMinutes()
-  const second = date.getSeconds()
+function formatTime(date) {
+  if(!date){
+    date = new Date();
+  }
 
-  return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+  var year = date.getFullYear()
+  var month = date.getMonth() + 1
+  var day = date.getDate()
+
+  var hour = date.getHours()
+  var minute = date.getMinutes()
+  var second = date.getSeconds();
+
+
+  return [year, month, day].map(formatNumber).join('-') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
 
-const formatNumber = n => {
+function formatNumber(n) {
   n = n.toString()
   return n[1] ? n : '0' + n
 }
-const timecutting=n=>{
-  //console.log(n);
-  var date=new Date(n);
-  var second = (date.getTime() - (new Date()).getTime())/1000;
-  var reminder=second;
-  var hour=parseInt( second/3600);
-  second=second-3600*hour;
-  var minute = parseInt(second/60);
-  second = parseInt(second-minute*60);
-  hour = hour > 999 ? hour.toString() 
-  : (hour > 99?"0"+hour.toString()
-  :hour>9?"00"+hour.toString()
-        : (hour > 0 ? "000" + hour.toString() : "0000"));
 
-  minute = minute > 9 ? minute.toString() : "0" + minute.toString();
-  second = second > 9 ? second.toString() : "0" + second.toString();
-
-  //console.log(hour.toString() + "-"+minute.toString() + "-"+second.toString() );
-  return {hour:hour,minute:minute,second:second,reminder:reminder};
+function formatDistance(distance) {
+  distance = +distance;
+  return distance < 1000 ? Math.round(distance) + 'm' : (distance/1000).toFixed(1) + 'km';
 }
-const amountcutting=n=>{
-  var b=Number(n).toFixed(0);
-  var s ="."+ Number(n).toFixed(2).split(".")[1].substring(0,2);
-  return {b:b,s:s}
+
+function isPlainObject(obj) {
+  for (var name in obj) {
+    return false;
+  }
+  return true;
+}
+
+function isPhoneNumber(num) {
+  return /^1\d{10}$/.test(num);
+}
+
+/*获取当前页url*/
+function getCurrentPageUrl() {
+  var pages = getCurrentPages()    //获取加载的页面
+  var currentPage = pages[pages.length - 1]    //获取当前页面的对象
+  var url = currentPage.route    //当前页面url
+  return url
+}
+
+/*获取当前页带参数的url*/
+function getCurrentPageUrlWithArgs() {
+  var pages = getCurrentPages()    //获取加载的页面
+  var currentPage = pages[pages.length - 1]    //获取当前页面的对象
+  var url = currentPage.route    //当前页面url
+  var options = currentPage.options    //如果要获取url中所带的参数可以查看options
+
+  //拼接url的参数
+  var urlWithArgs = url + '?'
+  for (var key in options) {
+    var value = options[key]
+    urlWithArgs += key + '=' + value + '&'
+  }
+  urlWithArgs = urlWithArgs.substring(0, urlWithArgs.length - 1)
+
+  return urlWithArgs
 }
 
 module.exports = {
   formatTime: formatTime,
-  timecutting: timecutting,
-  amountcutting: amountcutting
+  isPlainObject: isPlainObject,
+  isPhoneNumber: isPhoneNumber,
+  formatDistance: formatDistance,
+  getCurrentPageUrl: getCurrentPageUrl,
+  getCurrentPageUrlWithArgs: getCurrentPageUrlWithArgs
 }
+
+

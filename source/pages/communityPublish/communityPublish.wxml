@@ -1,0 +1,38 @@
+<scroll-view scroll-y="true" class="communityPublish-wrap" id="communityPublish">
+  <view class="communityPublish-main">
+    <view class="communityPublish-title">
+      <input class="communityPublish-title-input" id="communityPublish-title-input" placeholder="请输入标题" placeholder-style="color:#909090;font-size:14px;" type="text" bindblur="bindTitleInput" value="{{articleData.title}}" />
+    </view>
+    <view class="communityPublish-content">
+      <textarea class="communityPublish-content-input" id="communityPublish-content-input" placeholder="请输入内容" placeholder-style="color:#909090;font-size:12px;" bindinput="bindTextInput" maxlength="-1" value="{{articleData.text}}" />
+    </view>
+    <view class="communityPublish-img-wrap">
+      <view class="communityPublish-ul clearfix" id="communityPublish-ul">
+        <view wx:for="{{articleData.imgs}}" wx:key="" class="communityPublish-item">
+          <image src="{{item}}" mode="aspectFill"></image>
+          <view class="communityPublish-item-delete" data-index="{{index}}" catchtap="deleteImg">×</view>
+        </view>
+        <view class="communityPublish-item-add" catchtap="uploadImg"><span>+</span><view>添加图片</view></view>
+      </view>
+    </view>
+  </view>
+  <view class="communityPublish-center">
+    <view class="communityPublish-address" wx:if="{{require_loc}}">
+      <label class="ico-moon icon-community-location"></label>
+      <input class="communityPublish-address-input" id="communityPublish-address-input" placeholder="当前定位" placeholder-style="color:#909090;font-size:12px;" type="text" bindtap="getAddress" value="{{address}}" />
+    </view>
+    <view class="communityPublish-phone" wx:if="{{require_phone}}">
+      <label class="ico-moon icon-takeout-cellphone"></label>
+      <input class="communityPublish-phone-input" id="communityPublish-phone-input" placeholder="请输入您的电话号码" placeholder-style="color:#909090;font-size:12px;" type="number" bindblur="bindPhoneInput" value="{{articleData.phone}}" />
+    </view>
+  </view>
+  <view class="communityPublish-classify-wrap">
+    <view class="communityPublish-classify-title"><label class="ico-moon icon-community-category"></label><text>选择分类</text></view>
+    <view class="communityPublish-classify">
+      <text wx:for="{{category}}" wx:for-item="cateItem" wx:for-index="cateIdx" wx:key="cateIdx" data-id="{{cateItem.id}}" data-index="{{cateIdx}}" class="{{cateIdx == categoryIndex ? 'selected' : ''}}" bindtap="changeCategory">{{cateItem.name}}</text>
+    </view>
+  </view>
+  <view class="communityPublish-foot">
+    <button class="communityPublish-btn" catchtap="submitData" style="background-color:{{theme_color}};">发布</button>
+  </view>
+</scroll-view>
