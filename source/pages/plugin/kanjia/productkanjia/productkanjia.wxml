@@ -8,7 +8,7 @@
 
 <view wx:if="{{id>0}}" class='font-white' style='background:#fa8b44;'>
 
-  <view class='topbroadcast' wx:if="{{scolltomiddle==true&&member.id==order.member_id}}">
+  <view class='topbroadcast' wx:if="{{scolltomiddle==true&&member.id==order.member_id&&addtocart==false}}">
     <view class=' font-65 flex-row padding-2' wx:if="{{broadcase.money>0}}" style="color:black;padding-bottom:0px;">
       <view style='margin-right:1vh;'>
         <image class='img-2' src="../utils/images/icons/horn.png"></image>
@@ -27,7 +27,7 @@
     </view>
   </view>
 
-  <view class='bottomorder flex-row font-75' wx:if="{{scolltomiddle==true&&member.id==order.member_id}}">
+  <view class='bottomorder flex-row font-75' wx:if="{{scolltomiddle==true&&member.id==order.member_id&&addtocart==false}}">
     <view class='flex-6 text-center padding-2 ' style='background:#FDA14C' bindtap='gotoTryPay' wx:if="{{product.starttime_s.reminder<0&&product.endtime_s.reminder>0&&product.status=='A'&&order.status=='P'}}">
       <text>现价￥{{product.oriprice-kanprice}}立即下单</text>
     </view>

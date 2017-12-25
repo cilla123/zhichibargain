@@ -17,54 +17,23 @@ Page({
    * 页面的初始数据
    */
   data: {
-    "type": "mycut",
-    cuttype: "cut_doing",
+    "type": "cut",
+    cuttype: "P",
     ordertype:"order_all",
-    member: {},
-    displaytype: "",
-    items: [],
-    activeitem: 0,
-    bordercase: {},
     items_p: [],
     items_finish: [],
     items_myhelp: [],
     items_all: []
   },
-  setLs() {
-    wx.setStorage({
-      key: 'ls',
-      data: 'hellop',
-    });
+  changeCutType(e){
+    this.setData({ "cuttype": e.currentTarget.id });
   },
-  changeType(e) {
-    var t = e.currentTarget.id;
-    this.setData({ "type": t });
-    this.count();
-
-    // To Do:
-     
+  changeType(e){
+    this.setData({"type":e.currentTarget.id});
   },
-  goKanjia(e){
+  gotoKanjia(e){
     wx.navigateTo({
       url: '../productkanjia/productkanjia?id='+e.currentTarget.id,
-    })
-  },
-  changeCutType(e){
-    var t = e.currentTarget.id;
-    this.setData({ "cuttype": t });
-    // To Do:
-
-  }, 
-  changeOrderType(e){
-    var t = e.currentTarget.id;
-    this.setData({ "ordertype": t });
-    // To Do:
-    
-  },
-  gotoDetail(e) {
-    var id = e.currentTarget.id;
-    wx.navigateTo({
-      url: '../productdetail/productdetail?id=' + id,
     })
   },
   /**
@@ -91,21 +60,6 @@ Page({
 
     that.setData({ member: member });
   },
-  count() {
-    var that = this;
-    var items = that.data.items;
-    var ty = that.data.type;
-    var activeitem = 0;
-    for (var i = 0; i < items.length; i++) {
-      items[i].starttime_s = Util.timecutting(items[i].starttime);
-      items[i].endtime_s = Util.timecutting(items[i].endtime);
-      if ((items[i].endtime_s.reminder > 0) && (ty == 'all' || (ty == 'going' && items[i].starttime_s.reminder < 0) || (ty == 'coming' && items[i].starttime_s.reminder > 0))) {
-        activeitem++;
-      }
-    }
-    that.setData({ items: items, activeitem: activeitem });
-  },
-  goroundtimer: null,
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

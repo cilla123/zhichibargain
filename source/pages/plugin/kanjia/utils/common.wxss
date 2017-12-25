@@ -1,6 +1,9 @@
 /**app.wxss**/
 @import "style/img.wxss";
-
+page {
+  line-height: 1.6;
+  font-family: -apple-system-font, "Helvetica Neue", sans-serif;
+}
 
 .weui-footer_fixed-bottom {
   position: fixed;
@@ -125,6 +128,9 @@ background-color:#F2F2F2;
 .font-120{
   font-size:120%;
 }
+.font-95{
+  font-size: 95%;
+}
 .font-90{
   font-size: 90%;
 }
@@ -223,9 +229,17 @@ background-color:#F2F2F2;
   width: 7vh;
   height: 7vh;
 }
-
+.padding-21{
+  padding-left:2vh;
+  padding-right:2vh;
+  padding-top:1vh;
+  padding-bottom:1vh;
+}
 .padding-1{
   padding:1vh;
+}
+.padding-15{
+  padding:1.5vh;
 }
 .padding-2{
   padding:2vh;

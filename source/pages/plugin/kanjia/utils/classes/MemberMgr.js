@@ -9,6 +9,7 @@ class MemberMgr {
     console.log(app.globalData);
 
     var member={
+      id:0,
       usertoken: app.globalData.userInfo.user_token,
       name: app.globalData.userInfo.nickname,
       mobile: app.globalData.userInfo.phone,
