@@ -86,7 +86,7 @@
             <text class='font-65 light '>暂无进行中的砍价</text>
           </view>
           <view style='margin-top:2vh'>
-            <text bindtap='tryAddToCart bg_btn_red' class='font-80' style='font-weight:bold;color:white;margin-top:2vh;padding-top:1.8vh;padding-bottom:3vh;padding-left:15vw;padding-right:15vw;border:0'>发起砍价</text>
+            <text bindtap='tryAddToCart'  class='font-80 bg_btn_red' style='font-weight:bold;color:white;margin-top:2vh;padding-top:1.8vh;padding-bottom:3vh;padding-left:15vw;padding-right:15vw;border:0'>发起砍价</text>
           </view>
       </view>
   </view>

@@ -9,6 +9,8 @@ var Util = require("../utils/utils/util.js");
 var KanproductApi=require('../utils/apis/kanproduct.js');
 var kanproductApi=new KanproductApi();
 
+var BoardcastApi = require('../utils/apis/boardcast.js');
+var boardcastApi=new BoardcastApi();
 
 Page({
   /**
@@ -20,7 +22,7 @@ Page({
     displaytype:"",
     items:[],
     activeitem:0,
-    bordercase:{},
+    broadcase:[],
   },
   setLs(){
     wx.setStorage({
@@ -71,10 +73,16 @@ Page({
         that.count();
       }, 1000);
     });
+    boardcastApi.allsuccess({ zhichiapp_id: MerchantMgr.getAppId()},function(data){
+      // var a=[];
+      // a.push({ shortname: "11111", oriprice: 100, price: 90 });
+      // a.push({ shortname: "22222", oriprice: 100, price: 90 });
+      // a.push({ shortname: "33333", oriprice: 100, price: 90 });
+      that.setData({ boradcast: data });
     
-    var broadcase = ProductMgr.getProductKanjiaBroadcase();
+    });
 
-    that.setData({ member: member, displaytype: displaytype, broadcase: broadcase});
+    that.setData({ member: member, displaytype: displaytype});
   },
   count(amountcut=false){
     var that=this;
@@ -94,7 +102,7 @@ Page({
     //console.log(items);
     that.setData({ items: items, activeitem: activeitem });
   },
-  goroundtimer:null,
+  goroundtimer: null,
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

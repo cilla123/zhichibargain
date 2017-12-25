@@ -285,14 +285,14 @@
       </view>
     </view>
 
-    <view class='white block block-radius font-70 flex-row' style='color:black;margin-top:1vh;padding:1vh;border-radius:1vh;padding-left:2vh;padding-right:2vh;'>
-      <view class='flex-row'>
+    <view class='white block block-radius font-70' style='color:black;margin-top:1vh;padding:1vh;border-radius:1vh;padding-left:2vh;padding-right:2vh;'>
+      <view class='flex-row'  bindtap='bindShowDescription'>
         <view class='flex-1'>商品详情</view>
         <view class='flex-1 text-right'>
           <i class="fa fa-angle-down"></i>
         </view>
       </view>
-      <view wx:if="{{showdescription}}" class='font-70'>
+      <view wx:if="{{showdescription}}">
         <template is="wxParse" data="{{ wxParseData: wxParseDescription.nodes }}" />
       </view>
     </view>

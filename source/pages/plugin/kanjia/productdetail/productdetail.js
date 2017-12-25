@@ -72,7 +72,7 @@ Page({
       
       if(product.id==undefined){
         wx.redirectTo({
-          url: 'list'
+          url: '../index/index'
         });
         return;
       } 

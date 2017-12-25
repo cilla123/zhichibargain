@@ -187,6 +187,9 @@ Page({
     }
     
   },
+  bindShowDescription() {
+    this.setData({ showdescription: !this.data.showdescription });
+  },
   closeAddToCart() {
     this.setData({ addtocart: false });
   },
@@ -196,7 +199,7 @@ Page({
   onLoad: function (options) {
     var that = this;
     var id = options.id;
-    id=21;
+    //id=21;
     var member = MemberMgr.getMember();
     var app_id = MerchantMgr.getAppId();
 
@@ -211,7 +214,7 @@ Page({
     kanorderApi.detail({ id: id, zhichiapp_id: app_id }, function (data) {
       if (data.id == undefined) {
         wx.redirectTo({
-          url: 'list'
+          url: '../index/index'
         });
         return;
       }
@@ -228,6 +231,8 @@ Page({
       //product.status='D';
       order.member = member;
 
+      WxParse.wxParse('wxParseDescription', 'html', product.detail.description, that, 10);
+      
       for (var i in product.detail.model) {
         var options = [];
         for (var j = 0; j < product.detail.model[i].subModelId.length; j++) {

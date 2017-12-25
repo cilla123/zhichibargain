@@ -49,3 +49,36 @@
 .item-grid .item:nth-child(even){
   text-align: right;
 }
+
+
+
+.wrapscroll{height:30px;overflow: hidden;position: absolute;top:30;left: 100;width: 100%}
+      .wrapscroll text{margin:0;height: 30px;width: 100%}
+      .contentscroll text{
+        position: absolute;
+      }
+      @-webkit-keyframes anim1{
+        0% {top: 30px;opacity: 1}
+        50% {top: -30px;opacity: 1}
+        75% {top: -30px ;opacity: 0}
+        100%{top:30px;opacity: 0}
+      }
+      @-webkit-keyframes anim2{
+     
+        0% {top: -30px;opacity: 0}
+        25% {top: 30px;opacity: 0}
+        50% {top: 30px;opacity: 1}
+        100%{top: -30px;opacity: 1}
+      }
+
+      .contentscroll text:nth-child(1){background-color: red;}
+      .contentscroll text:nth-child(2){background-color: yellow;}
+      .contentscroll text:nth-child(1){
+        
+        -webkit-animation: anim1 10s linear infinite;
+      }
+      
+      .contentscroll text:nth-child(2){
+    
+        -webkit-animation: anim2 10s linear infinite;
+      }

@@ -1,9 +1,13 @@
 /**app.wxss**/
-@import "style/fontawesome.wxss";
-@import "style/weui.wxss";
 @import "style/img.wxss";
 
 
+.weui-footer_fixed-bottom {
+  position: fixed;
+  bottom: .52em;
+  left: 0;
+  right: 0;
+}
 .container {
   height: 100%;
   display: flex;

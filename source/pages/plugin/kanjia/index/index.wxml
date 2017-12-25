@@ -2,11 +2,11 @@
 <view class=' white' style='position:fixed;top:0;left:0;index:1; width:100%;'>
 <view class='flex-row padding-2' >
   <view class='flex-9 font-65 flex-row'>
-    <view style='margin-right:1vh;' wx:if="{{broadcase.money>0}}">
+    <view style='margin-right:1vh;' >
       <image class='img-2' src="../utils/images/icons/horn.png"></image>
     </view>
-    <view wx:if="{{broadcase.money>0}}" >
-      <text>恭喜{{member.shortname}}砍价成功，共砍掉￥99</text>
+    <view>
+      <text class='primary'>砍价火热进行中！</text>
     </view>
   </view>
   <view class='flex-4 font-65 primary text-right' bindtap='gotoMyOrder'>
