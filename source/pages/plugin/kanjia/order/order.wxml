@@ -52,7 +52,7 @@
         </view>
         <view class='text-right white padding-2' wx:else style='margin-top:1px'>
           <text class='font-80'>最终价格</text><text class='font-80'>￥</text><text>{{item.price}}</text>
-          <text class='back-primary block-radius padding-21 font-75' style='margin-left:2vh;'>去支付</text>
+          <text class='back-primary block-radius padding-21 font-75' style='margin-left:2vh;' bindtap='gotoPay' id="{{item.id}}">去支付</text>
         </view>
 
 

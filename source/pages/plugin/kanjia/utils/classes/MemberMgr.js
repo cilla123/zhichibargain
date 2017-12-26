@@ -9,11 +9,12 @@ class MemberMgr {
     console.log(app.globalData);
 
     var member={
-      id:0,
+      id: app.globalData.userInfo.user_token,
       usertoken: app.globalData.userInfo.user_token,
       name: app.globalData.userInfo.nickname,
       mobile: app.globalData.userInfo.phone,
-      photo: app.globalData.userInfo.cover_thumb
+      photo: app.globalData.userInfo.cover_thumb,
+      session_key: app.getSessionKey()
     };
     if (app.globalData.userInfo.nickname.length>8){
       member.shortname = app.globalData.userInfo.nickname.substr(0, 8) + (app.globalData.userInfo.nickname.length > 8 ? "..." : "");

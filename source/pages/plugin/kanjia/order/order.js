@@ -12,6 +12,9 @@ var kanproductApi = new KanproductApi();
 var KanorderApi = require('../utils/apis/kanorder.js');
 var kanorderApi = new KanorderApi();
 
+var WechatApi = require('../utils/apis/wechat.js');
+var wechatApi=new WechatApi();
+
 Page({
   /**
    * 页面的初始数据
@@ -23,7 +26,8 @@ Page({
     items_p: [],
     items_finish: [],
     items_myhelp: [],
-    items_all: []
+    items_all: [],
+    app_id:""
   },
   changeCutType(e){
     this.setData({ "cuttype": e.currentTarget.id });
@@ -36,6 +40,30 @@ Page({
       url: '../productkanjia/productkanjia?id='+e.currentTarget.id,
     })
   },
+  gotoPay(e) {
+    var json={
+      zhichiapp_id:this.data.app_id,
+      order_id: e.currentTarget.id,
+      session_key:this.data.member.session_key
+    };
+    var that=this;
+    wechatApi.pay(json,function(data){
+      wx.requestPayment({
+        timeStamp: data.timeStamp,
+        nonceStr: data.nonceStr,
+        package: data.package,
+        signType: data.signType,
+        paySign: data.paySign,
+        success:function(res){
+          //that.loadingData();
+          console.log(data);
+          wx.redirectTo({
+            url: '../../../goodsOrderDetail/goodsOrderDetail?detail=' + data.orderno,
+          })
+        }
+      })
+    });
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -44,21 +72,26 @@ Page({
     var member = MemberMgr.getMember();
     var app_id = MerchantMgr.getAppId();
 
-    kanorderApi.progress({member_id:member.id,zhichiapp_id:app_id},function(data){
-      that.setData({items_p:data});
+
+    that.setData({ member: member, app_id: app_id });
+    this.loadingData();
+  },
+  loadingData(){
+    var that = this;
+    var member = this.data.member;
+    var app_id = this.data.app_id;
+    kanorderApi.progress({ member_id: member.id, zhichiapp_id: app_id }, function (data) {
+      that.setData({ items_p: data });
     });
     kanorderApi.finish({ member_id: member.id, zhichiapp_id: app_id }, function (data) {
-      that.setData({ items_finish:data });
+      that.setData({ items_finish: data });
     });
     kanorderApi.myhelp({ member_id: member.id, zhichiapp_id: app_id }, function (data) {
       that.setData({ items_myhelp: data });
     });
-    kanorderApi.myhelp({ member_id: member.id, zhichiapp_id: app_id }, function (data)    {
+    kanorderApi.myhelp({ member_id: member.id, zhichiapp_id: app_id }, function (data) {
       that.setData({ items_all: data });
     });
-
-
-    that.setData({ member: member });
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

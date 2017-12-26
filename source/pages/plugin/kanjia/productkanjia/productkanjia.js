@@ -181,7 +181,7 @@ Page({
         })
       }else{
         wx.navigateTo({
-          url: '../productorder/productorder?id=' + this.data.id + "&" + this.data.selectmodel.join(","),
+          url: '../productorder/productorder?id=' + this.data.id + "&selectmodel=" + this.data.selectmodel.join(","),
         })
       }
     }
@@ -286,7 +286,7 @@ Page({
     //})
     if(this.data.product.detail.model_items.length==0){
       wx.navigateTo({
-        url: '../productorder/productorder?id=' + this.data.id+"&"+this.data.selectmodel.join(","),
+        url: '../productorder/productorder?id=' + this.data.id +"&selectmodel="+this.data.selectmodel.join(","),
       })
     }else{
       this.setData({ addtocart: true });

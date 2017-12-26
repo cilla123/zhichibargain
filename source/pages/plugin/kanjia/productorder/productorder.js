@@ -12,6 +12,10 @@ var kanproductApi = new KanproductApi();
 var KanorderApi = require('../utils/apis/kanorder.js');
 var kanorderApi = new KanorderApi();
 
+
+var WechatApi = require('../utils/apis/wechat.js');
+var wechatApi = new WechatApi();
+
 Page({
 
   /**
@@ -40,8 +44,12 @@ Page({
     this.setData({ comment: comment});
   },
   goSubmit(){
+
+    var that=this;
+    console.log(this.data.selectmodel);
       var json={
         member_id: this.data.member.id,
+        session_key: this.data.member.session_key,
         zhichiapp_id: this.data.app_id,
         order_id: this.data.id,
         models: this.data.selectmodel,
@@ -55,9 +63,31 @@ Page({
             showCancel:false
           })
         }else{
-          wx.redirectTo({
-            url: '../order/order',
-          })
+
+          var json = {
+            zhichiapp_id: that.data.app_id,
+            order_id: that.data.id,
+            session_key: that.data.member.session_key
+          };
+          wechatApi.pay(json, function (pdata) {
+            wx.requestPayment({
+              timeStamp: pdata.timeStamp,
+              nonceStr: pdata.nonceStr,
+              package: pdata.package,
+              signType: pdata.signType,
+              paySign: pdata.paySign,
+              success: function (res) {
+                wx.redirectTo({
+                  url: '../../../goodsOrderDetail/goodsOrderDetail?detail=' + pdata.orderno,
+                })
+              },
+              fail:function(res){
+                wx.redirectTo({
+                  url: '../order/order',
+                })
+              }
+            })
+          });
         }
       });
   },
@@ -68,6 +98,7 @@ Page({
     var that = this;
     var id = options.id;
     var selectmodel = options.selectmodel;
+    console.log(selectmodel);
     var member = MemberMgr.getMember();
     var delivery = MemberMgr.getDefaultDeliveryAddress();
     var selfdeliveryposition = MerchantMgr.getSelfDeliveryPosition();

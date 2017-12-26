@@ -36,6 +36,7 @@ Page({
       member_id: this.data.member.id,
       membername: this.data.member.name,
       membermobile: this.data.member.mobile,
+      membercover: this.data.member.photo,
       zhichiapp_id: MerchantMgr.getAppId(),
       product_id: this.data.product.id
     };
