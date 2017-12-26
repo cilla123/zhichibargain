@@ -21,15 +21,40 @@ Page({
    * status: N:未发起砍价
    */
   data: {
+    app_id:"",
     member: {},
     product: {id:0},
     broadcase: {},
-    showdescription: false
+    showdescription: false,
+    showevaluate:false,
+    evaluate:[]
   },
   tryKanjia(){
     
   },
-
+  perviewimg(e){
+    var imgs=[];
+    for (var i = 0; i < this.data.evaluate.length;i++){
+      for (var j = 0; j < this.data.evaluate[i].assess_info.img_arr.length; j++) {
+        imgs.push(this.data.evaluate[i].assess_info.img_arr[j]);
+      }
+    }
+    wx.previewImage({
+      current:e.currentTarget.id,
+      urls: imgs,
+    })
+  },
+  clickshowevaluate(){
+    var that=this;
+    if (this.data.showevaluate==false){
+      kanproductApi.evaluate({product_id:this.data.product.id,zhichiapp_id:this.data.app_id},function(data){
+        
+        that.setData({ showevaluate: true, evaluate:data });
+      });
+    }else{
+      this.setData({ showevaluate:false});
+    }
+  },
   tryAddToCart() {
 
     var json = {
@@ -90,7 +115,7 @@ Page({
 
     var broadcase = ProductMgr.getProductKanjiaBroadcase();
 
-    this.setData({ member: member,broadcase: broadcase });
+    this.setData({ member: member, broadcase: broadcase, app_id: app_id });
 
   },
   goroundtimer:null,

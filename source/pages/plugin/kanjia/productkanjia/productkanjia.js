@@ -22,6 +22,7 @@ Page({
    */
   data: {
     id: 0,
+    app_id:"",
     member: {},
     order: {},
     status: "E",
@@ -46,7 +47,32 @@ Page({
     selectedoptionstr: "",
     stock:0,
     selectmodel: [],
-    showdescription: false
+    showdescription: false,
+    showevaluate: false,
+    evaluate: []
+  },
+  perviewimg(e) {
+    var imgs = [];
+    for (var i = 0; i < this.data.evaluate.length; i++) {
+      for (var j = 0; j < this.data.evaluate[i].assess_info.img_arr.length; j++) {
+        imgs.push(this.data.evaluate[i].assess_info.img_arr[j]);
+      }
+    }
+    wx.previewImage({
+      current: e.currentTarget.id,
+      urls: imgs,
+    })
+  },
+  clickshowevaluate() {
+    var that = this;
+    if (this.data.showevaluate == false) {
+      kanproductApi.evaluate({ product_id: this.data.product.id, zhichiapp_id: this.data.app_id }, function (data) {
+
+        that.setData({ showevaluate: true, evaluate: data });
+      });
+    } else {
+      this.setData({ showevaluate: false });
+    }
   },
   bindShowDescription() {
     this.setData({ showdescription: !this.data.showdescription });
@@ -82,6 +108,7 @@ Page({
       order_id: this.data.id, member_id: member.id,
       membername: member.name, memberphoto: member.photo, membermobile: member.mobile
     }, function (data) {
+      console.log(data);
       var inkaning = true;
       var member_kanprice = data.kanprice;
       var member_extraprice = data.extraprice;
@@ -162,6 +189,25 @@ Page({
     this.setData({ selectedoptionstr: selectedoptionstr, stock: stock, selectmodel: selectmodel });
   },
   tryKanjia() {
+    var that=this;
+    if (this.data.kanfriends.length==0){
+
+      wx.showModal({
+        title: '提示',
+        content: '还没有好友为你砍价，是否跳转直接购买？',
+        success: function (res) {
+          if (res.confirm) {
+            wx.redirectTo({
+              url: '../../../goodsDetail/goodsDetail?detail=' + that.data.product.detail.id,
+            })
+          } else if (res.cancel) {
+
+          }
+        }
+      })
+      return;
+    }
+
     var modelcount=0;
     for (var i in this.data.product.detail.model){
       modelcount++;
@@ -229,7 +275,15 @@ Page({
       product.lowprice_str = Util.amountcutting(product.lowprice);
       //product.extrakan="C";
       //product.status='D';
-      order.member = member;
+      var ordermember={
+        id: order.member_id, 
+        name: order.membername,
+        mobile: order.membermobile,
+        photo: order.membercover,
+
+        };
+      order.member = ordermember;
+      order.member_id = order.member_id + "a";
 
       WxParse.wxParse('wxParseDescription', 'html', product.detail.description, that, 10);
       
@@ -256,7 +310,7 @@ Page({
 
     var broadcase = ProductMgr.getProductKanjiaBroadcase();
 
-    this.setData({ member: member, broadcase: broadcase });
+    this.setData({ member: member, broadcase: broadcase, app_id: app_id });
 
   },
   goroundtimer: null,
@@ -281,6 +335,24 @@ Page({
     })
   },
   gotoTryPay() {
+    var that=this;
+    if (this.data.kanfriends.length == 0) {
+
+      wx.showModal({
+        title: '提示',
+        content: '还没有好友为你砍价，是否跳转直接购买？',
+        success: function (res) {
+          if (res.confirm) {
+            wx.redirectTo({
+              url: '../../../goodsDetail/goodsDetail?detail=' + that.data.product.detail.id,
+            })
+          } else if (res.cancel) {
+
+          }
+        }
+      })
+      return;
+    }
     //wx.navigateTo({
     //  url: 'order?id=' + this.data.id,
     //})

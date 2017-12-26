@@ -278,10 +278,38 @@
       </view>
     </view>
 
-    <view class='white block block-radius font-70 flex-row' style='color:black;margin-top:4vh;padding:1vh;border-radius:1vh;padding-left:2vh;padding-right:2vh;'>
-      <view class='flex-1'>商品评价</view>
-      <view class='flex-1 text-right'>
-        <i class="fa fa-angle-down"></i>
+    <view class='white block block-radius font-70' style='color:black;margin-top:4vh;padding:1vh;border-radius:1vh;padding-left:2vh;padding-right:2vh;'>
+      <view class='flex-row'    bindtap='clickshowevaluate'>
+        <view class='flex-1'>商品评价</view>
+        <view class='flex-1 text-right'>
+          <i class="fa fa-angle-down"></i>
+        </view>
+      </view>
+      <view wx:if="{{showevaluate}}" class=' font-85'>
+      <block wx:for="{{evaluate}}" wx:key="key">
+        <view style='border-top:1px solid #cccccc;margin-top:1vh;' class='flex-row padding-21' >
+          <view class='flex-1'>
+            <image src="{{item.buyer_headimgurl}}" style='width:10vw;height:10vw;border-radius:5vw;'></image>
+          </view>
+          <view class='flex-5'>
+            <view>
+              <text>{{item.buyer_nickname}}</text>
+            </view>
+            <view>
+              <text class='font-90 primary'>{{item.assess_info.level=="0"?"全部":""}}{{item.assess_info.level=="1"?"好评":""}}{{item.assess_info.level=="2"?"中评":""}}{{item.assess_info.level=="3"?"差评":""}}{{item.assess_info.level=="4"?"带图评价":""}}</text>
+              <text class='font-90 light' style='margin-left:1vh'>{{item.add_time}}</text>
+            </view>
+            <view class='font-90' >
+              <text>{{item.assess_info.content}}</text>
+            </view>
+            <view class='flex-row padding-2' style='flex-direction: row;flex-wrap: wrap;'>
+              <view  wx:for="{{item.assess_info.img_arr}}" wx:key="keyimg">
+                <image src='{{item}}' class='evaimg' bindtap='perviewimg' id="{{item}}"></image>
+              </view>
+            </view>
+          </view>
+        </view>
+        </block>
       </view>
     </view>
 

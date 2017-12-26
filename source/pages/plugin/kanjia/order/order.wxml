@@ -51,7 +51,7 @@
           <text class='back-primary block-radius padding-21 font-75' style='margin-left:2vh;' bindtap='gotoKanjia' id="{{item.id}}">继续砍</text>
         </view>
         <view class='text-right white padding-2' wx:else style='margin-top:1px'>
-          <text class='font-80'>最终价格</text><text class='font-80'>￥</text><text>{{item.price}}</text>
+          <text class='font-80'>最终价格：</text><text class='font-80'>￥</text><text>{{item.price}}</text>
           <text class='back-primary block-radius padding-21 font-75' style='margin-left:2vh;' bindtap='gotoPay' id="{{item.id}}">去支付</text>
         </view>
 
@@ -59,12 +59,133 @@
       </view>
     </block>
 
-    <view class="flex-row font-80">
-      <view class="flex-1 border-bottom" style="border-color:#d3d3d3;margin:0 10px 0 10px; height:1em;"></view>
-      <view class="flex-1 text-center">
+    <view class="flex-row font-75" style='margin-top:1.5vh'>
+      <view class="flex-4 border-bottom" style="border-color:#d3d3d3;margin:0 10px 0 10px; height:1em;"></view>
+      <view class="flex-3 text-center">
         <text style="color:#aaa;">已经到底了</text>
       </view>
-      <view class="flex-1 border-bottom" style="border-color:#d3d3d3;margin:0 10px 0 10px;height:1em;"></view>
+      <view class="flex-4 border-bottom" style="border-color:#d3d3d3;margin:0 10px 0 10px;height:1em;"></view>
+    </view>
+
+  </block>
+  <block wx:else>
+    <view class="text-center font-70" style="height:100vh;background-color:#f2f2f2;">
+      <image style='width:40vw; height:50vw; margin-top:10%;' src="../utils/images/egg.png"></image>
+      <view class="text-center" style="color:#a3a3a3;">
+        <text>砍价记录空空如也</text>
+      </view>
+    </view>
+  </block>
+</view>
+
+
+
+
+
+
+<view style='margin-top:13.8vh;' wx:if="{{type=='cut'&&cuttype=='F'}}">
+  <block wx:if="{{items_finish.length>0}}">
+    <block wx:for="{{items_finish}}" wx:key="key">
+      <view style='margin-bottom:4px;'  id='{{item.id}}'>
+        <view class='flex-row white font-80'>
+          <text class='flex-3 light padding-21'>{{item.ordertime_format}}</text>
+          <text class='flex-1 light padding-21 primary text-right'>{{item.status=="S"?"已付款":""}}{{item.status=="E"?"已结束":""}}{{item.status=="C"?"已取消":""}}</text>
+        </view>
+        <view class='flex-row white padding-21' style='margin-top:1px'>
+          <view class='flex-1'>
+            <image src="{{item.product_cover}}" style='width:18.5vw;height:18.5vw;'></image>
+          </view>
+          <view class='flex-5' style='padding-left:2vh;padding-right:2vh;'>
+            <text class='font-90'>{{item.product_title}}</text>
+            <text class='font-90 light' wx:if="{{modelstring.length>0}}">({{item.modelstring}})</text>
+          </view>
+          <view  class='flex-1'>
+          <text class='font-70'>￥</text><text>{{item.price}}</text>   <view class='font-70 light text-right'>x1</view>
+          </view>
+        </view>
+        <view class='text-right white padding-2' style='margin-top:1px'>
+          <text class='font-80'>最终价格：</text><text class='font-80'>￥</text><text>{{item.price}}</text>
+          <text class='back-primary block-radius padding-21 font-75' style='margin-left:2vh;' bindtap='gotoDetail' id="{{item.orderno}}">查看订单</text>
+        </view>
+
+
+      </view>
+    </block>
+
+    <view class="flex-row font-75" style='margin-top:1.5vh'>
+      <view class="flex-4 border-bottom" style="border-color:#d3d3d3;margin:0 10px 0 10px; height:1em;"></view>
+      <view class="flex-3 text-center">
+        <text style="color:#aaa;">已经到底了</text>
+      </view>
+      <view class="flex-4 border-bottom" style="border-color:#d3d3d3;margin:0 10px 0 10px;height:1em;"></view>
+    </view>
+
+  </block>
+  <block wx:else>
+    <view class="text-center font-70" style="height:100vh;background-color:#f2f2f2;">
+      <image style='width:40vw; height:50vw; margin-top:10%;' src="../utils/images/egg.png"></image>
+      <view class="text-center" style="color:#a3a3a3;">
+        <text>砍价记录空空如也</text>
+      </view>
+    </view>
+  </block>
+</view>
+
+
+
+
+
+
+
+
+<view style='margin-top:13.8vh;' wx:if="{{type=='cut'&&cuttype=='H'}}">
+  <block wx:if="{{items_myhelp.length>0}}">
+    <block wx:for="{{items_myhelp}}" wx:key="key">
+      <view style='margin-bottom:4px;'  id='{{item.id}}'>
+        <view class='flex-row white font-80'>
+          <text class='flex-3 light padding-21'>{{item.ordertime_format}}</text>
+        </view>
+        <view class='flex-row white padding-21' style='margin-top:1px'>
+          <view class='flex-1'>
+            <image src="{{item.product_cover}}" style='width:18.5vw;height:18.5vw;'></image>
+          </view>
+          <view class='flex-5' style='padding-left:2vh;padding-right:2vh;'>
+            <text class='font-90'>{{item.product_title}}</text>
+            <text class='font-90 light' wx:if="{{modelstring.length>0}}">({{item.modelstring}})</text>
+          </view>
+          <view  class='flex-1'>
+          <text class='font-70'>￥</text><text>{{item.price}}</text>   <view class='font-70 light text-right'>x1</view>
+          </view>
+        </view>
+        <view class='white padding-21 font-80' style='margin-top:1px'>
+          <view>
+          <text>发起用户：</text>
+          <text class='light'>{{item.membername}}</text>
+          </view>
+          <view class='flex-row'>
+          <text class='flex-1'>砍价金额：</text>
+          <text class='light flex-1 text-right'>-￥{{item.kanprice}}</text>
+          </view>
+          <view class='flex-row' wx:if="{{item.extraprice>0}}">
+          <text class='flex-1'>额外砍价：{{item=="C"?"新用户多砍":"验证手机多砍"}}</text>
+          <text class='light flex-1 text-right'>-￥{{item.extraprice}}</text>
+          </view>
+        </view>
+        <view class='text-right white padding-2' style='margin-top:1px'>
+          <text class='font-80'>合计砍价：</text><text class='font-80'>-￥</text><text>{{item.totalkanprice}}</text>
+          <text wx:if="{{item.productstatus=='A'&&item.productendtime<0}}" class='back-primary block-radius padding-21 font-75' style='margin-left:2vh;' bindtap='gotoProductDetail' id="{{item.product_id}}">发起我的砍价</text>
+        </view>
+
+
+      </view>
+    </block>
+
+    <view class="flex-row font-75" style='margin-top:1.5vh'>
+      <view class="flex-4 border-bottom" style="border-color:#d3d3d3;margin:0 10px 0 10px; height:1em;"></view>
+      <view class="flex-3 text-center">
+        <text style="color:#aaa;">已经到底了</text>
+      </view>
+      <view class="flex-4 border-bottom" style="border-color:#d3d3d3;margin:0 10px 0 10px;height:1em;"></view>
     </view>
 
   </block>

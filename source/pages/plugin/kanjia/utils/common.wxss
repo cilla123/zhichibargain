@@ -262,3 +262,9 @@ background-color:#F2F2F2;
 
 
 
+
+.evaimg{
+  width: 18vw;
+  height: 18vw;
+  margin:1vw;
+}

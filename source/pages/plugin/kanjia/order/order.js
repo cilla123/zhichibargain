@@ -40,6 +40,11 @@ Page({
       url: '../productkanjia/productkanjia?id='+e.currentTarget.id,
     })
   },
+  gotoProductDetail(e){
+    wx.navigateTo({
+      url: '../productdetail/productdetail?id=' + e.currentTarget.id,
+    })
+  },
   gotoPay(e) {
     var json={
       zhichiapp_id:this.data.app_id,
@@ -62,6 +67,11 @@ Page({
           })
         }
       })
+    });
+  },
+  gotoDetail(e){
+    wx.navigateTo({
+      url: '../../../goodsOrderDetail/goodsOrderDetail?detail=' + e.currentTarget.id,
     });
   },
   /**
@@ -87,6 +97,11 @@ Page({
       that.setData({ items_finish: data });
     });
     kanorderApi.myhelp({ member_id: member.id, zhichiapp_id: app_id }, function (data) {
+      for(var i=0;i<data.length;i++){
+        var totalkanprice = Number(data[i].oriprice) - Number(data[i].price);
+        totalkanprice=totalkanprice.toFixed(2);
+        data[i].totalkanprice = totalkanprice;
+      }
       that.setData({ items_myhelp: data });
     });
     kanorderApi.myhelp({ member_id: member.id, zhichiapp_id: app_id }, function (data) {
