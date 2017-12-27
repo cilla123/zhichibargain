@@ -1,32 +1,36 @@
 <view style='position:fixed;top:0;left:0;index:1; width:100%;'>
+      <!--
   <view class='white'>
     <view class='flex-row border-bottom font-95'>
       <view class='flex-1 text-right padding-15' bindtap='changeType' id="cut" style='padding-right:5vw'>
-        <text class='{{type=="cut"?"active":""}}'>我的砍价</text>
+        <text >我的砍价</text>
       </view>
+      class='{{type=="cut"?"active":""}}'
       <view class='flex-1 padding-15' bindtap='changeType' id="order" style='padding-left:5vw'>
         <text class='{{type=="order"?"active":""}}'>我的订单</text>
       </view>
     </view>
   </view>
+      -->
 
   <view class='white light' wx:if="{{type=='cut'}}" style='margin-top:2px;padding-left:20vw;padding-right:20vw;'>
     <view class='flex-row font-95 text-center'>
       <view class='flex-1 padding-1' bindtap='changeCutType' id="P">
-        <text class='{{cuttype=="P"?"primary":""}}'>进行中</text>
+        <text class='{{cuttype=="P"?"active":""}}'>进行中</text>
       </view>
       <view class='flex-1 padding-1' bindtap='changeCutType' id="F">
-        <text class='{{cuttype=="F"?"primary":""}}'>已结束</text>
+        <text class='{{cuttype=="F"?"active":""}}'>已结束</text>
       </view>
       <view class='flex-1 padding-1' bindtap='changeCutType' id="H">
-        <text class='{{cuttype=="H"?"primary":""}}'>帮好友砍</text>
+        <text class='{{cuttype=="H"?"active":""}}'>帮好友砍</text>
       </view>
     </view>
   </view>
 
+
 </view>
 
-<view style='margin-top:13.8vh;' wx:if="{{type=='cut'&&cuttype=='P'}}">
+<view style='margin-top:7vh;' wx:if="{{type=='cut'&&cuttype=='P'}}">
   <block wx:if="{{items_p.length>0}}">
     <block wx:for="{{items_p}}" wx:key="key">
       <view style='margin-bottom:4px;'  id='{{item.id}}'>
@@ -70,7 +74,7 @@
   </block>
   <block wx:else>
     <view class="text-center font-70" style="height:100vh;background-color:#f2f2f2;">
-      <image style='width:40vw; height:50vw; margin-top:10%;' src="../utils/images/egg.png"></image>
+      <image style='width:40vw; height:50vw; margin-top:10%;' src="http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/egg.png"></image>
       <view class="text-center" style="color:#a3a3a3;">
         <text>砍价记录空空如也</text>
       </view>
@@ -83,12 +87,12 @@
 
 
 
-<view style='margin-top:13.8vh;' wx:if="{{type=='cut'&&cuttype=='F'}}">
+<view style='margin-top:7vh;' wx:if="{{type=='cut'&&cuttype=='F'}}">
   <block wx:if="{{items_finish.length>0}}">
     <block wx:for="{{items_finish}}" wx:key="key">
       <view style='margin-bottom:4px;'  id='{{item.id}}'>
         <view class='flex-row white font-80'>
-          <text class='flex-3 light padding-21'>{{item.ordertime_format}}</text>
+          <text class='flex-3 light padding-21'>{{item.overtime_format}}</text>
           <text class='flex-1 light padding-21 primary text-right'>{{item.status=="S"?"已付款":""}}{{item.status=="E"?"已结束":""}}{{item.status=="C"?"已取消":""}}</text>
         </view>
         <view class='flex-row white padding-21' style='margin-top:1px'>
@@ -103,7 +107,7 @@
           <text class='font-70'>￥</text><text>{{item.price}}</text>   <view class='font-70 light text-right'>x1</view>
           </view>
         </view>
-        <view class='text-right white padding-2' style='margin-top:1px'>
+        <view class='text-right white padding-21' style='margin-top:1px'>
           <text class='font-80'>最终价格：</text><text class='font-80'>￥</text><text>{{item.price}}</text>
           <text class='back-primary block-radius padding-21 font-75' style='margin-left:2vh;' bindtap='gotoDetail' id="{{item.orderno}}">查看订单</text>
         </view>
@@ -123,7 +127,7 @@
   </block>
   <block wx:else>
     <view class="text-center font-70" style="height:100vh;background-color:#f2f2f2;">
-      <image style='width:40vw; height:50vw; margin-top:10%;' src="../utils/images/egg.png"></image>
+      <image style='width:40vw; height:50vw; margin-top:10%;' src="http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/egg.png"></image>
       <view class="text-center" style="color:#a3a3a3;">
         <text>砍价记录空空如也</text>
       </view>
@@ -138,12 +142,12 @@
 
 
 
-<view style='margin-top:13.8vh;' wx:if="{{type=='cut'&&cuttype=='H'}}">
+<view style='margin-top:7vh;' wx:if="{{type=='cut'&&cuttype=='H'}}">
   <block wx:if="{{items_myhelp.length>0}}">
     <block wx:for="{{items_myhelp}}" wx:key="key">
       <view style='margin-bottom:4px;'  id='{{item.id}}'>
         <view class='flex-row white font-80'>
-          <text class='flex-3 light padding-21'>{{item.ordertime_format}}</text>
+          <text class='flex-3 light padding-21'>{{item.kanprice_date_format}}</text>
         </view>
         <view class='flex-row white padding-21' style='margin-top:1px'>
           <view class='flex-1'>
@@ -191,7 +195,7 @@
   </block>
   <block wx:else>
     <view class="text-center font-70" style="height:100vh;background-color:#f2f2f2;">
-      <image style='width:40vw; height:50vw; margin-top:10%;' src="../utils/images/egg.png"></image>
+      <image style='width:40vw; height:50vw; margin-top:10%;' src="http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/egg.png"></image>
       <view class="text-center" style="color:#a3a3a3;">
         <text>砍价记录空空如也</text>
       </view>

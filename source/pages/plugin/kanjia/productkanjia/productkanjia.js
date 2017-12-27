@@ -190,7 +190,7 @@ Page({
   },
   tryKanjia() {
     var that=this;
-    if (this.data.kanfriends.length==0){
+    if (1==2&&this.data.kanfriends.length==0){
 
       wx.showModal({
         title: '提示',
@@ -283,8 +283,8 @@ Page({
 
         };
       order.member = ordermember;
-      order.member_id = order.member_id + "a";
-
+      //order.member_id = order.member_id + "a";
+      order.member.shortname = order.member.name.substr(0, 8) + (order.member.name.length > 8 ? "..." : "");
       WxParse.wxParse('wxParseDescription', 'html', product.detail.description, that, 10);
       
       for (var i in product.detail.model) {
@@ -334,9 +334,15 @@ Page({
       url: '../productdetail/productdetail?id=' + this.data.product.id,
     })
   },
+  goToCommentPage: function () {
+    var pagePath = '../../../goodsComment/goodsComment?detail=' + this.data.product.product_id;
+    wx.navigateTo({
+      url: pagePath,
+    })
+  },
   gotoTryPay() {
     var that=this;
-    if (this.data.kanfriends.length == 0) {
+    if (1 == 2 &&this.data.kanfriends.length == 0) {
 
       wx.showModal({
         title: '提示',
@@ -454,22 +460,26 @@ Page({
     }
   },
   sharetomemory: function () {
-    wx.downloadFile({
-      url: "https://cmsdev.app-link.org/alucard263096/zhichibargain/api/kanorder/photo?order_id=" + this.data.id, //仅为示例，并非真实的资源
-      success: function (res) {
-        // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
-        if (res.statusCode === 200) {
+    kanorderApi.photo({ order_id: this.data.id},function(data){
+      var url=data.url;
+      console.log("go share to memory");
+      wx.downloadFile({
+        url: url, //仅为示例，并非真实的资源
+        success: function (res) {
+          // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
+          console.log(res);
           wx.saveImageToPhotosAlbum({
             filePath: res.tempFilePath,
-            success(res) {
+            success(ret) {
+              console.log(ret);
               wx.showToast({
                 title: '图片已保存，可分享到朋友圈',
               })
             }
           });
         }
-      }
-    })
+      })
+    });
 
     
   }

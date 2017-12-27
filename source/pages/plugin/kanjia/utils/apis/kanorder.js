@@ -304,5 +304,66 @@ class KanorderApi
       }
     })
   };
+  useraddresslist(json, callback, showLoading = true) {
+    if (showLoading) {
+      apiconfig.ShowLoading();
+    }
+    wx.request({
+      url: apiconfig.ServerUrl + '/kanorder/useraddresslist',
+      data: json,
+      method: 'POST',
+      dataType: 'json',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        if (callback != null) {
+          callback(res.data);
+        }
+      },
+      fail: function (res) {
+        console.log(res);
+        callback(false);
+      },
+      complete: function (res) {
+        console.log(res);
+
+        if (showLoading) {
+          apiconfig.CloseLoading();
+        }
+      }
+    })
+  };
+  photo(json, callback, showLoading = true) {
+    if (showLoading) {
+      apiconfig.ShowLoading();
+    }
+    wx.request({
+      url: apiconfig.ServerUrl + '/kanorder/photo',
+      data: json,
+      method: 'POST',
+      dataType: 'json',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        if (callback != null) {
+          callback(res.data);
+        }
+      },
+      fail: function (res) {
+        console.log(res);
+        callback(false);
+      },
+      complete: function (res) {
+        console.log(res);
+
+        if (showLoading) {
+          apiconfig.CloseLoading();
+        }
+      }
+    })
+  };
+  
 }
 module.exports = KanorderApi;

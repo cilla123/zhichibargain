@@ -11,17 +11,18 @@
   <view class='topbroadcast' wx:if="{{scolltomiddle==true&&member.id==order.member_id&&addtocart==false}}">
     <view class=' font-65 flex-row padding-2' wx:if="{{broadcase.money>0}}" style="color:black;padding-bottom:0px;">
       <view style='margin-right:1vh;'>
-        <image class='img-2' src="../utils/images/icons/horn.png"></image>
+        <image class='img-2' src="http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/icons/horn.png"></image>
       </view>
       <view style='padding-right:2vh;width:90vw'>
         <text>恭喜{{broadcase.membername}}砍价成功，共砍掉<text class='primary'>{{broadcase.money}}</text>元</text>
       </view>
       <view class='flex-row ' style='width:20vw'>
         <view class='img-5 text-center'>
-          <image src='../utils/images/icons/contact.png' class='img-3'></image>
+          <contact-button type="default-light" size="20" session-from="kanjia"></contact-button>
+          <image src='http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/icons/contact.png' class='img-3'></image>
         </view>
         <view style='margin-left:2vh;' class='img-5 text-center'>
-          <image src='../utils/images/icons/shop.png' class='img-3'></image>
+          <image src='http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/icons/shop.png' class='img-3'></image>
         </view>
       </view>
     </view>
@@ -42,7 +43,7 @@
   <scroll-view scroll-y style="height: {{scolltomiddle&&member.id==order.member_id?'93':'100'}}vh;" bindscroll="scrollmonitor">
     <view class='broadcast font-65 flex-row padding-2' wx:if="{{broadcase.money>0}}" style="color:black">
       <view style='margin-right:1vh;'>
-        <image class='img-2' src="../utils/images/icons/horn.png"></image>
+        <image class='img-2' src="http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/icons/horn.png"></image>
       </view>
       <view style='padding-right:2vh'>
         <text>恭喜{{broadcase.membername}}砍价成功，共砍掉<text class='primary'>{{broadcase.money}}</text>元</text>
@@ -50,10 +51,11 @@
     </view>
     <view style='position:absolute;right:0;margin-top:2.5vh;' class='flex-row'>
       <view style='background:black;opacity:0.3;border-radius:2.5vh;' class='img-5 text-center'>
-        <image src='../utils/images/icons/contact_w.png' class='img-3'></image>
+        <contact-button type="default-light" size="20" session-from="kanjia"></contact-button>
+        <image src='http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/icons/contact_w.png' class='img-3'></image>
       </view>
       <view style='background:black;opacity:0.3;border-radius:2.5vh;margin-left:2vh;margin-right:1vh;' class='img-5 text-center'>
-        <image src='../utils/images/icons/shop_w.png' class='img-3'></image>
+        <image src='http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/icons/shop_w.png' class='img-3'></image>
       </view>
     </view>
 
@@ -87,13 +89,13 @@
             <text class='font-65 no-margin' style='margin-left:3vh;color:white;padding-top:1vh;'>
             <text  class='no-margin'  style='text-decoration:line-through;'>￥{{product.oriprice}}\n</text>仅剩{{product.allstore-product.sales}}件
             </text>
-            <image wx:if="{{(product.endtime_s.reminder>0&&product.status=='A')==false}}" src="../utils/images/timeover.png" class="img-7" style="position:absolute;right:10vw;"></image>
+            <image wx:if="{{(product.endtime_s.reminder>0&&product.status=='A')==false}}" src="http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/timeover.png" class="img-7" style="position:absolute;right:10vw;"></image>
           </view>
         </view>
       </view>
       <view class='flex-row'>
         <view>
-          <image src="../utils/images/icons/bolt.png" class='img-2'></image>
+          <image src="http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/icons/bolt.png" class='img-2'></image>
         </view>
         <view class='font-75' style='margin-top:1vh;margin-left:1.5vh;'>活动时间仅剩：</view>
         <view style='color:black' wx:if="{{product.starttime_s.reminder<0&&product.endtime_s.reminder>0&&product.status=='A'&&status=='P'}}">
@@ -196,7 +198,7 @@
           </view>
         </view>
         <view class='flex-3 text-center'>
-          <image src="../utils/images/kanjiabang.png" style='width:20.1vw;height:8.7vw;'></image>
+          <image src="http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/kanjiabang.png" style='width:20.1vw;height:8.7vw;'></image>
         </view>
         <view class='flex-3 ' style="margin-left:2vh;">
           <view style='height:1px;width:100%;background:white;margin-top:2vh;'>
@@ -213,7 +215,7 @@
       <view class='bg_bg-{{bangtype=="rank"?"left":"right"}} {{kanfriends.length<3?"bg_bg-shortline":""}}' style='margin-left:2vh;margin-right:2vh;'>
         <view class='flex-row margin-2 border-bottom font-70 no-margin' style='padding-top:4vh;padding-bottom:2vh;'>
           <view style='margin-right:2vh;'>
-            <image src="../utils/images/icons/sword.png" class='img-3'></image>
+            <image src="http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/icons/sword.png" class='img-3'></image>
           </view>
           <block wx:if="{{kanfriends.length>0}}">已有{{kanfriends.length}}位好朋友帮你砍价</block>
           <block wx:else>暂无砍价记录</block>
@@ -223,9 +225,9 @@
             <view wx:if="{{item.seq<=(5+showmorerankfriends*10)}}" class="flex-row" style="margin-top:2vh;">
               <view class='flex-1 text-center'>
                 <text class="font-80" wx:if="{{item.seq>3}}">{{item.seq}}</text>
-                <image wx:if="{{item.seq==1}}" style='margin-top:1vh;' src='../utils/images/icons/jin.png' class='img-3'></image>
-                <image wx:if="{{item.seq==2}}" src='../utils/images/icons/yin.png' class='img-3' style='margin-top:1vh;'></image>
-                <image wx:if="{{item.seq==3}}" src='../utils/images/icons/tong.png' class='img-3' style='margin-top:1vh;'></image>
+                <image wx:if="{{item.seq==1}}" style='margin-top:1vh;' src='http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/icons/jin.png' class='img-3'></image>
+                <image wx:if="{{item.seq==2}}" src='http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/icons/yin.png' class='img-3' style='margin-top:1vh;'></image>
+                <image wx:if="{{item.seq==3}}" src='http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/icons/tong.png' class='img-3' style='margin-top:1vh;'></image>
               </view>
               <view style='flex-2 '>
                 <image src='{{item.memberphoto}}' class='img-5' style='border-radius:3.5vh;'></image>
@@ -310,6 +312,12 @@
           </view>
         </view>
         </block>
+        <view style="text-align:center;">
+          <button class="btn lookAllComments" bindtap="goToCommentPage">查看全部评价</button>
+        </view>
+      </view>
+      <view  wx:if="{{showevaluate&&evaluate.length==0}}" style="text-align:center;"  class='font-80'>
+          <text>暂无评论</text>
       </view>
     </view>
 
@@ -338,7 +346,7 @@
   <view style='height:100vh;width:100vw;background:black;opacity: 0.7;' bindtap='closeShare'>
   </view>
   <view style='position:absolute;left:13vw;top:5vh;width:74vw;'>
-    <image style='width:74vw;height:120vw;' src="../utils/images/1.png"></image>
+    <image style='width:74vw;height:120vw;' src="http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/1.png"></image>
   </view>
   <view style='position:absolute;left:30vw;top:30vh;width:100vw;'>
     <view class='flex-row font-white' style='padding-top:2vh;'>
@@ -384,7 +392,7 @@
     <view class='flex-1 text-right flex-row '>
       <button class='btn-outline font-white  font-70 flex-row' bindtap='sharetomemory' style='padding-left:4vw;padding-right:4vw;padding-top:0.5vh;margin-left:15vw;background:transparent'>
         <view>
-          <image src="../utils/images/icons/memory.png" style='width:5vw;height:5vw;margin-top:0.5vh;'></image>
+          <image src="http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/icons/memory.png" style='width:5vw;height:5vw;margin-top:0.5vh;'></image>
         </view>
         <view>
           <text style='margin-left:1vh;'>分享朋友圈</text>
@@ -394,7 +402,7 @@
     <view class='flex-1 text-right flex-row '>
       <button open-type="share" class='btn-outline font-white  font-70 flex-row' style='padding-left:4vw;padding-right:4vw;padding-top:0.5vh;margin-left:2vw;background:transparent'>
         <view>
-          <image src="../utils/images/icons/friends.png" style='width:5vw;height:5vw;margin-top:0.5vh;'></image>
+          <image src="http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/icons/friends.png" style='width:5vw;height:5vw;margin-top:0.5vh;'></image>
         </view>
         <view>
           <text style='margin-left:1vh;'>分享给好友</text>
@@ -410,7 +418,7 @@
   <view style='height:100vh;width:100vw;background:black;opacity: 0.7;' bindtap='closeShare'>
   </view>
   <view style='position:absolute;left:15vw;top:20vh;height:100vh;width:70vw;'>
-    <image src="../utils/images/kan.gif" ></image>
+    <image src="http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/kan.gif" ></image>
   </view>
 </view>
 
@@ -419,9 +427,9 @@
 <view style='position:absolute;left:0;top:0;height:100vh;width:100vw;' wx:if="{{inkan==true}}">
   <view style='height:100vh;width:100vw;background:black;opacity: 0.7;' bindtap='closeShare'>
   </view>
-<image src='../utils/images/brilliant.png' wx:if="{{inkan}}" class="abs brilliant" style='opacity: 0.85;'></image>
+<image src='http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/brilliant.png' wx:if="{{inkan}}" class="abs brilliant" style='opacity: 0.85;'></image>
 <view class="abs">
- <image src='../utils/images/success.png' style='width:70vw;height:98.6vw; border-radius:1vh;margin-top:20%;text-align:center;'></image>
+ <image src='http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/success.png' style='width:70vw;height:98.6vw; border-radius:1vh;margin-top:20%;text-align:center;'></image>
 </view>
 
 <!--gongxi-->
@@ -441,7 +449,7 @@
 
     <!--Close-->
       <view class='abs' style='margin:10% 15% 0 16.5%; width:68.3%; height:50px; text-align:right; '>
-      <image src='../utils/images/icons/close-empty.png'  class='img-3'  bindtap='close'></image>
+      <image src='http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/icons/close-empty.png'  class='img-3'  bindtap='close'></image>
       </view>
       <view class='abs' style='margin:16% 0 0 0; width:82.3%; height:19px; text-align:right;border-right:1px; border-right-color:rgba(255,255,255, 0.6); border-right-style:solid; '>
       </view>
@@ -494,7 +502,7 @@
           已选：{{selectedoptionstr}}
         </view>
       </view>
-      <view class='text-right flex-1' style='margin-top:-1vh;'  bindtap='closeAddToCart'><image src='../utils/images/icons/close-empty.png'  class='img-3'></image>
+      <view class='text-right flex-1' style='margin-top:-1vh;'  bindtap='closeAddToCart'><image src='http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/icons/close-empty.png'  class='img-3'></image>
       </view>
     </view>
     <block wx:for="{{product.detail.model}}" wx:key="index">

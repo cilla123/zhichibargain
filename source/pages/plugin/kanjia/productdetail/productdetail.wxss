@@ -1,5 +1,12 @@
 /* pages/product/detail.wxss */
 @import "../utils/common.wxss";
+contact-button {
+  position:absolute;
+  left:0;
+  bottom: 0;
+  width:4vh;
+  height:4vh;
+}
 .broadcast{
   position: absolute;
   background-color: white ;

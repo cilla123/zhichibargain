@@ -31,7 +31,7 @@ Page({
     kanprice: 0,
     status:"P",
     comment:"",
-    delivery:{},
+    address:{id:"0"},
     selfdeliveryposition:{},
     deliverytype:"express"
   },
@@ -43,8 +43,14 @@ Page({
     var comment=e.detail.value;
     this.setData({ comment: comment});
   },
+  gotoSelectAddress() {
+    wx.navigateTo({
+      url: '../../../myAddress/myAddress?id='+this.data.address.id,
+    })
+  },
   goSubmit(){
-
+    //应判断地址是否选择
+    
     var that=this;
     console.log(this.data.selectmodel);
       var json={
@@ -53,7 +59,8 @@ Page({
         zhichiapp_id: this.data.app_id,
         order_id: this.data.id,
         models: this.data.selectmodel,
-        comment: this.data.comment
+        comment: this.data.comment,
+        addressid:this.data.address.id
       };
       kanorderApi.submit(json, function (data) {
         if(data.code!="0"){
@@ -100,16 +107,29 @@ Page({
     var selectmodel = options.selectmodel;
     console.log(selectmodel);
     var member = MemberMgr.getMember();
-    var delivery = MemberMgr.getDefaultDeliveryAddress();
+    //var delivery = MemberMgr.getDefaultDeliveryAddress();
     var selfdeliveryposition = MerchantMgr.getSelfDeliveryPosition();
 
 
+
+    
     var member = MemberMgr.getMember();
     var app_id = MerchantMgr.getAppId();
+
+
+
 
     var KanorderApi = require('../utils/apis/kanorder.js');
     var kanorderApi = new KanorderApi();
 
+
+    kanorderApi.useraddresslist({ zhichiapp_id: app_id, session_key: member.session_key }, function (data) {
+      for (var i = 0; i < data.length; i++) {
+        if (data[i].is_default == "1") {
+          that.setData({ address: address });
+        }
+      }
+    });
 
     kanorderApi.detail({ id: id, zhichiapp_id: app_id }, function (data) {
       if (data.id == undefined) {
@@ -139,7 +159,7 @@ Page({
 
 
 
-    this.setData({ member: member, delivery: delivery, selfdeliveryposition: selfdeliveryposition, selectmodel: selectmodel, app_id: app_id});
+    this.setData({ member: member,  selfdeliveryposition: selfdeliveryposition, selectmodel: selectmodel, app_id: app_id});
     
 
   },

@@ -55,6 +55,12 @@ Page({
       this.setData({ showevaluate:false});
     }
   },
+  goToCommentPage: function () {
+      var pagePath = '../../../goodsComment/goodsComment?detail=' + this.data.product.product_id;
+      wx.navigateTo({
+        url: pagePath,
+      })
+  },
   tryAddToCart() {
 
     var json = {

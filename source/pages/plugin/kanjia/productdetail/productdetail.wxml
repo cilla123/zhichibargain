@@ -7,7 +7,7 @@
 
 <view class='broadcast font-65 flex-row padding-2' wx:if="{{broadcase.money>0}}">
   <view style='margin-right:1vh;'>
-    <image class='img-2' src="../utils/images/icons/horn.png"></image>
+    <image class='img-2' src="http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/icons/horn.png"></image>
   </view>
   <view style='padding-right:2vh'>
     <text>恭喜{{broadcase.membername}}砍价成功，共砍掉<text class='primary'>{{broadcase.money}}</text>元</text>
@@ -68,7 +68,7 @@
   </view>
   <view class='flex-1 text-right no-margin'>
     <view>
-      <image class='img-3' src='../utils/images/icons/share.png'></image>
+      <image class='img-3' src='http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/icons/share.png'></image>
     </view>
     <view class='font-60 no-margin light'>
       <text>分享</text>
@@ -138,7 +138,13 @@
         </view>
       </view>
     </view>
+    <view style="text-align:center;">
+       <button class="btn lookAllComments" bindtap="goToCommentPage">查看全部评价</button>
+    </view>
     </block>
+  </view>
+  <view  wx:if="{{showevaluate&&evaluate.length==0}}" style="text-align:center;"  class='font-80'>
+      <text>暂无评论</text>
   </view>
 </view>
 <view class='white  padding-2 border-bottom' style='padding-top:1.5vh;padding-bottom:1.5vh;margin-top:1vh;'>
@@ -157,7 +163,8 @@
      <view class='flex-row'>
       <view class='flex-1 padding-1' style='border-right:1px solid #f2f2f2;'>
         <view style='margin-bottom:-15px;'>
-          <image src='../utils/images/icons/contact.png' class='img-3'></image>
+          <image src='http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/icons/contact.png' class='img-3'></image>
+          <contact-button type="default-light" size="20" session-from="kanjia"></contact-button>
         </view>
         <view  class='no-margin' style=''>
           <text class='font-60 light'>客服</text>
@@ -165,7 +172,7 @@
       </view>
       <view class='flex-1 padding-1' style='border-right:1px solid #f2f2f2;'>
         <view style='margin-bottom:-15px;'>
-          <image src='../utils/images/icons/shop.png' class='img-3'></image>
+          <image src='http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/icons/shop.png' class='img-3'></image>
         </view>
         <view  class='no-margin' style=''>
           <text class='font-60 light'>店铺</text>

@@ -5,6 +5,16 @@ page {
   font-family: -apple-system-font, "Helvetica Neue", sans-serif;
 }
 
+.lookAllComments{
+  width:200rpx;
+  line-height:50rpx;
+  height:50rpx;
+  font-size:24rpx;
+  color:#ff7100;
+  border-color:#ff7100;
+  padding:0;
+  border-radius:26rpx;
+}
 .weui-footer_fixed-bottom {
   position: fixed;
   bottom: .52em;

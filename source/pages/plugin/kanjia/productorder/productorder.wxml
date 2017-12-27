@@ -47,14 +47,22 @@
   
 </view>
 <view class=' padding-2 white font-85' style='margin-top:2px' wx:if='{{deliverytype=="express"}}'>
-    <view class='flex-row'>
-      <view>{{delivery.name}}</view>
-      <view style='margin-left:2vh;'>{{delivery.contact}}</view>
-    </view>
-    <view class='flex-row'>
-      <view class='flex-12'>{{delivery.address}}</view>
+    <block wx:if="{{address.id=='0'}}">
+    <view class='flex-row' bindtap='gotoSelectAddress'>
+      <view class='flex-12'>选择地址</view>
       <view class='flex-1 text-right font-120'><text class='fa fa-angle-right'></text></view>
     </view>
+    </block>
+    <block wx:else>
+    <view class='flex-row'>
+      <view>{{address.name}}</view>
+      <view style='margin-left:2vh;'>{{delivery.telphone}}</view>
+    </view>
+    <view class='flex-row'>
+      <view class='flex-12'>{{delivery.detail_address}}</view>
+      <view class='flex-1 text-right font-120'><text class='fa fa-angle-right'></text></view>
+    </view>
+    </block>
 </view>
 <view class=' padding-2 white font-85' style='margin-top:2px' wx:if='{{deliverytype=="self"}}'>
     <view class='flex-row' style='margin-top:1vh'>

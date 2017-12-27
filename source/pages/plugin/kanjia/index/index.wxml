@@ -1,9 +1,9 @@
 <!--pages/product/list.wxml-->
-<view class=' white' style='position:fixed;top:0;left:0;index:1; width:100%;'>
-<view class='flex-row padding-2' >
+<view class=' ' style='position:fixed;top:0;left:0;index:1; width:100%;'>
+<view class='flex-row padding-2 white' >
   <view class='flex-9 font-65 flex-row'>
     <view style='margin-right:1vh;' >
-      <image class='img-2' src="../utils/images/icons/horn.png"></image>
+      <image class='img-2' src="http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/icons/horn.png"></image>
     </view>
     <view>
       <text class='primary'>砍价火热进行中！</text>
@@ -14,7 +14,7 @@
     <i class="fa fa-chevron-right"></i>
   </view>
 </view>
-<view class='white'>
+<view class='white' style='margin-top:2vh'>
   <view class='flex-row border-bottom padding-2 no-margin' style='padding-bottom:0px;'>
     <view class='flex-row flex-7 font-80  ' style='padding-left:3vh;'>
       <view class='flex-1' bindtap='changeType' id="all">
@@ -28,14 +28,14 @@
       </view>
     </view>
     <view class='flex-1 text-right' bindtap='changeDisplayType'>
-      <image class='img-3' src="../utils/images/icons/list.png"></image>
+      <image class='img-3' src="http://zhichikanjia.oss-cn-hangzhou.aliyuncs.com/icons/list.png"></image>
     </view>
   </view>
 </view>
 </view>
 
 
-<view class='white' style='margin-top:10vh;'>
+<view class='white' style='margin-top:12vh;'>
   <view class='item-list padding-2' wx:if="{{displaytype=='list'}}" style='padding-bottom:0px;'>
 
     
